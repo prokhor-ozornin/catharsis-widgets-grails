@@ -23,28 +23,25 @@ ICQ On-Site widget, "Like" button (mail.ru/odnoklassniki.ru), Embedded video, Vi
 7. [RuTube](http://rutube.ru)
 Embedded video, Video hyperlink
 
-8. [Share42](http://share42.com)
-Social buttons widget
-
-9. [Surfingbird](http://surfingbird.com)
+8. [Surfingbird](http://surfingbird.com)
 "Like" button
 
-10. [Tumblr](http://tumblr.com)
+9. [Tumblr](http://tumblr.com)
 "Follow" button, "Share" button
 
-11. [Twitter](https://twitter.com)
+10. [Twitter](https://twitter.com)
 "Follow" button, "Tweet" button
 
-12. [Vimeo](https://vimeo.com)
+11. [Vimeo](https://vimeo.com)
 Embedded video, Video hyperlink
 
-13. [VKontakte](http://vk.com)
+12. [VKontakte](http://vk.com)
 Comments widget, Community widget, "Like" button, Subscribe widget, Embedded video, Video hyperlink
 
-14. [Yandex](http://yandex.ru)
+13. [Yandex](http://yandex.ru)
 Yandex Analytics, "Ya" button, "Share" button, Embedded video, Video hyperlink
 
-15. [YouTube](http://youtube.com)
+14. [YouTube](http://youtube.com)
 Embedded video, Video hyperlink
 
 
@@ -100,9 +97,14 @@ You must include `<r:require module="disqus"/>` directive first to use below tag
 
 > `<facebook:videoLink video="10203121281421359">Watch a Facebook video !</facebook:videoLink>`
 
-You must include `<r:require module="facebook"/>` directive first to use below tags.
+> Performs Facebook JavaScript API initialization
+
+> `<facebook:initialize appId="1437917246425293"/>`
+
+You must call `<facebook:initialize"/>` directive first to use below tags.
 
 > Render Facebook "Like" button
+
 > `<facebook:like url="http://yandex.ru"/>`
 
 > `<facebook:like url="http://yandex.ru" layout="box_count" showFaces="true" verb="recommend"/>`
@@ -167,20 +169,6 @@ You must include `<r:require module="mailru"/>` directive first to use below tag
 > Render RuTube video hyperlink
 
 > `<rutube:videoLink video="4c5fe858f0013ea73188a3534af12f2b">Watch RuTube video !</rutube:videoLink>`
-
-**Share42**
-
-> Render Share42 horizontal panel
-
-> `<share42:horizontal/>`
-
-> `<share42:horizontal size="32"/>`
-
-> Render Share42 vertical panel
-
-> `<share42:vertical/>`
-
-> `<share42:vertical size="32"/>`
 
 **Surfingbird**
 

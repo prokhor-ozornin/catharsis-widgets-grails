@@ -12,10 +12,6 @@ modules =
   {
     resource url: "js/disqus.js"
   }
-  facebook
-  {
-    resource url: "js/facebook.js"
-  }
   google
   {
     resource url:"js/google_plusone.js"
@@ -48,6 +44,6 @@ modules =
   }
   widgets
     {
-      dependsOn(["cackle", "disqus", "facebook", "google", "mailru", "surfingbird", "twitter", "vkontakte", "yandex"])
+      dependsOn(["cackle", "disqus", "google", "mailru", "surfingbird", "twitter", "vkontakte", "yandex"])
     }
 }

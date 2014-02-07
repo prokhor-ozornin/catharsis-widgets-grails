@@ -16,7 +16,7 @@ class FacebookTagLib
     }
 
     out << g.withTag(name: "div", attrs: [id: "fb-root"])
-    out << r.require(module: "facebook")
+    out << g.javascript(null, g.render(contextPath: pluginContextPath, template: "/facebook_initialize", model: [appId : attrs.appId]))
   }
 
   /**
