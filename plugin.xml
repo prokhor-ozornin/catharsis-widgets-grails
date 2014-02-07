@@ -1,0 +1,38 @@
+<plugin name='catharsis-widgets' version='0.1' grailsVersion='2.0 &gt; *'>
+  <author>Prokhor Ozornin</author>
+  <authorEmail>prokhor.ozornin@yandex.ru</authorEmail>
+  <title>Catharsis Widgets</title>
+  <description>Catharsis.Grails.Widgets is a Grails 2 tag library, which provides useful social media tags to include on web pages of your site</description>
+  <documentation>https://github.com/prokhor-ozornin/Catharsis.Grails.Widgets</documentation>
+  <type>CatharsisWidgetsGrailsPlugin</type>
+  <resources>
+    <resource>ApplicationResources</resource>
+    <resource>BootStrap</resource>
+    <resource>spring.resources</resource>
+    <resource>catharsis.widgets.CackleTagLib</resource>
+    <resource>catharsis.widgets.DisqusTagLib</resource>
+    <resource>catharsis.widgets.FacebookTagLib</resource>
+    <resource>catharsis.widgets.GoogleTagLib</resource>
+    <resource>catharsis.widgets.IntenseDebateTagLib</resource>
+    <resource>catharsis.widgets.MailRuTagLib</resource>
+    <resource>catharsis.widgets.RuTubeTagLib</resource>
+    <resource>catharsis.widgets.SurfingbirdTagLib</resource>
+    <resource>catharsis.widgets.TumblrTagLib</resource>
+    <resource>catharsis.widgets.TwitterTagLib</resource>
+    <resource>catharsis.widgets.VimeoTagLib</resource>
+    <resource>catharsis.widgets.VkontakteTagLib</resource>
+    <resource>catharsis.widgets.YandexTagLib</resource>
+    <resource>catharsis.widgets.YouTubeTagLib</resource>
+  </resources>
+  <repositories>
+    <repository name='grailsCentral' url='http://plugins.grails.org' />
+    <repository name='http://repo.grails.org/grails/plugins' url='http://repo.grails.org/grails/plugins/' />
+    <repository name='http://repo.grails.org/grails/core' url='http://repo.grails.org/grails/core/' />
+    <repository name='grailsCore' url='http://svn.codehaus.org/grails/trunk/grails-plugins' />
+    <repository name='mavenCentral' url='http://repo1.maven.org/maven2/' />
+  </repositories>
+  <dependencies />
+  <plugins />
+  <runtimePluginRequirements />
+  <behavior />
+</plugin>
