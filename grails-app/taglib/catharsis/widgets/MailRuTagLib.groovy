@@ -1,6 +1,6 @@
 package catharsis.widgets
 
-import grails.converters.*
+import grails.converters.JSON
 
 class MailRuTagLib
 {
@@ -224,7 +224,7 @@ enum MailRuLikeButtonLayout
 
   String toString()
   {
-    return (this.ordinal() + 1).toString()
+    return (ordinal() + 1).toString()
   }
 }
 
@@ -265,7 +265,7 @@ enum MailRuLikeButtonCounterPosition
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }
 
@@ -288,6 +288,6 @@ enum MailRuLikeButtonTextType
 
   String toString()
   {
-    return (this.ordinal() + 1).toString()
+    return (ordinal() + 1).toString()
   }
 }

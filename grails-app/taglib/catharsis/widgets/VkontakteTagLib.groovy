@@ -1,6 +1,6 @@
 package catharsis.widgets
 
-import grails.converters.*
+import grails.converters.JSON
 
 class VkontakteTagLib
 {
@@ -285,7 +285,7 @@ enum VkontakteCommentsAttach
         break
 
       default :
-        return this.name().toLowerCase()
+        return name().toLowerCase()
         break
     }
   }
@@ -355,7 +355,7 @@ enum VkontakteCommunityMode
 
   String toString()
   {
-    return this.ordinal().toString()
+    return ordinal().toString()
   }
 }
 
@@ -383,7 +383,7 @@ enum VkontakteLikeButtonLayout
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }
 
@@ -446,7 +446,7 @@ enum VkontakteLikeButtonVerb
 
   String toString()
   {
-    return this.ordinal().toString()
+    return ordinal().toString()
   }
 }
 
@@ -457,6 +457,6 @@ enum VkontakteSubscribeButtonLayout
 
   String toString()
   {
-    return (this.ordinal() + 1).toString()
+    return (ordinal() + 1).toString()
   }
 }

@@ -96,7 +96,7 @@ enum TumblrFollowButtonType
 
   String toString()
   {
-    return (this.ordinal() + 1).toString()
+    return (ordinal() + 1).toString()
   }
 }
 
@@ -107,7 +107,7 @@ enum TumblrFollowButtonColorScheme
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }
 
@@ -120,7 +120,7 @@ enum TumblrShareButtonType
 
   String toString()
   {
-    return (this.ordinal() + 1).toString()
+    return (ordinal() + 1).toString()
   }
 }
 
@@ -131,6 +131,6 @@ enum TumblrShareButtonColorScheme
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }

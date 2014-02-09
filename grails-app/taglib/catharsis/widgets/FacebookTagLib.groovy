@@ -170,7 +170,7 @@ enum FacebookLikeButtonLayout
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }
 
@@ -181,7 +181,7 @@ enum FacebookLikeButtonColorScheme
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }
 
@@ -192,6 +192,6 @@ enum FacebookLikeButtonVerb
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }

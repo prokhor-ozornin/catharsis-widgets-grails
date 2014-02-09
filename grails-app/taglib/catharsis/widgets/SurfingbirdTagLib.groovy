@@ -1,6 +1,6 @@
 package catharsis.widgets
 
-import grails.converters.*
+import grails.converters.JSON
 
 class SurfingbirdTagLib
 {
@@ -80,6 +80,6 @@ enum SurfingbirdSurfButtonColor
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }
