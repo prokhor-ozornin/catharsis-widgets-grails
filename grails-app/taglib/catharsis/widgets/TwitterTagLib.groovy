@@ -142,7 +142,7 @@ enum TwitterFollowButtonSize
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }
 
@@ -153,7 +153,7 @@ enum TwitterFollowButtonAlignment
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }
 
@@ -165,7 +165,7 @@ enum TwitterTweetButtonCountBoxPosition
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }
 
@@ -176,6 +176,6 @@ enum TwitterTweetButtonSize
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }

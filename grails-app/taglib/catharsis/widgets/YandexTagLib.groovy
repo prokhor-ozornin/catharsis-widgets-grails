@@ -1,6 +1,6 @@
 package catharsis.widgets
 
-import grails.converters.*
+import grails.converters.JSON
 
 class YandexTagLib
 {
@@ -171,7 +171,7 @@ enum YandexLikeButtonSize
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }
 
@@ -182,7 +182,7 @@ enum YandexLikeButtonLayout
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }
 
@@ -195,6 +195,6 @@ enum YandexShareButtonLayout
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }

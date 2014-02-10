@@ -86,7 +86,7 @@ enum GooglePlusOneButtonSize
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }
 
@@ -109,7 +109,7 @@ enum GooglePlusOneButtonAnnotation
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }
 
@@ -120,6 +120,6 @@ enum GooglePlusOneButtonAlign
 
   String toString()
   {
-    return this.name().toLowerCase()
+    return name().toLowerCase()
   }
 }

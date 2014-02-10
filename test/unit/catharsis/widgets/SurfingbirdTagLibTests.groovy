@@ -1,6 +1,6 @@
 package catharsis.widgets
 
-import grails.test.mixin.*
+import grails.test.mixin.TestFor
 
 @TestFor(SurfingbirdTagLib)
 class SurfingbirdTagLibTests
