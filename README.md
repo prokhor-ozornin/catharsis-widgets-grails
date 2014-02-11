@@ -296,7 +296,7 @@ You must include `<r:require module="yandex"/>` directive first to use below tag
 
 > Render YouTube video hyperlink
 
-> `<youtube:videoLink video="eYJSlHiXegI"/>`
+> `<youtube:videoLink video="eYJSlHiXegI">Watch YouTube video!</youtube:videoLink>`
 
 
 _Note:_ Instead of using different modules with `<r:require/>` directive for separate social tags, you can use all-in-one module bundle, called "widgets" once :

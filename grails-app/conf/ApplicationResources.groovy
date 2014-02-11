@@ -33,17 +33,22 @@ modules =
   {
     resource url: "js/twitter_initialize.js"
   }
+  videojs
+  {
+    resource url: "http://vjs.zencdn.net/4.3/video-js.css"
+    resource url: "http://vjs.zencdn.net/4.3/video.js"
+  }
   vkontakte
   {
     resource url: "http://vk.com/js/api/openapi.js", disposition: "head"
   }
   yandex
   {
-    resource url: "js/yandex_initialize.js"
+    resource url: "js/yandex_like.js"
     resource url: "http://yandex.st/share/share.js"
   }
   widgets
-    {
-      dependsOn(["cackle", "disqus", "google", "mailru", "surfingbird", "twitter", "vkontakte", "yandex"])
-    }
+  {
+    dependsOn(["cackle", "disqus", "google", "mailru", "surfingbird", "twitter", "videojs", "vkontakte", "yandex"])
+  }
 }
