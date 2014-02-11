@@ -44,6 +44,9 @@ Yandex Analytics, "Ya" button, "Share" button, Embedded video, Video hyperlink
 14. [YouTube](http://youtube.com)
 Embedded video, Video hyperlink
 
+15. VideoJS player (http://www.videojs.com)
+Media player
+
 
 The list of social tags is ever-growing, and new ones can be included upon request fast.
 
@@ -298,6 +301,13 @@ You must include `<r:require module="yandex"/>` directive first to use below tag
 
 > `<youtube:videoLink video="eYJSlHiXegI">Watch YouTube video!</youtube:videoLink>`
 
+**VideoJS**
+
+You must include `<r:require module="videojs"/>` directive first to use below tags.
+
+> Render VideoJS media player
+
+> `<videojs:player width="640" height="480" videos="${["http://vjs.zencdn.net/v/oceans.mp4":"video/mp4","http://vjs.zencdn.net/v/oceans.webm":"video/webm"]}"><track kind="captions" src="http://www.videojs.com/vtt/captions.vtt" srclang="en" label="English"></track></videojs:player>`
 
 _Note:_ Instead of using different modules with `<r:require/>` directive for separate social tags, you can use all-in-one module bundle, called "widgets" once :
 
