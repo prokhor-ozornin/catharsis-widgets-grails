@@ -14,11 +14,18 @@ class FacebookTagLibTests
     assert html.contains('//connect.facebook.net/en_US/all.js#xfbml=1&appId=appId')*/
   }
 
+  void testFollowTag()
+  {
+    assert !applyTemplate('<facebook:follow/>')
+    assert applyTemplate('<facebook:follow url="url"/>') == '<div class="fb-follow" data-href="url"></div>'
+    assert applyTemplate("<facebook:follow colorScheme=\"${FacebookColorScheme.DARK}\" url=\"url\" forKids=\"true\" layout=\"${FacebookButtonLayout.BOX_COUNT}\" showFaces=\"true\" width=\"width\" height=\"height\"/>") == '<div class="fb-follow" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-layout="box_count" data-show-faces="true" data-width="width" data-height="height"></div>'
+  }
+
   void testLikeTag()
   {
     assert !applyTemplate('<facebook:like/>')
     assert applyTemplate('<facebook:like url="url"/>') == '<div class="fb-like" data-href="url"></div>'
-    assert applyTemplate("<facebook:like verb=\"${FacebookLikeButtonVerb.RECOMMEND}\" colorScheme=\"${FacebookColorScheme.DARK}\" url=\"url\" forKids=\"true\" layout=\"${FacebookLikeButtonLayout.BOX_COUNT}\" trackLabel=\"trackLabel\" showFaces=\"true\" width=\"width\"/>") == '<div class="fb-like" data-href="url" data-action="recommend" data-colorscheme="dark" data-kid-directed-site="true" data-layout="box_count" data-ref="trackLabel" data-show-faces="true" data-width="width"></div>'
+    assert applyTemplate("<facebook:like verb=\"${FacebookLikeButtonVerb.RECOMMEND}\" colorScheme=\"${FacebookColorScheme.DARK}\" url=\"url\" forKids=\"true\" layout=\"${FacebookButtonLayout.BOX_COUNT}\" trackLabel=\"trackLabel\" showFaces=\"true\" width=\"width\"/>") == '<div class="fb-like" data-href="url" data-action="recommend" data-colorscheme="dark" data-kid-directed-site="true" data-layout="box_count" data-ref="trackLabel" data-show-faces="true" data-width="width"></div>'
   }
 
   void testSendTag()

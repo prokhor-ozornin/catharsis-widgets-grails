@@ -20,6 +20,63 @@ class FacebookTagLib
   }
 
   /**
+   * Renders Facebook "Follow" button.
+   * Requires Facebook JavaScript initialization to be performed first.
+   * @see "https://developers.facebook.com/docs/plugins/follow-button"
+   * @attr url REQUIRED The Facebook.com profile URL of the user to follow.
+   * @attr width The width of the button. The layout you choose affects the minimum and default widths you can use.
+   * @attr height The height of the button.
+   * @attr colorScheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
+   * @attr forKids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
+   * @attr layout Selects one of the different layouts that are available for the button (FacebookButtonLayout or string). Default is "standard".
+   * @attr showFaces Specifies whether to display profile photos below the button (standard layout only). You must not enable this on child-directed sites.
+   */
+  def follow = { attrs ->
+    if (!attrs.url)
+    {
+      return
+    }
+
+    def attributes =
+    [
+      class: "fb-follow",
+      "data-href": attrs.url
+    ]
+
+    if (attrs.colorScheme)
+    {
+      attributes["data-colorscheme"] = attrs.colorScheme.toString()
+    }
+
+    if (attrs.forKids != null)
+    {
+      attributes["data-kid-directed-site"] = attrs.forKids.toBoolean().toString()
+    }
+
+    if (attrs.layout)
+    {
+      attributes["data-layout"] = attrs.layout.toString()
+    }
+
+    if (attrs.showFaces != null)
+    {
+      attributes["data-show-faces"] = attrs.showFaces.toBoolean().toString()
+    }
+
+    if (attrs.width)
+    {
+      attributes["data-width"] = attrs.width
+    }
+
+    if (attrs.height)
+    {
+      attributes["data-height"] = attrs.height
+    }
+
+    out << g.withTag(name: "div", attrs: attributes)
+  }
+
+  /**
    * Renders Facebook "Like"/"Recommend" button.
    * Requires Facebook JavaScript initialization to be performed first.
    * @see "https://developers.facebook.com/docs/plugins/like-button"
@@ -27,7 +84,7 @@ class FacebookTagLib
    * @attr verb The verb to display on the button (FacebookLikeButtonVerb or string). Default is "like".
    * @attr colorScheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
    * @attr forKids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
-   * @attr layout Selects one of the different layouts that are available for the button (FacebookLikeButtonLayout or string). Default is "standard".
+   * @attr layout Selects one of the different layouts that are available for the button (FacebookButtonLayout or string). Default is "standard".
    * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    * @attr showFaces Specifies whether to display profile photos below the button (standard layout only). You must not enable this on child-directed sites. Default is false.
    * @attr width The width of the button. The layout you choose affects the minimum and default widths you can use.
@@ -224,7 +281,7 @@ enum FacebookColorScheme
   }
 }
 
-enum FacebookLikeButtonLayout
+enum FacebookButtonLayout
 {
   BOX_COUNT,
   BUTTON_COUNT,

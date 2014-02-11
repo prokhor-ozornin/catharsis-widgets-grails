@@ -9,7 +9,7 @@ Comments and OAuth Login widgets
 Comments widget
 
 3. [Facebook](http://facebook.com)
-"Like" button, Embedded post, Embedded video, Video hyperlink
+"Follow" button, "Like" button, "Send" button, Embedded post, Embedded video, Video hyperlink
 
 4. [Google](http://google.com)
 Google Analytics, Google + 1 button
@@ -106,6 +106,12 @@ You must include `<r:require module="disqus"/>` directive first to use below tag
 
 You must call `<facebook:initialize"/>` directive first to use below tags.
 
+> Render Facebook "Follow" button
+
+> `<facebook:follow url="http://www.facebook.com/zuck"/>`
+
+> `<facebook:follow url="http://www.facebook.com/zuck" forKids="true" showFaces="true" layout="box_count"/>`
+
 > Render Facebook "Like" button
 
 > `<facebook:like url="http://yandex.ru"/>`
@@ -115,6 +121,12 @@ You must call `<facebook:initialize"/>` directive first to use below tags.
 > Render Facebook embedded post
 
 > `<facebook:post url="https://www.facebook.com/prokhor.ozornin/posts/10203109769053557" width="640"/>`
+
+> Render Facebook "Send" button
+
+> `<facebook:send url="http://yandex.ru"/>`
+
+> `<facebook:send url="url" colorScheme="${FacebookColorScheme.DARK}" forKids="true"/>`
 
 **Google**
 
