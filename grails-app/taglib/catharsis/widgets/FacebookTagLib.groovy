@@ -25,7 +25,7 @@ class FacebookTagLib
    * @see "https://developers.facebook.com/docs/plugins/like-button"
    * @attr url REQUIRED The absolute URL of the page that will be liked.
    * @attr verb The verb to display on the button (FacebookLikeButtonVerb or string). Default is "like".
-   * @attr colorScheme The color scheme used by the button (FacebookLikeButtonColorScheme or string). Default is "light".
+   * @attr colorScheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
    * @attr forKids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
    * @attr layout Selects one of the different layouts that are available for the button (FacebookLikeButtonLayout or string). Default is "standard".
    * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
@@ -109,6 +109,57 @@ class FacebookTagLib
   }
 
   /**
+   * Renders Facebook "Send" button.
+   * Requires Facebook JavaScript initialization to be performed first.
+   * @see "https://developers.facebook.com/docs/plugins/send-button"
+   * @attr url REQUIRED The absolute URL of the page that will be sent.
+   * @attr width The width of the button.
+   * @attr height The height of the button.
+   * @attr colorScheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
+   * @attr forKids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
+   * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
+   */
+  def send = { attrs ->
+    if (!attrs.url)
+    {
+      return
+    }
+
+    def attributes =
+    [
+      class: "fb-send",
+      "data-href": attrs.url
+    ]
+
+    if (attrs.colorScheme)
+    {
+      attributes["data-colorscheme"] = attrs.colorScheme.toString()
+    }
+
+    if (attrs.forKids != null)
+    {
+      attributes["data-kid-directed-site"] = attrs.forKids.toBoolean().toString()
+    }
+
+    if (attrs.trackLabel)
+    {
+      attributes["data-ref"] = attrs.trackLabel
+    }
+
+    if (attrs.width)
+    {
+      attributes["data-width"] = attrs.width
+    }
+
+    if (attrs.height)
+    {
+      attributes["data-height"] = attrs.height
+    }
+
+    out << g.withTag(name: "div", attrs: attributes)
+  }
+
+  /**
    * Renders embedded Facebook video on web page.
    * @attr video REQUIRED Identifier of Facebook video.
    * @attr width REQUIRED Width of video control.
@@ -162,11 +213,10 @@ class FacebookTagLib
   }
 }
 
-enum FacebookLikeButtonLayout
+enum FacebookColorScheme
 {
-  BOX_COUNT,
-  BUTTON_COUNT,
-  STANDARD
+  LIGHT,
+  DARK
 
   String toString()
   {
@@ -174,10 +224,11 @@ enum FacebookLikeButtonLayout
   }
 }
 
-enum FacebookLikeButtonColorScheme
+enum FacebookLikeButtonLayout
 {
-  LIGHT,
-  DARK
+  BOX_COUNT,
+  BUTTON_COUNT,
+  STANDARD
 
   String toString()
   {

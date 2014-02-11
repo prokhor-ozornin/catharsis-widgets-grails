@@ -18,7 +18,14 @@ class FacebookTagLibTests
   {
     assert !applyTemplate('<facebook:like/>')
     assert applyTemplate('<facebook:like url="url"/>') == '<div class="fb-like" data-href="url"></div>'
-    assert applyTemplate("<facebook:like verb=\"${FacebookLikeButtonVerb.RECOMMEND}\" colorScheme=\"${FacebookLikeButtonColorScheme.DARK}\" url=\"url\" forKids=\"true\" layout=\"${FacebookLikeButtonLayout.BOX_COUNT}\" trackLabel=\"trackLabel\" showFaces=\"true\" width=\"width\"/>") == '<div class="fb-like" data-href="url" data-action="recommend" data-colorscheme="dark" data-kid-directed-site="true" data-layout="box_count" data-ref="trackLabel" data-show-faces="true" data-width="width"></div>'
+    assert applyTemplate("<facebook:like verb=\"${FacebookLikeButtonVerb.RECOMMEND}\" colorScheme=\"${FacebookColorScheme.DARK}\" url=\"url\" forKids=\"true\" layout=\"${FacebookLikeButtonLayout.BOX_COUNT}\" trackLabel=\"trackLabel\" showFaces=\"true\" width=\"width\"/>") == '<div class="fb-like" data-href="url" data-action="recommend" data-colorscheme="dark" data-kid-directed-site="true" data-layout="box_count" data-ref="trackLabel" data-show-faces="true" data-width="width"></div>'
+  }
+
+  void testSendTag()
+  {
+    assert !applyTemplate('<facebook:send/>')
+    assert applyTemplate('<facebook:send url="url"/>') == '<div class="fb-send" data-href="url"></div>'
+    assert applyTemplate("<facebook:send url=\"url\" colorScheme=\"${FacebookColorScheme.DARK}\" forKids=\"true\" trackLabel=\"trackLabel\" width=\"width\" height=\"height\"/>") == '<div class="fb-send" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-ref="trackLabel" data-width="width" data-height="height"></div>'
   }
 
   void testPostTag()

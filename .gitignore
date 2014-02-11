@@ -1,5 +1,6 @@
 /web-app/WEB-INF
 /.idea
+/.iml
 /.classpath
 /.project
 /.settings
