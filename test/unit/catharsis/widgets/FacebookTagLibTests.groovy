@@ -14,6 +14,13 @@ class FacebookTagLibTests
     assert html.contains('//connect.facebook.net/en_US/all.js#xfbml=1&appId=appId')*/
   }
 
+  void testCommentsTag()
+  {
+    assert !applyTemplate('<facebook:comments/>')
+    assert applyTemplate('<facebook:comments url="url"/>') == '<div class="fb-comments" data-href="url"></div>'
+    assert applyTemplate("<facebook:comments url=\"url\" posts=\"1\" width=\"width\" colorScheme=\"${FacebookColorScheme.DARK}\" mobile=\"true\" order=\"${FacebookCommentsOrder.REVERSE_TIME}\"/>") == '<div class="fb-comments" data-href="url" data-num-posts="1" data-width="width" data-colorscheme="dark" data-mobile="true" data-order-by="reverse_time"></div>'
+  }
+
   void testFollowTag()
   {
     assert !applyTemplate('<facebook:follow/>')

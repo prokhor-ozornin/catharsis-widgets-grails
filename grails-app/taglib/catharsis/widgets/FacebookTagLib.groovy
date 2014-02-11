@@ -20,6 +20,57 @@ class FacebookTagLib
   }
 
   /**
+   * Renders Facebook comments widget.
+   * Requires Facebook JavaScript initialization to be performed first.
+   * @see "https://developers.facebook.com/docs/plugins/comments"
+   * @attr url REQUIRED The absolute URL that comments posted in the plugin will be permanently associated with. Stories on Facebook about comments posted in the plugin will link to this URL. Default is current page URL.
+   * @attr posts The number of comments to show by default. The minimum value is 1. Default is 10.
+   * @attr width The width of the widget. The mobile version of the Comments widget ignores the width parameter, and instead has a fluid width of 100%.
+   * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string).
+   * @attr mobile A boolean value that specifies whether to show the mobile-optimized version or not. If not specified, auto-detection is used.
+   * @attr order The order to use when displaying comments (FacebookCommentsOrder or string).
+   */
+  def comments = { attrs ->
+    if (!attrs.url)
+    {
+      return
+    }
+
+    def attributes =
+    [
+      class: "fb-comments",
+      "data-href": attrs.url
+    ]
+
+    if (attrs.posts)
+    {
+      attributes["data-num-posts"] = attrs.posts.toInteger()
+    }
+
+    if (attrs.width)
+    {
+      attributes["data-width"] = attrs.width
+    }
+
+    if (attrs.colorScheme)
+    {
+      attributes["data-colorscheme"] = attrs.colorScheme.toString()
+    }
+
+    if (attrs.mobile != null)
+    {
+      attributes["data-mobile"] = attrs.mobile.toBoolean().toString()
+    }
+
+    if (attrs.order)
+    {
+      attributes["data-order-by"] = attrs.order.toString()
+    }
+
+    out << g.withTag(name: "div", attrs: attributes)
+  }
+
+  /**
    * Renders Facebook "Follow" button.
    * Requires Facebook JavaScript initialization to be performed first.
    * @see "https://developers.facebook.com/docs/plugins/follow-button"
@@ -297,6 +348,18 @@ enum FacebookLikeButtonVerb
 {
   LIKE,
   RECOMMEND
+
+  String toString()
+  {
+    return name().toLowerCase()
+  }
+}
+
+enum FacebookCommentsOrder
+{
+  SOCIAl,
+  REVERSE_TIME,
+  TIME
 
   String toString()
   {

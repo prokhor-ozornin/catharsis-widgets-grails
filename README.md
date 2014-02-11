@@ -9,7 +9,7 @@ Comments and OAuth Login widgets
 Comments widget
 
 3. [Facebook](http://facebook.com)
-"Follow" button, "Like" button, "Send" button, Embedded post, Embedded video, Video hyperlink
+"Follow" button, "Like" button, "Send" button, Comments widget, Embedded post, Embedded video, Video hyperlink
 
 4. [Google](http://google.com)
 Google Analytics, Google + 1 button
@@ -105,6 +105,12 @@ You must include `<r:require module="disqus"/>` directive first to use below tag
 > `<facebook:initialize appId="1437917246425293"/>`
 
 You must call `<facebook:initialize"/>` directive first to use below tags.
+
+> Render Facebook comments widget
+
+> `<facebook:comments url="http://yandex.ru"/>`
+
+> `<facebook:comments url="http://yandex.ru" colorScheme="${FacebookColorScheme.DARK}" order="${catharsis.widgets.FacebookCommentsOrder.REVERSE_TIME}" posts="1" width="500"/>`
 
 > Render Facebook "Follow" button
 

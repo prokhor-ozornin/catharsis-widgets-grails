@@ -1,6 +1,6 @@
 class CatharsisWidgetsGrailsPlugin
 {
-  def version = "0.14"
+  def version = "0.15"
   def grailsVersion = "2.0 > *"
   def title = "Catharsis Widgets"
   def description = "Catharsis.Grails.Widgets is a Grails 2 tag library, which provides useful social media tags to include on web pages of your site"
