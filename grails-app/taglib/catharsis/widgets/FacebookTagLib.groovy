@@ -20,10 +20,90 @@ class FacebookTagLib
   }
 
   /**
+   * Renders Facebook Activity Feed.
+   * Requires Facebook JavaScript initialization to be performed first.
+   * @see "https://developers.facebook.com/docs/plugins/activity"
+   * @attr domain The domain for which to show activity. Default is current domain.
+   * @attr appId Display all actions associated with this app ID. This is usually inferred from the app ID you use to initiate the JavaScript SDK.
+   * @attr actions Collection or a comma-separated string of Open Graph action types to show in the feed.
+   * @attr width The width of the widget in pixels. Default is 300.
+   * @attr height The height of the widget in pixels. Default is 300.
+   * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string).
+   * @attr header Whether to show the "Recent Activity" header above the feed or not. Default is true (show).
+   * @attr linkTarget Determines what happens when people click on the links in the feed. Can be any of the standard HTML target values. Default is "_blank".
+   * @attr maxAge Limit the created time of articles that are shown in the feed. Valid values are 1-180, which represents the age in days to limit to. Default is 0 (no limit).
+   * @attr recommendations Specifies whether to always show recommendations (Articles liked by a high amount of people) in the bottom half of the feed. Default is false.
+   * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
+   */
+  def activityFeed = { attrs ->
+    def attributes =
+    [
+      class: "fb-activity",
+    ]
+
+    if (attrs.domain)
+    {
+      attributes["data-site"] = attrs.domain
+    }
+
+    if (attrs.appId)
+    {
+      attributes["data-app-id"] = attrs.appId
+    }
+
+    if (attrs.actions)
+    {
+      attributes["data-action"] = attrs.actions instanceof Collection ? attrs.actions.join(",") : attrs.actions.toString()
+    }
+
+    if (attrs.width)
+    {
+      attributes["data-width"] = attrs.width
+    }
+
+    if (attrs.height)
+    {
+      attributes["data-height"] = attrs.height
+    }
+
+    if (attrs.colorScheme)
+    {
+      attributes["data-colorscheme"] = attrs.colorScheme.toString()
+    }
+
+    if (attrs.header != null)
+    {
+      attributes["data-header"] = attrs.header.toBoolean().toString()
+    }
+
+    if (attrs.linkTarget)
+    {
+      attributes["data-linktarget"] = attrs.linkTarget
+    }
+
+    if (attrs.maxAge)
+    {
+      attributes["data-max-age"] = attrs.maxAge.toInteger()
+    }
+
+    if (attrs.recommendations != null)
+    {
+      attributes["data-recommendations"] = attrs.recommendations.toBoolean().toString()
+    }
+
+    if (attrs.trackLabel)
+    {
+      attributes["data-ref"] = attrs.trackLabel
+    }
+
+    out << g.withTag(name: "div", attrs: attributes)
+  }
+
+  /**
    * Renders Facebook comments widget.
    * Requires Facebook JavaScript initialization to be performed first.
    * @see "https://developers.facebook.com/docs/plugins/comments"
-   * @attr url REQUIRED The absolute URL that comments posted in the plugin will be permanently associated with. Stories on Facebook about comments posted in the plugin will link to this URL. Default is current page URL.
+   * @attr url The absolute URL that comments posted in the plugin will be permanently associated with. Stories on Facebook about comments posted in the plugin will link to this URL. Default is current page URL.
    * @attr posts The number of comments to show by default. The minimum value is 1. Default is 10.
    * @attr width The width of the widget. The mobile version of the Comments widget ignores the width parameter, and instead has a fluid width of 100%.
    * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string).
@@ -31,16 +111,15 @@ class FacebookTagLib
    * @attr order The order to use when displaying comments (FacebookCommentsOrder or string).
    */
   def comments = { attrs ->
-    if (!attrs.url)
-    {
-      return
-    }
-
     def attributes =
     [
       class: "fb-comments",
-      "data-href": attrs.url
     ]
+
+    if (attrs.url)
+    {
+      attributes["data-href"] = attrs.url
+    }
 
     if (attrs.posts)
     {
@@ -131,7 +210,7 @@ class FacebookTagLib
    * Renders Facebook "Like"/"Recommend" button.
    * Requires Facebook JavaScript initialization to be performed first.
    * @see "https://developers.facebook.com/docs/plugins/like-button"
-   * @attr url REQUIRED The absolute URL of the page that will be liked.
+   * @attr url The absolute URL of the page that will be liked. Default is current page URL.
    * @attr verb The verb to display on the button (FacebookLikeButtonVerb or string). Default is "like".
    * @attr colorScheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
    * @attr forKids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
@@ -141,16 +220,12 @@ class FacebookTagLib
    * @attr width The width of the button. The layout you choose affects the minimum and default widths you can use.
    */
   def like = { attrs ->
-    if (!attrs.url)
-    {
-      return
-    }
-
     def attributes =
     [
       class: "fb-like",
-      "data-href": attrs.url
     ]
+
+    attributes["data-href"] = attrs.url ?: request.requestURL
 
     if (attrs.verb)
     {
@@ -220,7 +295,7 @@ class FacebookTagLib
    * Renders Facebook "Send" button.
    * Requires Facebook JavaScript initialization to be performed first.
    * @see "https://developers.facebook.com/docs/plugins/send-button"
-   * @attr url REQUIRED The absolute URL of the page that will be sent.
+   * @attr url The absolute URL of the page that will be sent. Default is current page URL.
    * @attr width The width of the button.
    * @attr height The height of the button.
    * @attr colorScheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
@@ -228,16 +303,15 @@ class FacebookTagLib
    * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    */
   def send = { attrs ->
-    if (!attrs.url)
-    {
-      return
-    }
-
     def attributes =
     [
       class: "fb-send",
-      "data-href": attrs.url
     ]
+
+    if (attrs.url)
+    {
+      attributes["data-href"] = attrs.url
+    }
 
     if (attrs.colorScheme)
     {

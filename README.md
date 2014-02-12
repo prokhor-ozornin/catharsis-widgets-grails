@@ -9,7 +9,7 @@ Comments and OAuth Login widgets
 Comments widget
 
 3. [Facebook](http://facebook.com)
-"Follow" button, "Like" button, "Send" button, Comments widget, Embedded post, Embedded video, Video hyperlink
+Activity Feed, "Follow" button, "Like" button, "Send" button, Comments widget, Embedded post, Embedded video, Video hyperlink
 
 4. [Google](http://google.com)
 Google Analytics, Google + 1 button
@@ -106,11 +106,21 @@ You must include `<r:require module="disqus"/>` directive first to use below tag
 
 You must call `<facebook:initialize"/>` directive first to use below tags.
 
+> Render Facebook Activity Feed widget
+
+> `<facebook:activityFeed/>`
+
+> `<facebook:activityFeed domain="http://yandex.ru"/>`
+
+> `<facebook:activityFeed domain="http://yandex.ru" header="false" recommendations="true" colorScheme="dark"/>`
+
 > Render Facebook comments widget
+
+> `<facebook:comments/>`
 
 > `<facebook:comments url="http://yandex.ru"/>`
 
-> `<facebook:comments url="http://yandex.ru" colorScheme="${FacebookColorScheme.DARK}" order="${catharsis.widgets.FacebookCommentsOrder.REVERSE_TIME}" posts="1" width="500"/>`
+> `<facebook:comments url="http://yandex.ru" order="${FacebookCommentsOrder.REVERSE_TIME}" posts="1" width="500"/>`
 
 > Render Facebook "Follow" button
 
@@ -119,6 +129,8 @@ You must call `<facebook:initialize"/>` directive first to use below tags.
 > `<facebook:follow url="http://www.facebook.com/zuck" forKids="true" showFaces="true" layout="box_count"/>`
 
 > Render Facebook "Like" button
+
+> `<facebook:like/>`
 
 > `<facebook:like url="http://yandex.ru"/>`
 
@@ -129,6 +141,8 @@ You must call `<facebook:initialize"/>` directive first to use below tags.
 > `<facebook:post url="https://www.facebook.com/prokhor.ozornin/posts/10203109769053557" width="640"/>`
 
 > Render Facebook "Send" button
+
+> `<facebook:send/>`
 
 > `<facebook:send url="http://yandex.ru"/>`
 

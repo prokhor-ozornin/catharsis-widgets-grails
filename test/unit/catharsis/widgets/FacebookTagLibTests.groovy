@@ -14,10 +14,15 @@ class FacebookTagLibTests
     assert html.contains('//connect.facebook.net/en_US/all.js#xfbml=1&appId=appId')*/
   }
 
+  void testActivityFeedTag()
+  {
+    assert applyTemplate('<facebook:activityFeed/>') == '<div class="fb-activity"></div>'
+    assert applyTemplate('<facebook:activityFeed domain="domain" appId="appId" actions="actions" width="width" height="height" colorScheme="colorScheme" header="true" linkTarget="linkTarget" maxAge="1" recommendations="true" trackLabel="trackLabel"/>') == '<div class="fb-activity" data-site="domain" data-app-id="appId" data-action="actions" data-width="width" data-height="height" data-colorscheme="colorScheme" data-header="true" data-linktarget="linkTarget" data-max-age="1" data-recommendations="true" data-ref="trackLabel"></div>'
+  }
+
   void testCommentsTag()
   {
-    assert !applyTemplate('<facebook:comments/>')
-    assert applyTemplate('<facebook:comments url="url"/>') == '<div class="fb-comments" data-href="url"></div>'
+    assert applyTemplate('<facebook:comments/>') == '<div class="fb-comments"></div>'
     assert applyTemplate("<facebook:comments url=\"url\" posts=\"1\" width=\"width\" colorScheme=\"${FacebookColorScheme.DARK}\" mobile=\"true\" order=\"${FacebookCommentsOrder.REVERSE_TIME}\"/>") == '<div class="fb-comments" data-href="url" data-num-posts="1" data-width="width" data-colorscheme="dark" data-mobile="true" data-order-by="reverse_time"></div>'
   }
 
@@ -30,15 +35,13 @@ class FacebookTagLibTests
 
   void testLikeTag()
   {
-    assert !applyTemplate('<facebook:like/>')
-    assert applyTemplate('<facebook:like url="url"/>') == '<div class="fb-like" data-href="url"></div>'
+    assert applyTemplate('<facebook:like/>') == "<div class=\"fb-like\" data-href=\"${request.requestURL}\"></div>"
     assert applyTemplate("<facebook:like verb=\"${FacebookLikeButtonVerb.RECOMMEND}\" colorScheme=\"${FacebookColorScheme.DARK}\" url=\"url\" forKids=\"true\" layout=\"${FacebookButtonLayout.BOX_COUNT}\" trackLabel=\"trackLabel\" showFaces=\"true\" width=\"width\"/>") == '<div class="fb-like" data-href="url" data-action="recommend" data-colorscheme="dark" data-kid-directed-site="true" data-layout="box_count" data-ref="trackLabel" data-show-faces="true" data-width="width"></div>'
   }
 
   void testSendTag()
   {
-    assert !applyTemplate('<facebook:send/>')
-    assert applyTemplate('<facebook:send url="url"/>') == '<div class="fb-send" data-href="url"></div>'
+    assert applyTemplate('<facebook:send/>') == '<div class="fb-send"></div>'
     assert applyTemplate("<facebook:send url=\"url\" colorScheme=\"${FacebookColorScheme.DARK}\" forKids=\"true\" trackLabel=\"trackLabel\" width=\"width\" height=\"height\"/>") == '<div class="fb-send" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-ref="trackLabel" data-width="width" data-height="height"></div>'
   }
 
