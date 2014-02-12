@@ -119,6 +119,59 @@ class FacebookTagLib
   }
 
   /**
+   * Renders Facebook Facepile widget.
+   * Requires Facebook JavaScript initialization to be performed first.
+   * @see "https://developers.facebook.com/docs/plugins/facepile"
+   * @attr url Display photos of the people who have liked this absolute URL. Default is current page URL.
+   * @attr actions Collection or a comma-separated string of Open Graph action types.
+   * @attr size Controls the size of the photos shown in the widget (FacebookFacepileSize or string). Default is "medium".
+   * @attr width The width of the widget in pixels. Minimum is 200. Default is 300.
+   * @attr height The height of the widget in pixels.
+   * @attr maxRows The maximum number of rows of faces to display. Default is 1.
+   * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string). Default is "light".
+   */
+  def facepile = { attrs ->
+    def attributes =
+    [
+      class: "fb-facepile"
+    ]
+
+    attributes["data-href"] = attrs.url ?: request.requestURL
+
+    if (attrs.actions)
+    {
+      attributes["data-action"] = attrs.actions instanceof Collection ? attrs.actions.join(",") : attrs.actions.toString()
+    }
+
+    if (attrs.size)
+    {
+      attributes["data-size"] = attrs.size.toString()
+    }
+
+    if (attrs.width)
+    {
+      attributes["data-width"] = attrs.width
+    }
+
+    if (attrs.height)
+    {
+      attributes["data-height"] = attrs.height
+    }
+
+    if (attrs.maxRows)
+    {
+      attributes["data-max-rows"] = attrs.maxRows.toInteger()
+    }
+
+    if (attrs.colorScheme)
+    {
+      attributes["data-colorscheme"] = attrs.colorScheme.toString()
+    }
+
+    out << g.withTag(name: "div", attrs: attributes)
+  }
+
+  /**
    * Renders Facebook "Follow" button.
    * Requires Facebook JavaScript initialization to be performed first.
    * @see "https://developers.facebook.com/docs/plugins/follow-button"
@@ -407,6 +460,18 @@ enum FacebookButtonLayout
   BOX_COUNT,
   BUTTON_COUNT,
   STANDARD
+
+  String toString()
+  {
+    return name().toLowerCase()
+  }
+}
+
+enum FacebookFacepileSize
+{
+  SMALL,
+  MEDIUM,
+  LARGE
 
   String toString()
   {

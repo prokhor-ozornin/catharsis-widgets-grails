@@ -9,7 +9,7 @@ Comments and OAuth Login widgets
 Comments widget
 
 3. [Facebook](http://facebook.com)
-Activity Feed, Recommendations Feed, "Follow" button, "Like" button, "Send" button, Comments widget, Embedded post, Embedded video, Video hyperlink
+Activity Feed, Recommendations Feed, "Follow" button, "Like" button, "Send" button, Comments widget, Facepile widget, Embedded post, Embedded video, Video hyperlink
 
 4. [Google](http://google.com)
 Google Analytics, Google + 1 button
@@ -129,6 +129,14 @@ You must call `<facebook:initialize"/>` directive first to use below tags.
 > `<facebook:comments url="http://yandex.ru"/>`
 
 > `<facebook:comments url="http://yandex.ru" order="${FacebookCommentsOrder.REVERSE_TIME}" posts="1" width="500"/>`
+
+> Render Facebook Facepile widget
+
+> `<facebook:facepile/>`
+
+> `<facebook:facepile url="http://yandex.ru"/>`
+
+> `<facebook:facepile url="http://yandex.ru" maxRows="5" size="${FacebookFacepileSize.LARGE}" height="300"/>`
 
 > Render Facebook "Follow" button
 

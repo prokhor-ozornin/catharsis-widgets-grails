@@ -32,6 +32,12 @@ class FacebookTagLibTests
     assert applyTemplate("<facebook:comments url=\"url\" posts=\"1\" width=\"width\" colorScheme=\"${FacebookColorScheme.DARK}\" mobile=\"true\" order=\"${FacebookCommentsOrder.REVERSE_TIME}\"/>") == '<div class="fb-comments" data-href="url" data-num-posts="1" data-width="width" data-colorscheme="dark" data-mobile="true" data-order-by="reverse_time"></div>'
   }
 
+  void testFacepileTag()
+  {
+    assert applyTemplate('<facebook:facepile/>') == "<div class=\"fb-facepile\" data-href=\"${request.requestURL}\"></div>"
+    assert applyTemplate("<facebook:facepile url=\"url\" actions=\"actions\" size=\"${FacebookFacepileSize.LARGE}\" width=\"width\" height=\"height\" maxRows=\"10\" colorScheme=\"${FacebookColorScheme.DARK}\"/>") == '<div class="fb-facepile" data-href="url" data-action="actions" data-size="large" data-width="width" data-height="height" data-max-rows="10" data-colorscheme="dark"></div>'
+  }
+
   void testFollowTag()
   {
     assert !applyTemplate('<facebook:follow/>')
