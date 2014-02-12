@@ -36,67 +36,36 @@ class FacebookTagLib
    * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    */
   def activityFeed = { attrs ->
-    def attributes =
+    def feedAttributes =
     [
       class: "fb-activity",
     ]
 
-    if (attrs.domain)
-    {
-      attributes["data-site"] = attrs.domain
-    }
+    feed(attrs, feedAttributes)
+  }
 
-    if (attrs.appId)
-    {
-      attributes["data-app-id"] = attrs.appId
-    }
+  /**
+   * Renders Facebook Recommendations Feed.
+   * Requires Facebook JavaScript initialization to be performed first.
+   * @see "https://developers.facebook.com/docs/plugins/recommendations"
+   * @attr domain The domain for which to show activity. Default is current domain.
+   * @attr appId Display all actions associated with this app ID. This is usually inferred from the app ID you use to initiate the JavaScript SDK.
+   * @attr actions Collection or a comma-separated string of Open Graph action types to show in the feed.
+   * @attr width The width of the widget in pixels. Default is 300.
+   * @attr height The height of the widget in pixels. Default is 300.
+   * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string).
+   * @attr header Whether to show the "Recent Activity" header above the feed or not. Default is true (show).
+   * @attr linkTarget Determines what happens when people click on the links in the feed. Can be any of the standard HTML target values. Default is "_blank".
+   * @attr maxAge Limit the created time of articles that are shown in the feed. Valid values are 1-180, which represents the age in days to limit to. Default is 0 (no limit).
+   * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
+   */
+  def recommendationsFeed = { attrs ->
+    def feedAttributes =
+    [
+      class: "fb-recommendations",
+    ]
 
-    if (attrs.actions)
-    {
-      attributes["data-action"] = attrs.actions instanceof Collection ? attrs.actions.join(",") : attrs.actions.toString()
-    }
-
-    if (attrs.width)
-    {
-      attributes["data-width"] = attrs.width
-    }
-
-    if (attrs.height)
-    {
-      attributes["data-height"] = attrs.height
-    }
-
-    if (attrs.colorScheme)
-    {
-      attributes["data-colorscheme"] = attrs.colorScheme.toString()
-    }
-
-    if (attrs.header != null)
-    {
-      attributes["data-header"] = attrs.header.toBoolean().toString()
-    }
-
-    if (attrs.linkTarget)
-    {
-      attributes["data-linktarget"] = attrs.linkTarget
-    }
-
-    if (attrs.maxAge)
-    {
-      attributes["data-max-age"] = attrs.maxAge.toInteger()
-    }
-
-    if (attrs.recommendations != null)
-    {
-      attributes["data-recommendations"] = attrs.recommendations.toBoolean().toString()
-    }
-
-    if (attrs.trackLabel)
-    {
-      attributes["data-ref"] = attrs.trackLabel
-    }
-
-    out << g.withTag(name: "div", attrs: attributes)
+    feed(attrs, feedAttributes)
   }
 
   /**
@@ -167,43 +136,22 @@ class FacebookTagLib
       return
     }
 
-    def attributes =
+    def buttonAttributes =
     [
       class: "fb-follow",
-      "data-href": attrs.url
     ]
-
-    if (attrs.colorScheme)
-    {
-      attributes["data-colorscheme"] = attrs.colorScheme.toString()
-    }
-
-    if (attrs.forKids != null)
-    {
-      attributes["data-kid-directed-site"] = attrs.forKids.toBoolean().toString()
-    }
 
     if (attrs.layout)
     {
-      attributes["data-layout"] = attrs.layout.toString()
+      buttonAttributes["data-layout"] = attrs.layout.toString()
     }
 
     if (attrs.showFaces != null)
     {
-      attributes["data-show-faces"] = attrs.showFaces.toBoolean().toString()
+      buttonAttributes["data-show-faces"] = attrs.showFaces.toBoolean().toString()
     }
 
-    if (attrs.width)
-    {
-      attributes["data-width"] = attrs.width
-    }
-
-    if (attrs.height)
-    {
-      attributes["data-height"] = attrs.height
-    }
-
-    out << g.withTag(name: "div", attrs: attributes)
+    button(attrs, buttonAttributes)
   }
 
   /**
@@ -220,49 +168,32 @@ class FacebookTagLib
    * @attr width The width of the button. The layout you choose affects the minimum and default widths you can use.
    */
   def like = { attrs ->
-    def attributes =
+    if (!attrs.url)
+    {
+      attrs.url = request.requestURL
+    }
+
+    def buttonAttributes =
     [
       class: "fb-like",
     ]
 
-    attributes["data-href"] = attrs.url ?: request.requestURL
-
     if (attrs.verb)
     {
-      attributes["data-action"] = attrs.verb.toString()
-    }
-
-    if (attrs.colorScheme)
-    {
-      attributes["data-colorscheme"] = attrs.colorScheme.toString()
-    }
-
-    if (attrs.forKids != null)
-    {
-      attributes["data-kid-directed-site"] = attrs.forKids.toBoolean().toString()
+      buttonAttributes["data-action"] = attrs.verb.toString()
     }
 
     if (attrs.layout)
     {
-      attributes["data-layout"] = attrs.layout.toString()
-    }
-
-    if (attrs.trackLabel)
-    {
-      attributes["data-ref"] = attrs.trackLabel
+      buttonAttributes["data-layout"] = attrs.layout.toString()
     }
 
     if (attrs.showFaces != null)
     {
-      attributes["data-show-faces"] = attrs.showFaces.toBoolean().toString()
+      buttonAttributes["data-show-faces"] = attrs.showFaces.toBoolean().toString()
     }
 
-    if (attrs.width)
-    {
-      attributes["data-width"] = attrs.width
-    }
-
-    out << g.withTag(name: "div", attrs: attributes)
+    button(attrs, buttonAttributes)
   }
 
   /**
@@ -303,42 +234,12 @@ class FacebookTagLib
    * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    */
   def send = { attrs ->
-    def attributes =
+    def buttonAttributes =
     [
       class: "fb-send",
     ]
 
-    if (attrs.url)
-    {
-      attributes["data-href"] = attrs.url
-    }
-
-    if (attrs.colorScheme)
-    {
-      attributes["data-colorscheme"] = attrs.colorScheme.toString()
-    }
-
-    if (attrs.forKids != null)
-    {
-      attributes["data-kid-directed-site"] = attrs.forKids.toBoolean().toString()
-    }
-
-    if (attrs.trackLabel)
-    {
-      attributes["data-ref"] = attrs.trackLabel
-    }
-
-    if (attrs.width)
-    {
-      attributes["data-width"] = attrs.width
-    }
-
-    if (attrs.height)
-    {
-      attributes["data-height"] = attrs.height
-    }
-
-    out << g.withTag(name: "div", attrs: attributes)
+    button(attrs, buttonAttributes)
   }
 
   /**
@@ -392,6 +293,101 @@ class FacebookTagLib
     }
 
     out << "https://www.facebook.com/photo.php?v=${attrs.video}"
+  }
+
+  private void feed(Map attrs, Map feedAttributes)
+  {
+    if (attrs.domain)
+    {
+      feedAttributes["data-site"] = attrs.domain
+    }
+
+    if (attrs.appId)
+    {
+      feedAttributes["data-app-id"] = attrs.appId
+    }
+
+    if (attrs.actions)
+    {
+      feedAttributes["data-action"] = attrs.actions instanceof Collection ? attrs.actions.join(",") : attrs.actions.toString()
+    }
+
+    if (attrs.width)
+    {
+      feedAttributes["data-width"] = attrs.width
+    }
+
+    if (attrs.height)
+    {
+      feedAttributes["data-height"] = attrs.height
+    }
+
+    if (attrs.colorScheme)
+    {
+      feedAttributes["data-colorscheme"] = attrs.colorScheme.toString()
+    }
+
+    if (attrs.header != null)
+    {
+      feedAttributes["data-header"] = attrs.header.toBoolean().toString()
+    }
+
+    if (attrs.linkTarget)
+    {
+      feedAttributes["data-linktarget"] = attrs.linkTarget
+    }
+
+    if (attrs.maxAge)
+    {
+      feedAttributes["data-max-age"] = attrs.maxAge.toInteger()
+    }
+
+    if (attrs.recommendations != null)
+    {
+      feedAttributes["data-recommendations"] = attrs.recommendations.toBoolean().toString()
+    }
+
+    if (attrs.trackLabel)
+    {
+      feedAttributes["data-ref"] = attrs.trackLabel
+    }
+
+    out << g.withTag(name: "div", attrs: feedAttributes)
+  }
+
+  private void button(Map attrs, Map buttonAttributes)
+  {
+    if (attrs.url)
+    {
+      buttonAttributes["data-href"] = attrs.url
+    }
+
+    if (attrs.colorScheme)
+    {
+      buttonAttributes["data-colorscheme"] = attrs.colorScheme.toString()
+    }
+
+    if (attrs.forKids != null)
+    {
+      buttonAttributes["data-kid-directed-site"] = attrs.forKids.toBoolean().toString()
+    }
+
+    if (attrs.trackLabel)
+    {
+      buttonAttributes["data-ref"] = attrs.trackLabel
+    }
+
+    if (attrs.width)
+    {
+      buttonAttributes["data-width"] = attrs.width
+    }
+
+    if (attrs.height)
+    {
+      buttonAttributes["data-height"] = attrs.height
+    }
+
+    out << g.withTag(name: "div", attrs: buttonAttributes)
   }
 }
 

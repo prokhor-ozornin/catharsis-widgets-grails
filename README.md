@@ -9,7 +9,7 @@ Comments and OAuth Login widgets
 Comments widget
 
 3. [Facebook](http://facebook.com)
-Activity Feed, "Follow" button, "Like" button, "Send" button, Comments widget, Embedded post, Embedded video, Video hyperlink
+Activity Feed, Recommendations Feed, "Follow" button, "Like" button, "Send" button, Comments widget, Embedded post, Embedded video, Video hyperlink
 
 4. [Google](http://google.com)
 Google Analytics, Google + 1 button
@@ -113,6 +113,14 @@ You must call `<facebook:initialize"/>` directive first to use below tags.
 > `<facebook:activityFeed domain="http://yandex.ru"/>`
 
 > `<facebook:activityFeed domain="http://yandex.ru" header="false" recommendations="true" colorScheme="dark"/>`
+
+> Render Facebook Recommendations Feed widget
+
+> `<facebook:recommendationsFeed/>`
+
+> `<facebook:recommendationsFeed domain="http://yandex.ru"/>`
+
+> `<facebook:recommendationsFeed domain="http://yandex.ru" header="false" colorScheme="dark"/>`
 
 > Render Facebook comments widget
 
