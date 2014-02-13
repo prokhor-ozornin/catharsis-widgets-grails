@@ -9,7 +9,7 @@ Comments and OAuth Login widgets
 Comments widget
 
 3. [Facebook](http://facebook.com)
-Activity Feed, Recommendations Feed, "Follow" button, "Like" button, "Send" button, Comments widget, Facepile widget, Embedded post, Embedded video, Video hyperlink
+Activity Feed, Recommendations Feed, "Follow" button, "Like" button, Like Box, "Send" button, Comments widget, Facepile widget, Embedded post, Embedded video, Video hyperlink
 
 4. [Google](http://google.com)
 Google Analytics, Google + 1 button
@@ -143,6 +143,12 @@ You must call `<facebook:initialize"/>` directive first to use below tags.
 > `<facebook:follow url="http://www.facebook.com/zuck"/>`
 
 > `<facebook:follow url="http://www.facebook.com/zuck" forKids="true" showFaces="true" layout="box_count"/>`
+
+> Render Facebook Like Box
+
+> `<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070"/>`
+
+> `<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070" header="false" showBorder="false" showFaces="false" stream="true" width="500"/>`
 
 > Render Facebook "Like" button
 

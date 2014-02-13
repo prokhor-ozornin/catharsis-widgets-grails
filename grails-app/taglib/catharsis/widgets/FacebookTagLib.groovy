@@ -250,6 +250,75 @@ class FacebookTagLib
   }
 
   /**
+   * Renders Facebook Like Box.
+   * Requires Facebook JavaScript initialization to be performed first.
+   * @see "https://developers.facebook.com/docs/plugins/like-box-for-pages"
+   * @attr url REQUIRED The absolute URL of the Facebook Page that will be liked.
+   * @attr width The width of the widget in pixels. Minimum is 292. Default is 300.
+   * @attr height The height of the widget in pixels. The default height varies based on number of faces to display, and whether the stream is displayed. With stream set to true and 10 photos displayed (via showFaces) the default height is 556px. With stream and show_faces both false, the default height is 63px.
+   * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string). Default is "light".
+   * @attr forceWall For "place" Pages (Pages that have a physical location that can be used with check-ins), this specifies whether the stream contains posts by the Page or just check-ins from friends. Default is false.
+   * @attr header Specifies whether to display the Facebook header at the top of the widget. Default is true (show).
+   * @attr showBorder Specifies whether or not to show a border around the plugin. Default is true (show).
+   * @attr showFaces Specifies whether to display profile photos of people who like the page. Default is true (show).
+   * @attr stream Specifies whether to display a stream of the latest posts by the Page. Default is true (show).
+   */
+  def likebox = { attrs ->
+    if (!attrs.url)
+    {
+      return
+    }
+
+    def attributes =
+    [
+      class: "fb-like-box",
+      "data-href" : attrs.url
+    ]
+
+    if (attrs.width)
+    {
+      attributes["data-width"] = attrs.width
+    }
+
+    if (attrs.height)
+    {
+      attributes["data-height"] = attrs.height
+    }
+
+    if (attrs.colorScheme)
+    {
+      attributes["data-colorscheme"] = attrs.colorScheme.toString()
+    }
+
+    if (attrs.forceWall != null)
+    {
+      attributes["data-force-wall"] = attrs.forceWall.toBoolean().toString()
+    }
+
+    if (attrs.header != null)
+    {
+      attributes["data-header"] = attrs.header.toBoolean().toString()
+    }
+
+    if (attrs.showBorder != null)
+    {
+      attributes["data-show-border"] = attrs.showBorder.toBoolean().toString()
+    }
+
+    if (attrs.showFaces != null)
+    {
+      attributes["data-show-faces"] = attrs.showFaces.toBoolean().toString()
+    }
+
+    if (attrs.stream != null)
+    {
+      attributes["data-stream"] = attrs.stream.toBoolean().toString()
+    }
+
+    out << g.withTag(name: "div", attrs: attributes)
+  }
+
+  /**
    * Renders embedded Facebook post on web page.
    * @see "https://developers.facebook.com/docs/plugins/embedded-posts"
    * @attr url REQUIRED URL address of Facebook post to embed

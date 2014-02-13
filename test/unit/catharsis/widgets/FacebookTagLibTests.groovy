@@ -51,6 +51,13 @@ class FacebookTagLibTests
     assert applyTemplate("<facebook:like verb=\"${FacebookLikeButtonVerb.RECOMMEND}\" colorScheme=\"${FacebookColorScheme.DARK}\" url=\"url\" forKids=\"true\" layout=\"${FacebookButtonLayout.BOX_COUNT}\" trackLabel=\"trackLabel\" showFaces=\"true\" width=\"width\"/>") == '<div class="fb-like" data-action="recommend" data-layout="box_count" data-show-faces="true" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-ref="trackLabel" data-width="width"></div>'
   }
 
+  void testLikeBoxTag()
+  {
+    assert !applyTemplate('<facebook:likebox/>')
+    assert applyTemplate('<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070"/>') == '<div class="fb-like-box" data-href="https://www.facebook.com/pages/Clear-Words/515749945120070"></div>'
+    assert applyTemplate("<facebook:likebox url=\"https://www.facebook.com/pages/Clear-Words/515749945120070\" width=\"width\" height=\"height\" colorScheme=\"${FacebookColorScheme.DARK}\" forceWall=\"true\" header=\"true\" showBorder=\"true\" showFaces=\"true\" stream=\"true\"/>") == '<div class="fb-like-box" data-href="https://www.facebook.com/pages/Clear-Words/515749945120070" data-width="width" data-height="height" data-colorscheme="dark" data-force-wall="true" data-header="true" data-show-border="true" data-show-faces="true" data-stream="true"></div>'
+  }
+
   void testSendTag()
   {
     assert applyTemplate('<facebook:send/>') == '<div class="fb-send"></div>'
