@@ -12,7 +12,7 @@ class SurfingbirdTagLib
    * @see "http://surfingbird.ru/publishers/surfbutton"
    * @attr url URL address of web page to "like". Default is current web page.
    * @attr layout Layout/appearance of the button (SurfingbirdSurfButtonLayout or string).
-   * @attr hasCounter Whether to render share counter next to a button. Default is false.
+   * @attr counter Whether to render share counter next to a button. Default is false.
    * @attr label Text label to show on button. Default is "Surf".
    * @attr color Text label's color (SurfingbirdSurfButtonColor or string). If not specified, default color combination is used.
    * @attr width Horizontal width of the button. Default is 500px.
@@ -21,7 +21,7 @@ class SurfingbirdTagLib
   def surf = { attrs ->
     def config =
     [
-      layout : "${(attrs.layout ?: SurfingbirdSurfButtonLayout.COMMON).toString()}${attrs.hasCounter?.toBoolean() ? "" : "-nocount"}${attrs.color ? "-" + attrs.color : ""}",
+      layout : "${(attrs.layout ?: SurfingbirdSurfButtonLayout.COMMON).toString()}${attrs.counter?.toBoolean() ? "" : "-nocount"}${attrs.color ? "-" + attrs.color : ""}",
     ]
 
     if (attrs.url)

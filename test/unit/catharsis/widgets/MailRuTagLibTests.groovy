@@ -17,7 +17,7 @@ class MailRuTagLibTests
   void testLikeTag()
   {
     assert applyTemplate('<mailru:like/>') == "<a target=\"_blank\" class=\"mrc__plugin_uber_like_button\" href=\"http://connect.mail.ru/share\" data-mrc-config=\"{${'"sz":"20","st":"1","tp":"combo","cm":"1","ck":"1"'.encodeAsHTML()}}\">Нравится</a>"
-    assert applyTemplate("<mailru:like size=\"${MailRuLikeButtonSize.SIZE_30}\" layout=\"${MailRuLikeButtonLayout.SECOND}\" type=\"${MailRuLikeButtonType.MAILRU}\" hasCounter=\"true\" counterPosition=\"${MailRuLikeButtonCounterPosition.UPPER}\" hasText=\"false\" />") == "<a target=\"_blank\" class=\"mrc__plugin_uber_like_button\" href=\"http://connect.mail.ru/share\" data-mrc-config=\"{${'"sz":"30","st":"2","tp":"mm","vt":1,"nt":1'.encodeAsHTML()}}\">Нравится</a>"
+    assert applyTemplate("<mailru:like size=\"${MailRuLikeButtonSize.SIZE_30}\" layout=\"${MailRuLikeButtonLayout.SECOND}\" type=\"${MailRuLikeButtonType.MAILRU}\" counter=\"true\" counterPosition=\"${MailRuLikeButtonCounterPosition.UPPER}\" text=\"false\" />") == "<a target=\"_blank\" class=\"mrc__plugin_uber_like_button\" href=\"http://connect.mail.ru/share\" data-mrc-config=\"{${'"sz":"30","st":"2","tp":"mm","vt":1,"nt":1'.encodeAsHTML()}}\">Нравится</a>"
   }
 
   void testVideoTag()

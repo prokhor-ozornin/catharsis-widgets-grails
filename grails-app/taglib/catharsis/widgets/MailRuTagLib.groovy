@@ -28,9 +28,9 @@ class MailRuTagLib
    * @attr size Vertical size of button (MailRuLikeButtonSize or string).
    * @attr layout Visual layout/appearance of button (MailRuLikeButtonLayout or integer).
    * @attr type Type of button (MailRuLikeButtonType or string).
-   * @attr hasCounter Whether to render share counter next to a button. Default is true.
+   * @attr counter Whether to render share counter next to a button. Default is true.
    * @attr counterPosition Position of a share counter (MailRuLikeButtonCounterPosition or string).
-   * @attr hasText Whether to show text label on button. Default is true.
+   * @attr text Whether to show text label on button. Default is true.
    * @attr textType Type of text label to show on button (MailRuLikeButtonTextType or integer).
    */
   def like = { attrs ->
@@ -58,7 +58,7 @@ class MailRuTagLib
     }
     config.tp = type.toString()
 
-    if (attrs.hasCounter != null && !attrs.hasCounter.toBoolean())
+    if (attrs.counter != null && !attrs.counter.toBoolean())
     {
       config.nc = 1
     }
@@ -67,7 +67,7 @@ class MailRuTagLib
       config.vt = 1
     }
 
-    if (attrs.hasText != null && !attrs.hasText.toBoolean())
+    if (attrs.text != null && !attrs.text.toBoolean())
     {
       config.nt = 1
     }

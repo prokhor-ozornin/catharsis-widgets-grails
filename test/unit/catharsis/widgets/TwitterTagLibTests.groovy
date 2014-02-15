@@ -10,7 +10,7 @@ class TwitterTagLibTests
     assert !applyTemplate('<twitter:follow/>')
 
     assert applyTemplate('<twitter:follow account="account"/>') == "<a href=\"https://twitter.com/account\" class=\"twitter-follow-button\" data-lang=\"${request.locale.language}\"></a>"
-    assert applyTemplate('<twitter:follow account="account" language="en" showCount="true" size="size" width="width" align="align" showScreenName="true" dnt="true"/>') == '<a href="https://twitter.com/account" class="twitter-follow-button" data-lang="en" data-show-count="true" data-size="size" data-width="width" data-align="align" data-show-screen-name="true" data-dnt="true"></a>'
+    assert applyTemplate('<twitter:follow account="account" language="en" count="true" size="size" width="width" align="align" screenName="true" dnt="true"/>') == '<a href="https://twitter.com/account" class="twitter-follow-button" data-lang="en" data-show-count="true" data-size="size" data-width="width" data-align="align" data-show-screen-name="true" data-dnt="true"></a>'
   }
 
   void testTweetTag()

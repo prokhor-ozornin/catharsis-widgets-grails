@@ -42,26 +42,26 @@ class FacebookTagLibTests
   {
     assert !applyTemplate('<facebook:follow/>')
     assert applyTemplate('<facebook:follow url="url"/>') == '<div class="fb-follow" data-href="url"></div>'
-    assert applyTemplate("<facebook:follow colorScheme=\"${FacebookColorScheme.DARK}\" url=\"url\" forKids=\"true\" layout=\"${FacebookButtonLayout.BOX_COUNT}\" showFaces=\"true\" width=\"width\" height=\"height\"/>") == '<div class="fb-follow" data-layout="box_count" data-show-faces="true" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-width="width" data-height="height"></div>'
+    assert applyTemplate("<facebook:follow colorScheme=\"${FacebookColorScheme.DARK}\" url=\"url\" kids=\"true\" layout=\"${FacebookButtonLayout.BOX_COUNT}\" faces=\"true\" width=\"width\" height=\"height\"/>") == '<div class="fb-follow" data-layout="box_count" data-show-faces="true" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-width="width" data-height="height"></div>'
   }
 
   void testLikeTag()
   {
     assert applyTemplate('<facebook:like/>') == "<div class=\"fb-like\" data-href=\"${request.requestURL}\"></div>"
-    assert applyTemplate("<facebook:like verb=\"${FacebookLikeButtonVerb.RECOMMEND}\" colorScheme=\"${FacebookColorScheme.DARK}\" url=\"url\" forKids=\"true\" layout=\"${FacebookButtonLayout.BOX_COUNT}\" trackLabel=\"trackLabel\" showFaces=\"true\" width=\"width\"/>") == '<div class="fb-like" data-action="recommend" data-layout="box_count" data-show-faces="true" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-ref="trackLabel" data-width="width"></div>'
+    assert applyTemplate("<facebook:like verb=\"${FacebookLikeButtonVerb.RECOMMEND}\" colorScheme=\"${FacebookColorScheme.DARK}\" url=\"url\" kids=\"true\" layout=\"${FacebookButtonLayout.BOX_COUNT}\" trackLabel=\"trackLabel\" faces=\"true\" width=\"width\"/>") == '<div class="fb-like" data-action="recommend" data-layout="box_count" data-show-faces="true" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-ref="trackLabel" data-width="width"></div>'
   }
 
   void testLikeBoxTag()
   {
     assert !applyTemplate('<facebook:likebox/>')
     assert applyTemplate('<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070"/>') == '<div class="fb-like-box" data-href="https://www.facebook.com/pages/Clear-Words/515749945120070"></div>'
-    assert applyTemplate("<facebook:likebox url=\"https://www.facebook.com/pages/Clear-Words/515749945120070\" width=\"width\" height=\"height\" colorScheme=\"${FacebookColorScheme.DARK}\" forceWall=\"true\" header=\"true\" showBorder=\"true\" showFaces=\"true\" stream=\"true\"/>") == '<div class="fb-like-box" data-href="https://www.facebook.com/pages/Clear-Words/515749945120070" data-width="width" data-height="height" data-colorscheme="dark" data-force-wall="true" data-header="true" data-show-border="true" data-show-faces="true" data-stream="true"></div>'
+    assert applyTemplate("<facebook:likebox url=\"https://www.facebook.com/pages/Clear-Words/515749945120070\" width=\"width\" height=\"height\" colorScheme=\"${FacebookColorScheme.DARK}\" wall=\"true\" header=\"true\" border=\"true\" faces=\"true\" stream=\"true\"/>") == '<div class="fb-like-box" data-href="https://www.facebook.com/pages/Clear-Words/515749945120070" data-width="width" data-height="height" data-colorscheme="dark" data-force-wall="true" data-header="true" data-show-border="true" data-show-faces="true" data-stream="true"></div>'
   }
 
   void testSendTag()
   {
     assert applyTemplate('<facebook:send/>') == '<div class="fb-send"></div>'
-    assert applyTemplate("<facebook:send url=\"url\" colorScheme=\"${FacebookColorScheme.DARK}\" forKids=\"true\" trackLabel=\"trackLabel\" width=\"width\" height=\"height\"/>") == '<div class="fb-send" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-ref="trackLabel" data-width="width" data-height="height"></div>'
+    assert applyTemplate("<facebook:send url=\"url\" colorScheme=\"${FacebookColorScheme.DARK}\" kids=\"true\" width=\"width\" height=\"height\"/>") == '<div class="fb-send" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-width="width" data-height="height"></div>'
   }
 
   void testPostTag()

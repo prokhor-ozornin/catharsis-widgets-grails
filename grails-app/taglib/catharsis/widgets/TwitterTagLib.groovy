@@ -10,11 +10,11 @@ class TwitterTagLib
    * @see "https://dev.twitter.com/docs/follow-button"
    * @attr account REQUIRED Twitter account name.
    * @attr language The language for the "Follow" button. Default is request locale's language.
-   * @attr showCount Whether to display user's followers count. Default is false.
+   * @attr count Whether to display user's followers count. Default is false.
    * @attr size The size of the rendered button (TwitterFollowButtonSize or string). Default is "medium".
    * @attr width Width of the button.
    * @attr align Horizontal alignment of the button (TwitterFollowButtonAlignment or string).
-   * @attr showScreenName Whether to show user's screen name. Default is true.
+   * @attr screenName Whether to show user's screen name. Default is true.
    * @attr dnt Whether to opt-out of twitter suggestions. Default is false.
    */
   def follow = { attrs ->
@@ -30,9 +30,9 @@ class TwitterTagLib
       "data-lang": attrs.language ?: request.locale.language
     ]
 
-    if (attrs.showCount != null)
+    if (attrs.count != null)
     {
-      attributes["data-show-count"] = attrs.showCount.toBoolean().toString()
+      attributes["data-show-count"] = attrs.count.toBoolean().toString()
     }
 
     if (attrs.size)
@@ -50,9 +50,9 @@ class TwitterTagLib
       attributes["data-align"] = attrs.align
     }
 
-    if (attrs.showScreenName != null)
+    if (attrs.screenName != null)
     {
-      attributes["data-show-screen-name"] = attrs.showScreenName.toBoolean().toString()
+      attributes["data-show-screen-name"] = attrs.screenName.toBoolean().toString()
     }
 
     if (attrs.dnt != null)

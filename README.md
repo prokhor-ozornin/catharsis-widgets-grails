@@ -81,7 +81,6 @@ You must include `<r:require module="cackle"/>` directive first to use below tag
 
 > `<cackle:login account="20049"/>`
 
-
 **Disqus**
 
 You must include `<r:require module="disqus"/>` directive first to use below tags.
@@ -142,13 +141,13 @@ You must call `<facebook:initialize"/>` directive first to use below tags.
 
 > `<facebook:follow url="http://www.facebook.com/zuck"/>`
 
-> `<facebook:follow url="http://www.facebook.com/zuck" forKids="true" showFaces="true" layout="box_count"/>`
+> `<facebook:follow url="http://www.facebook.com/zuck" kids="true" faces="true" layout="box_count"/>`
 
 > Render Facebook Like Box
 
 > `<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070"/>`
 
-> `<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070" header="false" showBorder="false" showFaces="false" stream="true" width="500"/>`
+> `<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070" header="false" border="false" faces="false" stream="true" width="500"/>`
 
 > Render Facebook "Like" button
 
@@ -156,7 +155,7 @@ You must call `<facebook:initialize"/>` directive first to use below tags.
 
 > `<facebook:like url="http://yandex.ru"/>`
 
-> `<facebook:like url="http://yandex.ru" layout="box_count" showFaces="true" verb="recommend"/>`
+> `<facebook:like url="http://yandex.ru" layout="box_count" faces="true" verb="recommend"/>`
 
 > Render Facebook embedded post
 
@@ -168,7 +167,7 @@ You must call `<facebook:initialize"/>` directive first to use below tags.
 
 > `<facebook:send url="http://yandex.ru"/>`
 
-> `<facebook:send url="url" colorScheme="${FacebookColorScheme.DARK}" forKids="true"/>`
+> `<facebook:send url="url" colorScheme="${FacebookColorScheme.DARK}" kids="true"/>`
 
 **Google**
 
@@ -215,7 +214,7 @@ You must include `<r:require module="mailru"/>` directive first to use below tag
 
 > `<mailru:like/>`
 
-> `<mailru:like layout="2" hasText="false" counterPosition="upper" size="30"/>`
+> `<mailru:like layout="2" text="false" counterPosition="upper" size="30"/>`
 
 **RuTube**
 
@@ -235,7 +234,7 @@ You must include `<r:require module="surfingbird"/>` directive first to use belo
 
 > `<surfingbird:surf/>`
 
-> `<surfingbird:surf color="blue" hasCounter="true" label="Share" url="http://yandex.ru" layout="${SurfingbirdSurfButtonLayout.COMMON}"/>`
+> `<surfingbird:surf color="blue" counter="true" label="Share" url="http://yandex.ru" layout="${SurfingbirdSurfButtonLayout.COMMON}"/>`
 
 **Tumblr**
 
@@ -267,7 +266,7 @@ You must include `<r:require module="twitter"/>` directive first to use below ta
 
 > `<twitter:follow account="prokhor_ozornin"/>`
 
-> `<twitter:follow account="prokhor_ozornin" dnt="false" showCount="false" showScreenName="false"/>`
+> `<twitter:follow account="prokhor_ozornin" dnt="false" count="false" screenName="false"/>`
 
 **Vimeo**
 

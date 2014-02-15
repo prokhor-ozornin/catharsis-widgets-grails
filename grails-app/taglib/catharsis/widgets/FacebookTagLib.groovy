@@ -179,9 +179,9 @@ class FacebookTagLib
    * @attr width The width of the button. The layout you choose affects the minimum and default widths you can use.
    * @attr height The height of the button.
    * @attr colorScheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
-   * @attr forKids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
+   * @attr kids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
    * @attr layout Selects one of the different layouts that are available for the button (FacebookButtonLayout or string). Default is "standard".
-   * @attr showFaces Specifies whether to display profile photos below the button (standard layout only). You must not enable this on child-directed sites.
+   * @attr faces Specifies whether to display profile photos below the button (standard layout only). You must not enable this on child-directed sites.
    */
   def follow = { attrs ->
     if (!attrs.url)
@@ -199,9 +199,9 @@ class FacebookTagLib
       buttonAttributes["data-layout"] = attrs.layout.toString()
     }
 
-    if (attrs.showFaces != null)
+    if (attrs.faces != null)
     {
-      buttonAttributes["data-show-faces"] = attrs.showFaces.toBoolean().toString()
+      buttonAttributes["data-show-faces"] = attrs.faces.toBoolean().toString()
     }
 
     button(attrs, buttonAttributes)
@@ -214,10 +214,10 @@ class FacebookTagLib
    * @attr url The absolute URL of the page that will be liked. Default is current page URL.
    * @attr verb The verb to display on the button (FacebookLikeButtonVerb or string). Default is "like".
    * @attr colorScheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
-   * @attr forKids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
+   * @attr kids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
    * @attr layout Selects one of the different layouts that are available for the button (FacebookButtonLayout or string). Default is "standard".
    * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
-   * @attr showFaces Specifies whether to display profile photos below the button (standard layout only). You must not enable this on child-directed sites. Default is false.
+   * @attr faces Specifies whether to display profile photos below the button (standard layout only). You must not enable this on child-directed sites. Default is false.
    * @attr width The width of the button. The layout you choose affects the minimum and default widths you can use.
    */
   def like = { attrs ->
@@ -241,9 +241,9 @@ class FacebookTagLib
       buttonAttributes["data-layout"] = attrs.layout.toString()
     }
 
-    if (attrs.showFaces != null)
+    if (attrs.faces != null)
     {
-      buttonAttributes["data-show-faces"] = attrs.showFaces.toBoolean().toString()
+      buttonAttributes["data-show-faces"] = attrs.faces.toBoolean().toString()
     }
 
     button(attrs, buttonAttributes)
@@ -257,10 +257,10 @@ class FacebookTagLib
    * @attr width The width of the widget in pixels. Minimum is 292. Default is 300.
    * @attr height The height of the widget in pixels. The default height varies based on number of faces to display, and whether the stream is displayed. With stream set to true and 10 photos displayed (via showFaces) the default height is 556px. With stream and show_faces both false, the default height is 63px.
    * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string). Default is "light".
-   * @attr forceWall For "place" Pages (Pages that have a physical location that can be used with check-ins), this specifies whether the stream contains posts by the Page or just check-ins from friends. Default is false.
+   * @attr wall For "place" Pages (Pages that have a physical location that can be used with check-ins), this specifies whether the stream contains posts by the Page or just check-ins from friends. Default is false.
    * @attr header Specifies whether to display the Facebook header at the top of the widget. Default is true (show).
-   * @attr showBorder Specifies whether or not to show a border around the plugin. Default is true (show).
-   * @attr showFaces Specifies whether to display profile photos of people who like the page. Default is true (show).
+   * @attr border Specifies whether or not to show a border around the plugin. Default is true (show).
+   * @attr faces Specifies whether to display profile photos of people who like the page. Default is true (show).
    * @attr stream Specifies whether to display a stream of the latest posts by the Page. Default is true (show).
    */
   def likebox = { attrs ->
@@ -290,9 +290,9 @@ class FacebookTagLib
       attributes["data-colorscheme"] = attrs.colorScheme.toString()
     }
 
-    if (attrs.forceWall != null)
+    if (attrs.wall != null)
     {
-      attributes["data-force-wall"] = attrs.forceWall.toBoolean().toString()
+      attributes["data-force-wall"] = attrs.wall.toBoolean().toString()
     }
 
     if (attrs.header != null)
@@ -300,14 +300,14 @@ class FacebookTagLib
       attributes["data-header"] = attrs.header.toBoolean().toString()
     }
 
-    if (attrs.showBorder != null)
+    if (attrs.border != null)
     {
-      attributes["data-show-border"] = attrs.showBorder.toBoolean().toString()
+      attributes["data-show-border"] = attrs.border.toBoolean().toString()
     }
 
-    if (attrs.showFaces != null)
+    if (attrs.faces != null)
     {
-      attributes["data-show-faces"] = attrs.showFaces.toBoolean().toString()
+      attributes["data-show-faces"] = attrs.faces.toBoolean().toString()
     }
 
     if (attrs.stream != null)
@@ -352,7 +352,7 @@ class FacebookTagLib
    * @attr width The width of the button.
    * @attr height The height of the button.
    * @attr colorScheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
-   * @attr forKids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
+   * @attr kids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
    * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    */
   def send = { attrs ->
@@ -489,9 +489,9 @@ class FacebookTagLib
       buttonAttributes["data-colorscheme"] = attrs.colorScheme.toString()
     }
 
-    if (attrs.forKids != null)
+    if (attrs.kids != null)
     {
-      buttonAttributes["data-kid-directed-site"] = attrs.forKids.toBoolean().toString()
+      buttonAttributes["data-kid-directed-site"] = attrs.kids.toBoolean().toString()
     }
 
     if (attrs.trackLabel)
