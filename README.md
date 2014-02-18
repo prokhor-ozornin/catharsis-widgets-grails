@@ -117,9 +117,9 @@ You must call `<facebook:initialize"/>` directive first to use below tags.
 
 > `<facebook:recommendationsFeed/>`
 
-> `<facebook:recommendationsFeed domain="http://yandex.ru"/>`
+> `<facebook:recommendationsFeed domain="yandex.ru"/>`
 
-> `<facebook:recommendationsFeed domain="http://yandex.ru" header="false" colorScheme="dark"/>`
+> `<facebook:recommendationsFeed domain="yandex.ru" header="false" colorScheme="dark"/>`
 
 > Render Facebook comments widget
 

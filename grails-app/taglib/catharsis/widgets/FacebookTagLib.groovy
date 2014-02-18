@@ -29,7 +29,7 @@ class FacebookTagLib
    * @attr width The width of the widget in pixels. Default is 300.
    * @attr height The height of the widget in pixels. Default is 300.
    * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string).
-   * @attr header Whether to show the "Recent Activity" header above the feed or not. Default is true (show).
+   * @attr header Whether to show the "Recent Activity" header above the feed or not. Default is true.
    * @attr linkTarget Determines what happens when people click on the links in the feed. Can be any of the standard HTML target values. Default is "_blank".
    * @attr maxAge Limit the created time of articles that are shown in the feed. Valid values are 1-180, which represents the age in days to limit to. Default is 0 (no limit).
    * @attr recommendations Specifies whether to always show recommendations (Articles liked by a high amount of people) in the bottom half of the feed. Default is false.
@@ -72,7 +72,7 @@ class FacebookTagLib
    * Renders Facebook comments widget.
    * Requires Facebook JavaScript initialization to be performed first.
    * @see "https://developers.facebook.com/docs/plugins/comments"
-   * @attr url The absolute URL that comments posted in the plugin will be permanently associated with. Stories on Facebook about comments posted in the plugin will link to this URL. Default is current page URL.
+   * @attr url The absolute URL that comments posted in the widget will be permanently associated with. Stories on Facebook about comments posted in the plugin will link to this URL. Default is current page URL.
    * @attr posts The number of comments to show by default. The minimum value is 1. Default is 10.
    * @attr width The width of the widget. The mobile version of the Comments widget ignores the width parameter, and instead has a fluid width of 100%.
    * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string).
@@ -258,10 +258,10 @@ class FacebookTagLib
    * @attr height The height of the widget in pixels. The default height varies based on number of faces to display, and whether the stream is displayed. With stream set to true and 10 photos displayed (via showFaces) the default height is 556px. With stream and show_faces both false, the default height is 63px.
    * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string). Default is "light".
    * @attr wall For "place" Pages (Pages that have a physical location that can be used with check-ins), this specifies whether the stream contains posts by the Page or just check-ins from friends. Default is false.
-   * @attr header Specifies whether to display the Facebook header at the top of the widget. Default is true (show).
-   * @attr border Specifies whether or not to show a border around the plugin. Default is true (show).
-   * @attr faces Specifies whether to display profile photos of people who like the page. Default is true (show).
-   * @attr stream Specifies whether to display a stream of the latest posts by the Page. Default is true (show).
+   * @attr header Specifies whether to display the Facebook header at the top of the widget. Default is true.
+   * @attr border Specifies whether or not to show a border around the plugin. Default is true.
+   * @attr faces Specifies whether to display profile photos of people who like the page. Default is true.
+   * @attr stream Specifies whether to display a stream of the latest posts by the Page. Default is true.
    */
   def likebox = { attrs ->
     if (!attrs.url)
