@@ -39,7 +39,7 @@ Embedded video, Video hyperlink
 Comments widget, Community widget, "Like" button, Subscribe widget, Embedded video, Video hyperlink
 
 13. [Yandex](http://yandex.ru)
-Yandex Analytics, "Ya" button, "Share" button, Embedded video, Video hyperlink
+Yandex Analytics, "Ya" button, "Share" button, Embedded video, Video hyperlink, Yandex.Money payment system widgets (buttons and forms)
 
 14. [YouTube](http://youtube.com)
 Embedded video, Video hyperlink
@@ -49,6 +49,8 @@ Media player
 
 
 The list of social tags is ever-growing, and new ones can be included upon request fast.
+
+[![Image](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=APHM8MU9N76V8 "Donate")
 
 ***
 
@@ -330,6 +332,24 @@ You must include `<r:require module="yandex"/>` directive first to use below tag
 
 > `<yandex:like title="Yandex Main Page" text="Share" url="http://yandex.ru" size="${YandexLikeButtonSize.SMALL}"/>`
 
+> Render Yandex.Money payment button
+
+> `<yandex:moneyButton account="41001577953208" sum="15.5" description="Test Payment"/>`
+
+> `<yandex:moneyButton account="41001577953208" sum="15.5" description="Test Payment" type="${YandexMoneyButtonType.CARD}" text="${YandexMoneyButtonText.BUY}" size="${YandexMoneyButtonSize.MEDIUM}" color="${YandexMoneyButtonColor.WHITE}" payerAddress="true" payerEmail="true" payerFullName="true" payerPhone="true"/>`
+
+> Render Yandex.Money donation form
+
+> `<yandex:moneyDonateForm account="41001577953208" description="Test Donation"/>`
+
+> `<yandex:moneyDonateForm account="41001577953208" description="Test Donation" showDescription="true" sum="15.5" cards="true" projectName="Yandex" projectSite="http://yandex.ru" text="${YandexMoneyDonateFormText.GIVE}" payerPhone="true" payerFullName="true" payerComment="true" payerEmail="true"/>`
+
+> Render Yandex.Money payment form
+
+> `<yandex:moneyPaymentForm account="41001577953208" description="Test Payment"/>`
+
+> `<yandex:moneyPaymentForm account="41001577953208" description="Test Payment" sum="15.5" cards="false" text="${YandexMoneyPaymentFormText.TRANSFER}" payerComment="true" payerEmail="true" payerFullName="true" payerAddress="true" payerPhone="true" payerPurpose="true" />`
+
 > Render Yandex "Share" button
 
 > `<yandex:share/>`
@@ -369,6 +389,3 @@ _Note:_ Instead of using different modules with `<r:require/>` directive for sep
   `<r:require module="widgets"/>`
 
 `</head>`
-
-
-[![Image](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=APHM8MU9N76V8 "Donate")
