@@ -36,6 +36,34 @@ class YandexTagLibTests
     assert applyTemplate('<yandex:like layout="icon" size="small" text="text" url="url" title="title"/>') == '<a name="ya-share" type="icon" size="small" share_text="text" share_url="url" share_title="title"></a>'
   }
 
+  void testMoneyButtonTag()
+  {
+    assert !applyTemplate('<yandex:moneyButton/>')
+    assert !applyTemplate('<yandex:moneyButton description="description" sum="1"/>')
+    assert !applyTemplate('<yandex:moneyButton account="account" sum="1"/>')
+    assert !applyTemplate('<yandex:moneyButton account="account" description="description"/>')
+    assert applyTemplate('<yandex:moneyButton account="account" description="description" sum="1"/>') == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="229" height="54" src="https://money.yandex.ru/embed/small.xml?account=account&quickpay=small&yamoney-payment-type=on&button-text=01&button-size=l&button-color=orange&targets=description&default-sum=1"></iframe>'
+    assert applyTemplate("<yandex:moneyButton account=\"account\" description=\"description\" sum=\"1\" type=\"${YandexMoneyButtonType.CARD}\" text=\"${YandexMoneyButtonText.TRANSFER}\" size=\"${YandexMoneyButtonSize.MEDIUM}\" color=\"${YandexMoneyButtonColor.WHITE}\" payerFullName=\"true\" payerEmail=\"true\" payerPhone=\"true\" payerAddress=\"true\"/>") == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="242" height="54" src="https://money.yandex.ru/embed/small.xml?account=account&quickpay=small&any-card-payment-type=on&button-text=03&button-size=m&button-color=white&targets=description&default-sum=1&fio=on&mail=on&phone=on&address=on"></iframe>'
+  }
+
+  void testMoneyDonateFormTag()
+  {
+    assert !applyTemplate('<yandex:moneyDonateForm/>')
+    assert !applyTemplate('<yandex:moneyDonateForm description="description"/>')
+    assert !applyTemplate('<yandex:moneyDonateForm account="account"/>')
+    assert applyTemplate('<yandex:moneyDonateForm account="account" description="description"/>') == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="523" height="133" src="https://money.yandex.ru/embed/donate.xml?account=account&quickpay=donate&payment-type-choice=on&default-sum=&targets=description&project-name=&project-site=&button-text=01"></iframe>'
+    assert applyTemplate("<yandex:moneyDonateForm account=\"account\" description=\"description\" showDescription=\"true\" sum=\"1\" cards=\"false\" text=\"${YandexMoneyDonateFormText.TRANSFER}\" projectName=\"projectName\" projectSite=\"projectSite\" payerComment=\"true\" payerCommentHint=\"payerCommentHint\" payerFullName=\"true\" payerEmail=\"true\" payerPhone=\"true\"/>") == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="426" height="210" src="https://money.yandex.ru/embed/donate.xml?account=account&quickpay=donate&default-sum=1&targets=description&target-visibility=on&project-name=projectName&project-site=projectSite&button-text=03&comment=on&hint=payerCommentHint&fio=on&mail=on&phone=on"></iframe>'
+  }
+
+  void testMoneyPaymentFormTag()
+  {
+    assert !applyTemplate('<yandex:moneyPaymentForm/>')
+    assert !applyTemplate('<yandex:moneyPaymentForm description="description"/>')
+    assert !applyTemplate('<yandex:moneyPaymentForm account="account"/>')
+    assert applyTemplate('<yandex:moneyPaymentForm account="account" description="description"/>') == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="450" height="200" src="https://money.yandex.ru/embed/shop.xml?account=account&quickpay=shop&payment-type-choice=on&writer=seller&targets=description&default-sum=&button-text=01"></iframe>'
+    assert applyTemplate("<yandex:moneyPaymentForm account=\"account\" description=\"description\" sum=\"1\" cards=\"false\" text=\"${YandexMoneyPaymentFormText.TRANSFER}\" payerPurpose=\"true\" payerComment=\"true\' payerFullName=\"true\" payerEmail=\"true\" payerPhone=\"true\" payerAddress=\"true\"/>") == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="450" height="200" src="https://money.yandex.ru/embed/shop.xml?account=account&quickpay=shop&writer=buyer&targets-hint=description&default-sum=1&button-text=03&phone=on&address=on"></iframe>'
+  }
+
   void testShareTag()
   {
     assert applyTemplate('<yandex:share/>') == "<div class=\"yashare-auto-init\" data-yashareL10n=\"${request.locale.language}\" data-yashareType=\"button\" data-yashareQuickServices=\"yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,friendfeed,moikrug,gplus,pinterest,surfingbird\"></div>"
