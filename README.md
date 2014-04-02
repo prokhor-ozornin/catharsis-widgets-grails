@@ -2,51 +2,80 @@
 
 As of the latest version, the following areas are covered :
 
-1. [Cackle](http://cackle.me)
-Comments and OAuth Login widgets
+[Cackle](http://cackle.me)
+* Comments
+* OAuth Login
 
-2. [Disqus](http://disqus.com)
-Comments widget
+[Disqus](http://disqus.com)
+* Comments
 
-3. [Facebook](http://facebook.com)
-Activity Feed, Recommendations Feed, "Follow" button, "Like" button, Like Box, "Send" button, Comments widget, Facepile widget, Embedded post, Embedded video, Video hyperlink
+[Facebook](http://facebook.com)
+* Activity Feed
+* Recommendations Feed
+* Follow Button
+* Like Button
+* Like Box
+* Send Button
+* Comments
+* Facepile
+* Embedded Post
+* Embedded Video
+* Video Hyperlink
 
-4. [Google](http://google.com)
-Google Analytics, Google + 1 button
+[Google](http://google.com)
+* Google Analytics
+* Google "+1" Button
 
-5. [IntenseDebate](http://intensedebate.com)
-Comments widget, comments count hyperlink
+[IntenseDebate](http://intensedebate.com)
+* Comments
+* Comments Count Hyperlink
 
-6. [Mail.ru](http://mail.ru)
-ICQ On-Site widget, "Like" button (mail.ru/odnoklassniki.ru), Embedded video, Video hyperlink
+[Mail.ru](http://mail.ru)
+* ICQ On-Site
+* Like Button
+* Embedded Video
+* Video Hyperlink
 
-7. [RuTube](http://rutube.ru)
-Embedded video, Video hyperlink
+[RuTube](http://rutube.ru)
+* Embedded Video
+* Video Hyperlink
 
-8. [Surfingbird](http://surfingbird.com)
-"Like" button
+[Surfingbird](http://surfingbird.com)
+* Like Button
 
-9. [Tumblr](http://tumblr.com)
-"Follow" button, "Share" button
+[Tumblr](http://tumblr.com)
+* Follow Button
+* Share Button
 
-10. [Twitter](https://twitter.com)
-"Follow" button, "Tweet" button
+[Twitter](https://twitter.com)
+* Follow Button
+* Tweet Button
 
-11. [Vimeo](https://vimeo.com)
-Embedded video, Video hyperlink
+[Vimeo](https://vimeo.com)
+* Embedded Video
+* Video Hyperlink
 
-12. [VKontakte](http://vk.com)
-Comments widget, Community widget, "Like" button, Subscribe widget, Embedded video, Video hyperlink
+[VKontakte](http://vk.com)
+* Comments
+* Community
+* Like Button
+* Subscribe
+* Embedded Video
+* Video Hyperlink
 
-13. [Yandex](http://yandex.ru)
-Yandex Analytics, "Ya" button, "Share" button, Embedded video, Video hyperlink, Yandex.Money payment system widgets (buttons and forms)
+[Yandex](http://yandex.ru)
+* Yandex Analytics
+* Ya Button
+* Share Button
+* Embedded Video
+* Video Hyperlink
+* Yandex.Money Payment Button
+* Yandex.Money Donate Form
+* Yandex.Money Payment Form
 
-14. [YouTube](http://youtube.com)
-Embedded video, Video hyperlink
-
-15. VideoJS player (http://www.videojs.com)
-Media player
-
+[YouTube](http://youtube.com)
+* Embedded Video
+* Video Hyperlink
 
 The list of social tags is ever-growing, and new ones can be included upon request fast.
 
