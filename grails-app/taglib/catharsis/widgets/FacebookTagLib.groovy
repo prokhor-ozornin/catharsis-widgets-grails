@@ -1,5 +1,9 @@
 package catharsis.widgets
 
+/**
+ * Facebook tags library
+ * @see "http://facebook.com"
+ */
 class FacebookTagLib
 {
   static final String namespace = "facebook"
@@ -7,16 +11,16 @@ class FacebookTagLib
   /**
    * Performs initialization of Facebook JavaScript API. Initialization must be performed before rendering Facebook widgets on the page.
    * @see "https://developers.facebook.com/docs/javascript"
-   * @attr appId REQUIRED Identifier of registered Facebook application.
+   * @attr app_id REQUIRED Identifier of registered Facebook application.
    */
   def initialize = { attrs ->
-    if (!attrs.appId)
+    if (!attrs.app_id)
     {
       return
     }
 
     out << g.withTag(name: "div", attrs: [id: "fb-root"])
-    out << g.javascript(null, g.render(contextPath: pluginContextPath, template: "/facebook_initialize", model: [appId : attrs.appId]))
+    out << g.javascript(null, g.render(contextPath: pluginContextPath, template: "/facebook_initialize", model: [app_id : attrs.app_id]))
   }
 
   /**
@@ -24,18 +28,18 @@ class FacebookTagLib
    * Requires Facebook JavaScript initialization to be performed first.
    * @see "https://developers.facebook.com/docs/plugins/activity"
    * @attr domain The domain for which to show activity. Default is current domain.
-   * @attr appId Display all actions associated with this app ID. This is usually inferred from the app ID you use to initiate the JavaScript SDK.
+   * @attr app_id Display all actions associated with this app ID. This is usually inferred from the app ID you use to initiate the JavaScript SDK.
    * @attr actions Collection or a comma-separated string of Open Graph action types to show in the feed.
    * @attr width The width of the widget in pixels. Default is 300.
    * @attr height The height of the widget in pixels. Default is 300.
-   * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string).
+   * @attr color_scheme The color scheme used by the widget (FacebookColorScheme or string).
    * @attr header Whether to show the "Recent Activity" header above the feed or not. Default is true.
-   * @attr linkTarget Determines what happens when people click on the links in the feed. Can be any of the standard HTML target values. Default is "_blank".
-   * @attr maxAge Limit the created time of articles that are shown in the feed. Valid values are 1-180, which represents the age in days to limit to. Default is 0 (no limit).
+   * @attr link_target Determines what happens when people click on the links in the feed. Can be any of the standard HTML target values. Default is "_blank".
+   * @attr max_age Limit the created time of articles that are shown in the feed. Valid values are 1-180, which represents the age in days to limit to. Default is 0 (no limit).
    * @attr recommendations Specifies whether to always show recommendations (Articles liked by a high amount of people) in the bottom half of the feed. Default is false.
-   * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
+   * @attr track_label A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    */
-  def activityFeed = { attrs ->
+  def activity_feed = { attrs ->
     def feedAttributes =
     [
       class: "fb-activity",
@@ -49,17 +53,17 @@ class FacebookTagLib
    * Requires Facebook JavaScript initialization to be performed first.
    * @see "https://developers.facebook.com/docs/plugins/recommendations"
    * @attr domain The domain for which to show activity. Default is current domain.
-   * @attr appId Display all actions associated with this app ID. This is usually inferred from the app ID you use to initiate the JavaScript SDK.
+   * @attr app_id Display all actions associated with this app ID. This is usually inferred from the app ID you use to initiate the JavaScript SDK.
    * @attr actions Collection or a comma-separated string of Open Graph action types to show in the feed.
    * @attr width The width of the widget in pixels. Default is 300.
    * @attr height The height of the widget in pixels. Default is 300.
-   * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string).
+   * @attr color_scheme The color scheme used by the widget (FacebookColorScheme or string).
    * @attr header Whether to show the "Recent Activity" header above the feed or not. Default is true (show).
-   * @attr linkTarget Determines what happens when people click on the links in the feed. Can be any of the standard HTML target values. Default is "_blank".
-   * @attr maxAge Limit the created time of articles that are shown in the feed. Valid values are 1-180, which represents the age in days to limit to. Default is 0 (no limit).
-   * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
+   * @attr link_target Determines what happens when people click on the links in the feed. Can be any of the standard HTML target values. Default is "_blank".
+   * @attr max_age Limit the created time of articles that are shown in the feed. Valid values are 1-180, which represents the age in days to limit to. Default is 0 (no limit).
+   * @attr track_label A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    */
-  def recommendationsFeed = { attrs ->
+  def recommendations_feed = { attrs ->
     def feedAttributes =
     [
       class: "fb-recommendations",
@@ -75,7 +79,7 @@ class FacebookTagLib
    * @attr url The absolute URL that comments posted in the widget will be permanently associated with. Stories on Facebook about comments posted in the plugin will link to this URL. Default is current page URL.
    * @attr posts The number of comments to show by default. The minimum value is 1. Default is 10.
    * @attr width The width of the widget. The mobile version of the Comments widget ignores the width parameter, and instead has a fluid width of 100%.
-   * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string).
+   * @attr color_scheme The color scheme used by the widget (FacebookColorScheme or string).
    * @attr mobile A boolean value that specifies whether to show the mobile-optimized version or not. If not specified, auto-detection is used.
    * @attr order The order to use when displaying comments (FacebookCommentsOrder or string).
    */
@@ -100,9 +104,9 @@ class FacebookTagLib
       attributes["data-width"] = attrs.width
     }
 
-    if (attrs.colorScheme)
+    if (attrs.color_scheme)
     {
-      attributes["data-colorscheme"] = attrs.colorScheme.toString()
+      attributes["data-colorscheme"] = attrs.color_scheme.toString()
     }
 
     if (attrs.mobile != null)
@@ -127,8 +131,8 @@ class FacebookTagLib
    * @attr size Controls the size of the photos shown in the widget (FacebookFacepileSize or string). Default is "medium".
    * @attr width The width of the widget in pixels. Minimum is 200. Default is 300.
    * @attr height The height of the widget in pixels.
-   * @attr maxRows The maximum number of rows of faces to display. Default is 1.
-   * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string). Default is "light".
+   * @attr max_rows The maximum number of rows of faces to display. Default is 1.
+   * @attr color_scheme The color scheme used by the widget (FacebookColorScheme or string). Default is "light".
    */
   def facepile = { attrs ->
     def attributes =
@@ -158,14 +162,14 @@ class FacebookTagLib
       attributes["data-height"] = attrs.height
     }
 
-    if (attrs.maxRows)
+    if (attrs.max_rows)
     {
-      attributes["data-max-rows"] = attrs.maxRows.toInteger()
+      attributes["data-max-rows"] = attrs.max_rows.toInteger()
     }
 
-    if (attrs.colorScheme)
+    if (attrs.color_scheme)
     {
-      attributes["data-colorscheme"] = attrs.colorScheme.toString()
+      attributes["data-colorscheme"] = attrs.color_scheme.toString()
     }
 
     out << g.withTag(name: "div", attrs: attributes)
@@ -178,7 +182,7 @@ class FacebookTagLib
    * @attr url REQUIRED The Facebook.com profile URL of the user to follow.
    * @attr width The width of the button. The layout you choose affects the minimum and default widths you can use.
    * @attr height The height of the button.
-   * @attr colorScheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
+   * @attr color_scheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
    * @attr kids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
    * @attr layout Selects one of the different layouts that are available for the button (FacebookButtonLayout or string). Default is "standard".
    * @attr faces Specifies whether to display profile photos below the button (standard layout only). You must not enable this on child-directed sites.
@@ -213,10 +217,10 @@ class FacebookTagLib
    * @see "https://developers.facebook.com/docs/plugins/like-button"
    * @attr url The absolute URL of the page that will be liked. Default is current page URL.
    * @attr verb The verb to display on the button (FacebookLikeButtonVerb or string). Default is "like".
-   * @attr colorScheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
+   * @attr color_scheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
    * @attr kids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
    * @attr layout Selects one of the different layouts that are available for the button (FacebookButtonLayout or string). Default is "standard".
-   * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
+   * @attr track_label A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    * @attr faces Specifies whether to display profile photos below the button (standard layout only). You must not enable this on child-directed sites. Default is false.
    * @attr width The width of the button. The layout you choose affects the minimum and default widths you can use.
    */
@@ -256,7 +260,7 @@ class FacebookTagLib
    * @attr url REQUIRED The absolute URL of the Facebook Page that will be liked.
    * @attr width The width of the widget in pixels. Minimum is 292. Default is 300.
    * @attr height The height of the widget in pixels. The default height varies based on number of faces to display, and whether the stream is displayed. With stream set to true and 10 photos displayed (via showFaces) the default height is 556px. With stream and show_faces both false, the default height is 63px.
-   * @attr colorScheme The color scheme used by the widget (FacebookColorScheme or string). Default is "light".
+   * @attr color_scheme The color scheme used by the widget (FacebookColorScheme or string). Default is "light".
    * @attr wall For "place" Pages (Pages that have a physical location that can be used with check-ins), this specifies whether the stream contains posts by the Page or just check-ins from friends. Default is false.
    * @attr header Specifies whether to display the Facebook header at the top of the widget. Default is true.
    * @attr border Specifies whether or not to show a border around the plugin. Default is true.
@@ -285,9 +289,9 @@ class FacebookTagLib
       attributes["data-height"] = attrs.height
     }
 
-    if (attrs.colorScheme)
+    if (attrs.color_scheme)
     {
-      attributes["data-colorscheme"] = attrs.colorScheme.toString()
+      attributes["data-colorscheme"] = attrs.color_scheme.toString()
     }
 
     if (attrs.wall != null)
@@ -351,9 +355,9 @@ class FacebookTagLib
    * @attr url The absolute URL of the page that will be sent. Default is current page URL.
    * @attr width The width of the button.
    * @attr height The height of the button.
-   * @attr colorScheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
+   * @attr color_scheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
    * @attr kids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
-   * @attr trackLabel A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
+   * @attr track_label A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    */
   def send = { attrs ->
     def buttonAttributes =
@@ -388,35 +392,6 @@ class FacebookTagLib
     ])
   }
 
-  /**
-   * Renders hyperlink to Facebook video.
-   * @attr video REQUIRED Identifier of Facebook video.
-   */
-  def videoLink = { attrs, body ->
-    if (!attrs.video)
-    {
-      return
-    }
-
-    attrs.href = videoUrl([video: attrs.video])
-    attrs.remove("video")
-
-    out << g.withTag(name: "a", attrs: attrs, body())
-  }
-
-  /**
-   * Generates URL for Facebook video.
-   * @attr video REQUIRED Identifier of Facebook video.
-   */
-  def videoUrl = { attrs ->
-    if (!attrs.video)
-    {
-      return
-    }
-
-    out << "https://www.facebook.com/photo.php?v=${attrs.video}"
-  }
-
   private void feed(Map attrs, Map feedAttributes)
   {
     if (attrs.domain)
@@ -424,9 +399,9 @@ class FacebookTagLib
       feedAttributes["data-site"] = attrs.domain
     }
 
-    if (attrs.appId)
+    if (attrs.app_id)
     {
-      feedAttributes["data-app-id"] = attrs.appId
+      feedAttributes["data-app-id"] = attrs.app_id
     }
 
     if (attrs.actions)
@@ -444,9 +419,9 @@ class FacebookTagLib
       feedAttributes["data-height"] = attrs.height
     }
 
-    if (attrs.colorScheme)
+    if (attrs.color_scheme)
     {
-      feedAttributes["data-colorscheme"] = attrs.colorScheme.toString()
+      feedAttributes["data-colorscheme"] = attrs.color_scheme.toString()
     }
 
     if (attrs.header != null)
@@ -454,14 +429,14 @@ class FacebookTagLib
       feedAttributes["data-header"] = attrs.header.toBoolean().toString()
     }
 
-    if (attrs.linkTarget)
+    if (attrs.link_target)
     {
-      feedAttributes["data-linktarget"] = attrs.linkTarget
+      feedAttributes["data-linktarget"] = attrs.link_target
     }
 
-    if (attrs.maxAge)
+    if (attrs.max_age)
     {
-      feedAttributes["data-max-age"] = attrs.maxAge.toInteger()
+      feedAttributes["data-max-age"] = attrs.max_age.toInteger()
     }
 
     if (attrs.recommendations != null)
@@ -469,9 +444,9 @@ class FacebookTagLib
       feedAttributes["data-recommendations"] = attrs.recommendations.toBoolean().toString()
     }
 
-    if (attrs.trackLabel)
+    if (attrs.track_label)
     {
-      feedAttributes["data-ref"] = attrs.trackLabel
+      feedAttributes["data-ref"] = attrs.track_label
     }
 
     out << g.withTag(name: "div", attrs: feedAttributes)
@@ -484,9 +459,9 @@ class FacebookTagLib
       buttonAttributes["data-href"] = attrs.url
     }
 
-    if (attrs.colorScheme)
+    if (attrs.color_scheme)
     {
-      buttonAttributes["data-colorscheme"] = attrs.colorScheme.toString()
+      buttonAttributes["data-colorscheme"] = attrs.color_scheme.toString()
     }
 
     if (attrs.kids != null)
@@ -494,9 +469,9 @@ class FacebookTagLib
       buttonAttributes["data-kid-directed-site"] = attrs.kids.toBoolean().toString()
     }
 
-    if (attrs.trackLabel)
+    if (attrs.track_label)
     {
-      buttonAttributes["data-ref"] = attrs.trackLabel
+      buttonAttributes["data-ref"] = attrs.track_label
     }
 
     if (attrs.width)

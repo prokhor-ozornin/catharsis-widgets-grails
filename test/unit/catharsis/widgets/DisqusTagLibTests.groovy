@@ -5,7 +5,7 @@ import grails.test.mixin.TestFor
 @TestFor(DisqusTagLib)
 class DisqusTagLibTests
 {
-  void testCommentsTag()
+  void test_comments_tag()
   {
     assert !applyTemplate('<disqus:comments/>')
     def html = applyTemplate('<disqus:comments account="account"/>')

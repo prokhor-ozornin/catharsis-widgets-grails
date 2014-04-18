@@ -5,7 +5,7 @@ import grails.test.mixin.TestFor
 @TestFor(IntenseDebateTagLib)
 class IntenseDebateTagLibTests
 {
-  void testCommentsTag()
+  void test_comments_tag()
   {
     assert !applyTemplate("<intensedebate:comments/>")
 
@@ -17,16 +17,16 @@ class IntenseDebateTagLibTests
     assert html.contains('var idcomments_post_url = ""')
     assert html.contains('var idcomments_post_title = ""')
 
-    html = applyTemplate('<intensedebate:comments account="account" postId="postId" postUrl="postUrl" postTitle="postTitle"/>')
+    html = applyTemplate('<intensedebate:comments account="account" post_id="post_id" post_url="post_url" post_title="post_title"/>')
     assert html.contains('<script type="text/javascript">')
     assert html.contains('var idcomments_acct = "account";')
     assert html.contains('http://www.intensedebate.com/js/genericCommentWrapperV2.js')
-    assert html.contains('var idcomments_post_id = "postId"')
-    assert html.contains('var idcomments_post_url = "postUrl"')
-    assert html.contains('var idcomments_post_title = "postTitle"')
+    assert html.contains('var idcomments_post_id = "post_id"')
+    assert html.contains('var idcomments_post_url = "post_url"')
+    assert html.contains('var idcomments_post_title = "post_title"')
   }
 
-  void testLinkTag()
+  void test_link_tag()
   {
     assert !applyTemplate("<intensedebate:link/>")
 
@@ -38,12 +38,12 @@ class IntenseDebateTagLibTests
     assert html.contains('var idcomments_post_url = ""')
     assert html.contains('var idcomments_post_title = ""')
 
-    html = applyTemplate('<intensedebate:link account="account" postId="postId" postUrl="postUrl" postTitle="postTitle"/>')
+    html = applyTemplate('<intensedebate:link account="account" post_id="post_id" post_url="post_url" post_title="post_title"/>')
     assert html.contains('<script type="text/javascript">')
     assert html.contains('var idcomments_acct = "account";')
     assert html.contains('http://www.intensedebate.com/js/genericLinkWrapperV2.js')
-    assert html.contains('var idcomments_post_id = "postId"')
-    assert html.contains('var idcomments_post_url = "postUrl"')
-    assert html.contains('var idcomments_post_title = "postTitle"')
+    assert html.contains('var idcomments_post_id = "post_id"')
+    assert html.contains('var idcomments_post_url = "post_url"')
+    assert html.contains('var idcomments_post_title = "post_title"')
   }
 }

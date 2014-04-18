@@ -1,5 +1,9 @@
 package catharsis.widgets
 
+/**
+ * Twitter tags library
+ * @see "http://twitter.com"
+ */
 class TwitterTagLib
 {
   static final String namespace = "twitter"
@@ -14,7 +18,7 @@ class TwitterTagLib
    * @attr size The size of the rendered button (TwitterFollowButtonSize or string). Default is "medium".
    * @attr width Width of the button.
    * @attr align Horizontal alignment of the button (TwitterFollowButtonAlignment or string).
-   * @attr screenName Whether to show user's screen name. Default is true.
+   * @attr screen_name Whether to show user's screen name. Default is true.
    * @attr dnt Whether to opt-out of twitter suggestions. Default is false.
    */
   def follow = { attrs ->
@@ -50,9 +54,9 @@ class TwitterTagLib
       attributes["data-align"] = attrs.align
     }
 
-    if (attrs.screenName != null)
+    if (attrs.screen_name != null)
     {
-      attributes["data-show-screen-name"] = attrs.screenName.toBoolean().toString()
+      attributes["data-show-screen-name"] = attrs.screen_name.toBoolean().toString()
     }
 
     if (attrs.dnt != null)
@@ -73,7 +77,7 @@ class TwitterTagLib
    * @attr related Collection of related accounts, or comma-separated values as a string.
    * @attr count Count box position (TwitterTweetButtonCountBoxPosition or string). Default is "horizontal".
    * @attr language The language for the "Tweet" Button. Default is request locale's language.
-   * @attr counturl URL to which your shared URL resolves. Default is the URL being shared.
+   * @attr count_url URL to which your shared URL resolves. Default is the URL being shared.
    * @attr tags Collection of hashtags which are to be appended to tweet text, or comma-separated values as a string.
    * @attr size The size of the rendered button (TwitterTweetButtonSize or string). Default is "medium".
    * @attr dnt Whether to opt-out of twitter suggestions. Default is false.
@@ -111,9 +115,9 @@ class TwitterTagLib
       attributes["data-count"] = attrs.count
     }
 
-    if (attrs.counturl)
+    if (attrs.count_url)
     {
-      attributes["data-counturl"] = attrs.counturl
+      attributes["data-counturl"] = attrs.count_url
     }
 
     if (attrs.tags)

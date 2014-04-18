@@ -1,5 +1,9 @@
 package catharsis.widgets
 
+/**
+ * RuTube tags library
+ * @see "http://rutube.ru"
+ */
 class RuTubeTagLib
 {
   static final String namespace = "rutube"
@@ -27,37 +31,7 @@ class RuTubeTagLib
         scrolling: "no",
         width: attrs.width,
         height: attrs.height,
-        src: videoUrl([video: attrs.video, embedded: true])
+        src: "http://rutube.ru/embed/${attrs.video}"
       ])
-  }
-
-  /**
-   * Renders hyperlink to RuTube video.
-   * @attr video REQUIRED Hash identifier of RuTube video.
-   * @attr embedded Whether to create link for embedded video type (default is false).
-   */
-  def videoLink = { attrs, body ->
-    if (!attrs.video)
-    {
-      return
-    }
-
-    attrs.href = videoUrl([video: attrs.video, embedded: attrs.embedded])
-    attrs.remove("video")
-    attrs.remove("embedded")
-    out << g.withTag(name: "a", attrs: attrs, body())
-  }
-
-  /**
-   * @attr video REQUIRED Hash identifier of RuTube video.
-   * @attr embedded Whether to render video as embedded (default is false).
-   */
-  def videoUrl = { attrs ->
-    if (!attrs.video)
-    {
-      return
-    }
-
-    out << "http://rutube.ru/${attrs.embedded?.toBoolean() ? "embed" : "video"}/${attrs.video}"
   }
 }

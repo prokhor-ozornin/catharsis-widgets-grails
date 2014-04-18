@@ -1,83 +1,10 @@
-**Catharsis.Grails.Widgets** is a [Grails 2](http://grails.org) tag library, which provides useful social media tags to include on web pages of your site. 
+This library is a [Grails 2](http://grails.org) tag library port of [Catharsis Social Web Widgets](https://github.com/prokhor-ozornin/Catharsis-Social-Web-Widgets) library.
 
-As of the latest version, the following areas are covered :
+It provides useful social media widgets to include on web pages of your site. 
 
-[Cackle](http://cackle.me)
-* Comments
-* OAuth Login
+***
 
-[Disqus](http://disqus.com)
-* Comments
-
-[Facebook](http://facebook.com)
-* Activity Feed
-* Recommendations Feed
-* Follow Button
-* Like Button
-* Like Box
-* Send Button
-* Comments
-* Facepile
-* Embedded Post
-* Embedded Video
-* Video Hyperlink
-
-[Google](http://google.com)
-* Google Analytics
-* Google "+1" Button
-
-[IntenseDebate](http://intensedebate.com)
-* Comments
-* Comments Count Hyperlink
-
-[Mail.ru](http://mail.ru)
-* ICQ On-Site
-* Like Button
-* Embedded Video
-* Video Hyperlink
-
-[RuTube](http://rutube.ru)
-* Embedded Video
-* Video Hyperlink
-
-[Surfingbird](http://surfingbird.com)
-* Like Button
-
-[Tumblr](http://tumblr.com)
-* Follow Button
-* Share Button
-
-[Twitter](https://twitter.com)
-* Follow Button
-* Tweet Button
-
-[Vimeo](https://vimeo.com)
-* Embedded Video
-* Video Hyperlink
-
-[VKontakte](http://vk.com)
-* Comments
-* Community
-* Like Button
-* Subscribe
-* Embedded Video
-* Video Hyperlink
-
-[Yandex](http://yandex.ru)
-* Yandex Analytics
-* Ya Button
-* Share Button
-* Embedded Video
-* Video Hyperlink
-* Yandex.Money Payment Button
-* Yandex.Money Donate Form
-* Yandex.Money Payment Form
-
-[YouTube](http://youtube.com)
-* Embedded Video
-* Video Hyperlink
-
-The list of social tags is ever-growing, and new ones can be included upon request fast.
+This project requires your support. Please donate !
 
 [![Image](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=APHM8MU9N76V8 "Donate")
 
@@ -106,6 +33,7 @@ You must include `<r:require module="cackle"/>` directive first to use below tag
 > Render Cackle list of latest comments
 
 > `<cackle:latestComments account="20049"/>`
+
 > `<cackle:latestComments account="20049" max="15" avatarSize="32" titleSize="50" textSize="255"/>`
 
 > Render Cackle OAuth login widget
@@ -125,10 +53,6 @@ You must include `<r:require module="disqus"/>` directive first to use below tag
 > Render Facebook embedded video
 
 > `<facebook:video height="480" width="640" video="10203121281421359"/>`
-
-> Render Facebook video hyperlink
-
-> `<facebook:videoLink video="10203121281421359">Watch a Facebook video !</facebook:videoLink>`
 
 > Performs Facebook JavaScript API initialization
 
@@ -211,7 +135,22 @@ You must include `<r:require module="google"/>` directive first to use below tag
 > Render Google "+1" button
 
 > `<google:plusone/>`
+
 > `<google:plusone url="http://yandex.ru" align="right" size="tall" annotation="inline" recommendations="false"/>`
+
+**Gravatar**
+
+> Render Gravatar's avatar image URL.
+
+> `<gravatar:image_url email="prokhor.ozornin@yandex.ru"/>`
+
+> `<gravatar:image_url email="prokhor.ozornin@yandex.ru" extension="jpg" force_default="true" size="320"/>`
+
+> Render Gravatar's user profile URL.
+
+> `<gravatar:profile_url email="prokhor.ozornin@yandex.ru"/>`
+
+> `<gravatar:profile_url email="prokhor.ozornin@yandex.ru" format="xml"/>`
 
 **IntenseDebate**
 
@@ -222,6 +161,18 @@ You must include `<r:require module="google"/>` directive first to use below tag
 > Render IntenseDebate hyperlink with comments count
 
 > `<intensedebate:link account="a639ec3507d53023d4f213666651b6c2"/>`
+
+**LiveJournal**
+
+> Renders LiveJournal "Like" button
+
+> `<livejournal:like/>`
+
+> Renders LiveJournal "Repost" button
+
+> `<livejournal:repost/>`
+
+> `<livejournal:repost title="title">text</livejournal:repost>`
 
 **Mail.ru**
 
@@ -235,10 +186,6 @@ You must include `<r:require module="google"/>` directive first to use below tag
 
 > `<mailru:video height="480" width="640" video="tommylordau/4271/4279.html"/>`
 
-> Render Mail.ru video hyperlink
-
-> `<mailru:videoLink video="mani.79/_myvideo/256.html">Watch Mail.ru video !</mailru:videoLink>`
-
 You must include `<r:require module="mailru"/>` directive first to use below tags.
 
 > Render Mail.ru + Odnoklassniki.ru "Like" buttons pair
@@ -247,15 +194,31 @@ You must include `<r:require module="mailru"/>` directive first to use below tag
 
 > `<mailru:like layout="2" text="false" counterPosition="upper" size="30"/>`
 
+> Renders Mail.ru Faces (People On Site) widget.
+
+> `<mailru:faces domain="mail.ru" width="640" height="480"/>`
+
+> `<mailru:faces domain="mail.ru" width="640" height="480" font="${MailRuFacesFont.TAHOMA}" show_title="false" background_color="aaffaa" hyperlink_color="ffaaff" border_color="aaaaaa"/>`
+
+> Renders Mail.ru Group (People In Group) widget.
+
+> `<mailru:groups account="mail_ru" width="640" height="480"/>`
+
+> `<mailru:groups account="mail_ru" width="640" height="480" background_color="aaffaa" button_color="ffaaff" subscribers="false" text_color="aaaadd"/>`
+
 **RuTube**
 
 > Render RuTube embedded video
 
 > `<rutube:video height="480" width="640" video="6785018"/>`
 
-> Render RuTube video hyperlink
+**SoundCloud**
 
-> `<rutube:videoLink video="4c5fe858f0013ea73188a3534af12f2b">Watch RuTube video !</rutube:videoLink>`
+> Renders SoundCloud user's profile icon
+
+> `<soundcloud:profile_icon account="prokhor-ozornin"/>`
+
+> `<soundcloud:profile_icon account="prokhor-ozornin" color="${SoundCloudProfileIconColor.BLACK_WHITE}" size="${SoundCloudProfileIconSize.SIZE_64}"/>`
 
 **Surfingbird**
 
@@ -305,19 +268,11 @@ You must include `<r:require module="twitter"/>` directive first to use below ta
 
 > `<vimeo:video height="480" width="640" video="55456906"/>`
 
-> Render Vimeo video hyperlink
-
-> `<vimeo:videoLink video="55456906">Watch Vimeo video !</vimeo:videoLink>`
-
 **VKontakte**
 
 > Render VKontakte embedded video
 
 > `<vkontakte:video height="360" hash="7a0cdf6ef7a69e67" user="5707198" width="607" video="167533148" hd="true"/>`
-
-> Render VKontakte video hyperlink
-
-> `<vkontakte:videoLink user="5707198" video="167533148">Watch VKontakte video !</vkontakte:videoLink>`
 
 You must include `<r:require module="vkontakte"/>` directive first to use below tags.
 
@@ -389,19 +344,11 @@ You must include `<r:require module="yandex"/>` directive first to use below tag
 
 > `<yandex:video height="253" width="450" user="leonevskiy" video="6ea0ugstkx.2528"/>`
 
-> Render Yandex video hyperlink
-
-> `<yandex:videoLink user="leonevskiy" video="1">Watch Yandex video !</yandex:videoLink>`
-
 **YouTube**
 
 > Render YouTube embedded video
 
 > `<youtube:video height="480" width="100%" video="eYJSlHiXegI"/>`
-
-> Render YouTube video hyperlink
-
-> `<youtube:videoLink video="eYJSlHiXegI">Watch YouTube video!</youtube:videoLink>`
 
 **VideoJS**
 

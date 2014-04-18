@@ -2,6 +2,10 @@ package catharsis.widgets
 
 import grails.converters.JSON
 
+/**
+ * Surfingbird tags library
+ * @see "http://surfingbird.ru"
+ */
 class SurfingbirdTagLib
 {
   static final String namespace = "surfingbird"

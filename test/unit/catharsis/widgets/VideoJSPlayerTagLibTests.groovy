@@ -5,10 +5,8 @@ import grails.test.mixin.TestFor
 @TestFor(VideoJSPlayerTagLib)
 class VideoJSPlayerTagLibTests
 {
-  void testPlayerTag()
+  void test_player_tag()
   {
-    def videos = "${["http://vjs.zencdn.net/v/oceans.mp4":"video/mp4"]}";
-
     assert !applyTemplate('<videojs:player/>')
     assert !applyTemplate('<videojs:player width="width"/>')
     assert !applyTemplate('<videojs:player height="height"/>')

@@ -1,5 +1,9 @@
 package catharsis.widgets
 
+/**
+ * Disqus tags library
+ * @see "http://disqus.com"
+ */
 class DisqusTagLib
 {
   static final String namespace = "disqus"

@@ -2,6 +2,10 @@ package catharsis.widgets
 
 import grails.converters.JSON
 
+/**
+ * Vkontakte tags library
+ * @see "http://vk.com"
+ */
 class VkontakteTagLib
 {
   static final String namespace = "vkontakte"
@@ -10,15 +14,15 @@ class VkontakteTagLib
    * Performs initialization of VKontakte JavaScript API. Initialization must be performed before render any VKontakte widgets on web pages.
    * Requires "vkontakte" module to be loaded with Resources plugin.
    * @see "http://vk.com/dev/sites"
-   * @attr apiId REQUIRED API identifier of registered VKontakte application.
+   * @attr api_id REQUIRED API identifier of registered VKontakte application.
    */
   def initialize = { attrs ->
-    if (!attrs.apiId)
+    if (!attrs.api_id)
     {
       return
     }
 
-    r.script(disposition: "head", "VK.init({apiId:${attrs.apiId}, onlyWidgets:true});")
+    r.script(disposition: "head", "VK.init({apiId:${attrs.api_id}, onlyWidgets:true});")
   }
 
   /**
@@ -96,10 +100,10 @@ class VkontakteTagLib
    * @see "http://vk.com/dev/Like"
    * @attr layout Visual layout/appearance of the button (VkontakteLikeButtonLayout or string).
    * @attr width Width of button in pixels (integer value > 200, default value is 350). Parameter value has meaning only for a button with a text counter (layout = "full").
-   * @attr pageTitle Title of the page (to display in preview mode for record on the wall).
-   * @attr pageDescription Description of the page (to display in preview mode for record on the wall).
-   * @attr pageUrl URL of the page to "like" (this URL will be shown in a record on the wall). Default is URL of the current page.
-   * @attr pageImage URL of the thumbnail image (to display in preview mode for record on the wall).
+   * @attr page_title Title of the page (to display in preview mode for record on the wall).
+   * @attr page_description Description of the page (to display in preview mode for record on the wall).
+   * @attr page_url URL of the page to "like" (this URL will be shown in a record on the wall). Default is URL of the current page.
+   * @attr page_image URL of the thumbnail image (to display in preview mode for record on the wall).
    * @attr text Text to be published on the wall when "Tell to friends" is pressed. Maximum length is 140 characters. Default value equals to page's title.
    * @attr height Vertical height of the button in pixels (VkontakteLikeButtonHeight or string). Default value is "22".
    * @attr verb Type of text to display on the button (VkontakteLikeButtonVerb or integer).
@@ -117,24 +121,24 @@ class VkontakteTagLib
       config.width = attrs.width
     }
 
-    if (attrs.pageTitle)
+    if (attrs.page_title)
     {
-      config.pageTitle = attrs.pageTitle
+      config.pageTitle = attrs.page_title
     }
 
-    if (attrs.pageDescription)
+    if (attrs.page_description)
     {
-      config.pageDescription = attrs.pageDescription
+      config.pageDescription = attrs.page_description
     }
 
-    if (attrs.pageUrl)
+    if (attrs.page_url)
     {
-      config.pageUrl = attrs.pageUrl
+      config.pageUrl = attrs.page_url
     }
 
-    if (attrs.pageImage)
+    if (attrs.page_image)
     {
-      config.pageImage = attrs.pageImage
+      config.pageImage = attrs.page_image
     }
 
     if (attrs.text)
@@ -162,7 +166,7 @@ class VkontakteTagLib
    * @see "http://vk.com/dev/Subscribe"
    * @attr account REQUIRED Identifier of user/group to subscribe to.
    * @attr layout Visual layout/appearance of the button (VkontakteSubscribeButtonLayout or integer).
-   * @attr onlyButton Whether to display both author and button (false) or button only (true).
+   * @attr only_button Whether to display both author and button (false) or button only (true).
    */
   def subscribe = { attrs ->
     if (!attrs.account)
@@ -175,7 +179,7 @@ class VkontakteTagLib
       mode : (attrs.layout ?: VkontakteSubscribeButtonLayout.FIRST).toString()
     ]
 
-    if (attrs.onlyButton?.toBoolean())
+    if (attrs.only_button?.toBoolean())
     {
       config.soft = 1
     }
@@ -209,38 +213,6 @@ class VkontakteTagLib
       height: attrs.height,
       src: "http://vk.com/video_ext.php?oid=${attrs.user}&id=${attrs.video}&hash=${attrs.hash}&hd=${attrs.hd?.toBoolean() ? 1 : 0}"
     ])
-  }
-
-  /**
-   * Renders hyperlink to VKontakte video.
-   * @attr video REQUIRED Identifier of video.
-   * @attr user REQUIRED Account identifier of video's uploader.
-   */
-  def videoLink = { attrs, body ->
-    if (!attrs.video || !attrs.user)
-    {
-      return
-    }
-
-    attrs.href = videoUrl(attrs)
-    attrs.remove("video")
-    attrs.remove("user")
-
-    out << g.withTag(name: "a", attrs: attrs, body())
-  }
-
-  /**
-   * Generates URL to VKontakte video.
-   * @attr video REQUIRED Identifier of video.
-   * @attr user REQUIRED Account identifier of video's uploader.
-   */
-  def videoUrl = { attrs ->
-    if (!attrs.video || !attrs.user)
-    {
-      return
-    }
-
-    out << "http://vk.com/video${attrs.user}_${attrs.video}"
   }
 }
 

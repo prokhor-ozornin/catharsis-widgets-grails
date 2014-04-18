@@ -1,5 +1,9 @@
 package catharsis.widgets
 
+/**
+ * VideoJS tags library
+ * @see "http://www.videojs.com"
+ */
 class VideoJSPlayerTagLib
 {
   static final String namespace = "videojs"

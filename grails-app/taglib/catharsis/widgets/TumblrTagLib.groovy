@@ -1,5 +1,9 @@
 package catharsis.widgets
 
+/**
+ * Tumblr tags library
+ * @see "http://www.tumblr.com"
+ */
 class TumblrTagLib
 {
   static final String namespace = "tumblr"
@@ -9,7 +13,7 @@ class TumblrTagLib
    * @see "http://www.tumblr.com/buttons"
    * @attr account REQUIRED Name of Tumblr account (blog).
    * @attr type Visual layout/appearance of button (TumblrFollowButtonType or string).
-   * @attr colorScheme Visual color scheme of button (TumblrFollowButtonColorScheme or string).
+   * @attr color_scheme Visual color scheme of button (TumblrFollowButtonColorScheme or string).
    */
   def follow = { attrs ->
     if (!attrs.account)
@@ -40,7 +44,7 @@ class TumblrTagLib
       height: "25",
       width: width,
       scrolling: "no",
-      src: "http://platform.tumblr.com/v1/follow_button.html?button_type=${type}&tumblelog=${attrs.account}&color_scheme=${attrs.colorScheme ?: TumblrFollowButtonColorScheme.LIGHT}"
+      src: "http://platform.tumblr.com/v1/follow_button.html?button_type=${type}&tumblelog=${attrs.account}&color_scheme=${attrs.color_scheme ?: TumblrFollowButtonColorScheme.LIGHT}"
     ])
   }
 
@@ -49,7 +53,7 @@ class TumblrTagLib
    * Requires "tumblr" module to be loaded with Resources plugin.
    * @see "http://www.tumblr.com/buttons"
    * @attr type Visual layout/appearance of button (TumblrShareButtonType or string).
-   * @attr colorScheme Visual color scheme of button (TumblrShareButtonColorScheme or string).
+   * @attr color_scheme Visual color scheme of button (TumblrShareButtonColorScheme or string).
    */
   def share = { attrs ->
     def type = (attrs.type ?: TumblrShareButtonType.FIRST).toString()
@@ -82,7 +86,7 @@ class TumblrTagLib
     [
       href: "http://www.tumblr.com/share",
       title: "Share on Tumblr",
-      style: "display:inline-block; text-indent:-9999px; overflow:hidden; width:${width}px; height:20px; background:url('http://platform.tumblr.com/v1/share_${type}${attrs.colorScheme?.toString()?.toLowerCase() == TumblrShareButtonColorScheme.GRAY.toString() ? "T" : ""}.png') top left no-repeat transparent;"
+      style: "display:inline-block; text-indent:-9999px; overflow:hidden; width:${width}px; height:20px; background:url('http://platform.tumblr.com/v1/share_${type}${attrs.color_scheme?.toString()?.toLowerCase() == TumblrShareButtonColorScheme.GRAY.toString() ? "T" : ""}.png') top left no-repeat transparent;"
     ],
     "Share on Tumblr")
   }

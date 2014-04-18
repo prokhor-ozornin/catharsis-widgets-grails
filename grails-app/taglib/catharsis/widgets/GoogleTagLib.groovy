@@ -1,5 +1,9 @@
 package catharsis.widgets
 
+/**
+ * Google tags library
+ * @see "http://google.com"
+ */
 class GoogleTagLib
 {
   static final String namespace = "google"
@@ -22,6 +26,13 @@ class GoogleTagLib
       domain: attrs.domain
     ]))
   }
+
+  /*
+   *
+   *
+  def map = { attrs ->
+
+  }*/
 
   /**
    * Renders Google "+1" button.

@@ -2,6 +2,10 @@ package catharsis.widgets
 
 import grails.converters.JSON
 
+/**
+ * Cackle tags library
+ * @see  "http://cackle.me"
+ */
 class CackleTagLib
 {
   static final String namespace = "cackle"
@@ -35,7 +39,7 @@ class CackleTagLib
    * @see "http://ru.cackle.me/help/widget-api"
    * @attr account REQUIRED Identifier of registered website in the "Cackle" comments system.
    */
-  def commentsCount = { attrs ->
+  def comments_count = { attrs ->
     if (!attrs.account)
     {
       return
@@ -56,11 +60,11 @@ class CackleTagLib
    * @see "http://ru.cackle.me/help/widget-api"
    * @attr account REQUIRED Identifier of registered website in the "Cackle" comments system.
    * @attr max Number of comments to display. Maximum 100, default 5.
-   * @attr avatarSize Size of user avatars. Default is 32.
-   * @attr textSize Maximum allowed count of characters in comment (0 - do not cut). Default is 150.
-   * @attr titleSize Maximum allowed count of characters in title (0 - do not cut). Default is 40.
+   * @attr avatar_size Size of user avatars. Default is 32.
+   * @attr text_size Maximum allowed count of characters in comment (0 - do not cut). Default is 150.
+   * @attr title_size Maximum allowed count of characters in title (0 - do not cut). Default is 40.
    */
-  def latestComments = { attrs ->
+  def latest_comments = { attrs ->
     if (!attrs.account)
     {
       return
@@ -71,9 +75,9 @@ class CackleTagLib
       widget: "CommentRecent",
       id: attrs.account,
       size: attrs.max?.toInteger() ?: 5,
-      avatarSize: attrs.avatarSize?.toInteger() ?: 32,
-      textSize: attrs.textSize?.toInteger() ?: 150,
-      titleSize: attrs.titleSize?.toInteger() ?: 40
+      avatarSize: attrs.avatar_size?.toInteger() ?: 32,
+      textSize: attrs.text_size?.toInteger() ?: 150,
+      titleSize: attrs.title_size?.toInteger() ?: 40
     ]
 
     out << '<div id="mc-last"></div>'

@@ -1,5 +1,9 @@
 package catharsis.widgets
 
+/**
+ * Vimeo tags library
+ * @see "http://vimeo.com"
+ */
 class VimeoTagLib
 {
   static final String namespace = "vimeo"
@@ -28,34 +32,5 @@ class VimeoTagLib
       height: attrs.height,
       src: "https://player.vimeo.com/video/${attrs.video}?badge=0${attrs.autoplay?.toBoolean() ? "&autoplay=1" : ""}${attrs.loop?.toBoolean() ? "&loop=1" : ""}"
     ])
-  }
-
-  /**
-   * Renders hyperlink to Vimeo video.
-   * @attr video REQUIRED Identifier of video.
-   */
-  def videoLink = { attrs, body ->
-    if (!attrs.video)
-    {
-      return
-    }
-
-    attrs.href = videoUrl([video: attrs.video])
-    attrs.remove("video")
-
-    out << g.withTag(name: "a", attrs: attrs, body())
-  }
-
-  /**
-   * Generates URL for Vimeo video.
-   * @attr video REQUIRED Identifier of video.
-   */
-  def videoUrl = { attrs ->
-    if (!attrs.video)
-    {
-      return
-    }
-
-    out << "https://vimeo.com/${attrs.video}"
   }
 }

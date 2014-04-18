@@ -4,6 +4,6 @@
     if (d.getElementById(id)) return;
     js = d.createElement(s);
     js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=${appId}";
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=${app_id}";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));

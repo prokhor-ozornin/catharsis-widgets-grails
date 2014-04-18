@@ -5,7 +5,7 @@ import grails.test.mixin.TestFor
 @TestFor(YandexTagLib)
 class YandexTagLibTests
 {
-  void testAnalyticsTag()
+  void test_analytics_tag()
   {
     assert !applyTemplate('<yandex:analytics/>')
 
@@ -19,7 +19,7 @@ class YandexTagLibTests
     assert html.contains('"trackHash":true')
     assert !html.contains('"ut":"noindex"')
 
-    html = applyTemplate('<yandex:analytics account="account" webvisor="false" clickmap="false" tracklinks="false" accurate="false" trackhash="false" noindex="true"/>')
+    html = applyTemplate('<yandex:analytics account="account" web_visor="false" click_map="false" track_links="false" accurate="false" track_hash="false" no_index="true"/>')
     assert html.contains("Ya.Metrika.informer({i: this, id: account, lang: '${request.locale.language}'})")
     assert html.contains('yaCounteraccount')
     assert html.contains('"webvisor":false')
@@ -30,70 +30,58 @@ class YandexTagLibTests
     assert html.contains('"ut":"noindex"')
   }
 
-  void testLikeTag()
+  void test_like_tag()
   {
     assert applyTemplate('<yandex:like/>') == '<a name="ya-share" type="button" size="large"></a>'
     assert applyTemplate('<yandex:like layout="icon" size="small" text="text" url="url" title="title"/>') == '<a name="ya-share" type="icon" size="small" share_text="text" share_url="url" share_title="title"></a>'
   }
 
-  void testMoneyButtonTag()
+  /*void test_map_tag()
   {
-    assert !applyTemplate('<yandex:moneyButton/>')
-    assert !applyTemplate('<yandex:moneyButton description="description" sum="1"/>')
-    assert !applyTemplate('<yandex:moneyButton account="account" sum="1"/>')
-    assert !applyTemplate('<yandex:moneyButton account="account" description="description"/>')
-    assert applyTemplate('<yandex:moneyButton account="account" description="description" sum="1"/>') == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="229" height="54" src="https://money.yandex.ru/embed/small.xml?account=account&quickpay=small&yamoney-payment-type=on&button-text=01&button-size=l&button-color=orange&targets=description&default-sum=1"></iframe>'
-    assert applyTemplate("<yandex:moneyButton account=\"account\" description=\"description\" sum=\"1\" type=\"${YandexMoneyButtonType.CARD}\" text=\"${YandexMoneyButtonText.TRANSFER}\" size=\"${YandexMoneyButtonSize.MEDIUM}\" color=\"${YandexMoneyButtonColor.WHITE}\" payerFullName=\"true\" payerEmail=\"true\" payerPhone=\"true\" payerAddress=\"true\"/>") == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="242" height="54" src="https://money.yandex.ru/embed/small.xml?account=account&quickpay=small&any-card-payment-type=on&button-text=03&button-size=m&button-color=white&targets=description&default-sum=1&fio=on&mail=on&phone=on&address=on"></iframe>'
+
+  }*/
+
+  void test_money_button_tag()
+  {
+    assert !applyTemplate('<yandex:money_button/>')
+    assert !applyTemplate('<yandex:money_button description="description" sum="1"/>')
+    assert !applyTemplate('<yandex:money_button account="account" sum="1"/>')
+    assert !applyTemplate('<yandex:money_button account="account" description="description"/>')
+    assert applyTemplate('<yandex:money_button account="account" description="description" sum="1"/>') == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="229" height="54" src="https://money.yandex.ru/embed/small.xml?account=account&quickpay=small&yamoney-payment-type=on&button-text=01&button-size=l&button-color=orange&targets=description&default-sum=1"></iframe>'
+    assert applyTemplate("<yandex:money_button account=\"account\" description=\"description\" sum=\"1\" type=\"${YandexMoneyButtonType.CARD}\" text=\"${YandexMoneyButtonText.TRANSFER}\" size=\"${YandexMoneyButtonSize.MEDIUM}\" color=\"${YandexMoneyButtonColor.WHITE}\" payer_fullname=\"true\" payer_email=\"true\" payer_phone=\"true\" payer_address=\"true\"/>") == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="242" height="54" src="https://money.yandex.ru/embed/small.xml?account=account&quickpay=small&any-card-payment-type=on&button-text=03&button-size=m&button-color=white&targets=description&default-sum=1&fio=on&mail=on&phone=on&address=on"></iframe>'
   }
 
-  void testMoneyDonateFormTag()
+  void test_money_donate_form_tag()
   {
-    assert !applyTemplate('<yandex:moneyDonateForm/>')
-    assert !applyTemplate('<yandex:moneyDonateForm description="description"/>')
-    assert !applyTemplate('<yandex:moneyDonateForm account="account"/>')
-    assert applyTemplate('<yandex:moneyDonateForm account="account" description="description"/>') == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="523" height="133" src="https://money.yandex.ru/embed/donate.xml?account=account&quickpay=donate&payment-type-choice=on&default-sum=&targets=description&project-name=&project-site=&button-text=01"></iframe>'
-    assert applyTemplate("<yandex:moneyDonateForm account=\"account\" description=\"description\" showDescription=\"true\" sum=\"1\" cards=\"false\" text=\"${YandexMoneyDonateFormText.TRANSFER}\" projectName=\"projectName\" projectSite=\"projectSite\" payerComment=\"true\" payerCommentHint=\"payerCommentHint\" payerFullName=\"true\" payerEmail=\"true\" payerPhone=\"true\"/>") == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="426" height="210" src="https://money.yandex.ru/embed/donate.xml?account=account&quickpay=donate&default-sum=1&targets=description&target-visibility=on&project-name=projectName&project-site=projectSite&button-text=03&comment=on&hint=payerCommentHint&fio=on&mail=on&phone=on"></iframe>'
+    assert !applyTemplate('<yandex:money_donate_form/>')
+    assert !applyTemplate('<yandex:money_donate_form description="description"/>')
+    assert !applyTemplate('<yandex:money_donate_form account="account"/>')
+    assert applyTemplate('<yandex:money_donate_form account="account" description="description"/>') == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="523" height="133" src="https://money.yandex.ru/embed/donate.xml?account=account&quickpay=donate&payment-type-choice=on&default-sum=&targets=description&project-name=&project-site=&button-text=01"></iframe>'
+    assert applyTemplate("<yandex:money_donate_form account=\"account\" description=\"description\" show_description=\"true\" sum=\"1\" cards=\"false\" text=\"${YandexMoneyDonateFormText.TRANSFER}\" project_name=\"project_name\" project_site=\"project_site\" payer_comment=\"true\" payer_comment_hint=\"payer_comment_hint\" payer_fullname=\"true\" payer_email=\"true\" payer_phone=\"true\"/>") == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="426" height="210" src="https://money.yandex.ru/embed/donate.xml?account=account&quickpay=donate&default-sum=1&targets=description&target-visibility=on&project-name=project_name&project-site=project_site&button-text=03&comment=on&hint=payer_comment_hint&fio=on&mail=on&phone=on"></iframe>'
   }
 
-  void testMoneyPaymentFormTag()
+  void test_money_payment_form_tag()
   {
-    assert !applyTemplate('<yandex:moneyPaymentForm/>')
-    assert !applyTemplate('<yandex:moneyPaymentForm description="description"/>')
-    assert !applyTemplate('<yandex:moneyPaymentForm account="account"/>')
-    assert applyTemplate('<yandex:moneyPaymentForm account="account" description="description"/>') == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="450" height="200" src="https://money.yandex.ru/embed/shop.xml?account=account&quickpay=shop&payment-type-choice=on&writer=seller&targets=description&default-sum=&button-text=01"></iframe>'
-    assert applyTemplate("<yandex:moneyPaymentForm account=\"account\" description=\"description\" sum=\"1\" cards=\"false\" text=\"${YandexMoneyPaymentFormText.TRANSFER}\" payerPurpose=\"true\" payerComment=\"true\' payerFullName=\"true\" payerEmail=\"true\" payerPhone=\"true\" payerAddress=\"true\"/>") == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="450" height="200" src="https://money.yandex.ru/embed/shop.xml?account=account&quickpay=shop&writer=buyer&targets-hint=description&default-sum=1&button-text=03&phone=on&address=on"></iframe>'
+    assert !applyTemplate('<yandex:money_payment_form/>')
+    assert !applyTemplate('<yandex:money_payment_form description="description"/>')
+    assert !applyTemplate('<yandex:money_payment_form account="account"/>')
+    assert applyTemplate('<yandex:money_payment_form account="account" description="description"/>') == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="450" height="200" src="https://money.yandex.ru/embed/shop.xml?account=account&quickpay=shop&payment-type-choice=on&writer=seller&targets=description&default-sum=&button-text=01"></iframe>'
+    assert applyTemplate("<yandex:money_payment_form account=\"account\" description=\"description\" sum=\"1\" cards=\"false\" text=\"${YandexMoneyPaymentFormText.TRANSFER}\" payer_purpose=\"true\" payer_comment=\"true\" payer_fullname=\"true\" payer_email=\"true\" payer_phone=\"true\" payer_address=\"true\"/>") == '<iframe frameborder="0" allowtransparency="true" scrolling="no" width="450" height="255" src="https://money.yandex.ru/embed/shop.xml?account=account&quickpay=shop&writer=buyer&targets-hint=description&default-sum=1&button-text=03&comment=on&fio=on&mail=on&phone=on&address=on"></iframe>'
   }
 
-  void testShareTag()
+  void test_share_tag()
   {
     assert applyTemplate('<yandex:share/>') == "<div class=\"yashare-auto-init\" data-yashareL10n=\"${request.locale.language}\" data-yashareType=\"button\" data-yashareQuickServices=\"yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,friendfeed,moikrug,gplus,pinterest,surfingbird\"></div>"
     assert applyTemplate("<yandex:share services=\"yaru\" layout=\"${YandexShareButtonLayout.LINK}\" language=\"ru\"/>") == "<div class=\"yashare-auto-init\" data-yashareL10n=\"ru\" data-yashareType=\"${YandexShareButtonLayout.LINK}\" data-yashareQuickServices=\"yaru\"></div>"
   }
 
-  void testVideoTag()
+  void test_video_tag()
   {
     assert !applyTemplate('<yandex:video/>')
     assert !applyTemplate('<yandex:video video="video" user="user" width="width"/>')
     assert !applyTemplate('<yandex:video video="video" user="user" height="height"/>')
     assert !applyTemplate('<yandex:video video="video" width="width" height="height"/>')
     assert !applyTemplate('<yandex:video user="user" width="width" height="height"/>')
-
     assert applyTemplate('<yandex:video video="video" width="width" height="height" user="user"/>') == '<iframe frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" width="width" height="height" src="http://video.yandex.ru/iframe/user/video"></iframe>'
-  }
-
-  void testVideoLinkTag()
-  {
-    assert !applyTemplate('<yandex:videoLink/>')
-    assert !applyTemplate('<yandex:videoLink video="video"/>')
-    assert !applyTemplate('<yandex:videoLink user="user"/>')
-    assert applyTemplate('<yandex:videoLink video="video" user="user"/>') == '<a href="http://video.yandex.ru/users/user/view/video"></a>'
-  }
-
-  void testVideoUrlTag()
-  {
-    assert !applyTemplate('<yandex:videoUrl/>')
-    assert !applyTemplate('<yandex:videoUrl video="video"/>')
-    assert !applyTemplate('<yandex:videoUrl user="user"/>')
-    assert applyTemplate('<yandex:videoUrl video="video" user="user"/>') == 'http://video.yandex.ru/users/user/view/video'
   }
 }

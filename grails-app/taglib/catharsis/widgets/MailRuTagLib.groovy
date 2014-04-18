@@ -2,9 +2,127 @@ package catharsis.widgets
 
 import grails.converters.JSON
 
+/**
+ * Mail.ru tags library
+ * @see "http://mail.ru"
+ */
 class MailRuTagLib
 {
   static final String namespace = "mailru"
+
+  /**
+   * Renders Mail.ru Faces (People On Site) widget.
+   * Requires "mailru" module to be loaded with Resources plugin.
+   * @see "http://api.mail.ru/sites/plugins/faces"
+   * @attr domain REQUIRED Domain of target site with which users have interacted.
+   * @attr width REQUIRED Width of Faces box area.
+   * @attr height REQUIRED Height of Faces box area.
+   * @attr font Name of font, used for text labels.
+   * @attr title Title text label of Faces box.
+   * @attr show_title Whether to show or hide Faces box title.
+   * @attr title_color Color of Faces box title.
+   * @attr background_color Color of Faces box background.
+   * @attr border_color Color of Faces box border.
+   * @attr text_tolor Color of Faces box text labels.
+   * @attr hyperlink_color Color of Faces box hyperlinks.
+   */
+  def faces = { attrs ->
+    if (!attrs.domain || !attrs.width || !attrs.height)
+    {
+      return
+    }
+
+    def config =
+    [
+      "domain": attrs.domain,
+      "font": (attrs.font ?: MailRuFacesFont.ARIAL).toString(),
+      "width": attrs.width,
+      "height": attrs.height
+    ]
+
+    if (attrs.title)
+    {
+      config.title = attrs.title
+    }
+    if (attrs.show_title != null && !attrs.show_title.toBoolean())
+    {
+      config.notitle = true
+    }
+    if (attrs.title_color)
+    {
+      config["title-color"] = attrs.title_color
+    }
+    if (attrs.background_color)
+    {
+      config.background = attrs.background_color
+    }
+    if (attrs.border_color)
+    {
+      config.border = attrs.border_color
+    }
+    if (attrs.text_color)
+    {
+      config.color = attrs.text_color
+    }
+    if (attrs.hyperlink_color)
+    {
+      config["link-color"] = attrs.hyperlink_color
+    }
+
+    def query = config.collect { pair -> "${pair.key.encodeAsURL()}=${pair.value.encodeAsURL()}" }.join("&amp;")
+
+    out << "<a class=\"mrc__plugin_share_friends\" href=\"http://connect.mail.ru/share_friends?${query}\" rel=\"${(config as JSON).encodeAsHTML()}\">Друзья</a>"
+  }
+
+  /**
+   * Renders Mail.ru Group (People In Group) widget.
+   * Requires "mailru" module to be loaded with Resources plugin.
+   * @see "http://api.mail.ru/sites/plugins/groups"
+   * @attr account REQUIRED Account name of Mail.ru group.
+   * @attr height REQUIRED Height of Groups box area.
+   * @attr width REQUIRED Width of Groups box area.
+   * @attr domain Target site domain.
+   * @attr subscribers Whether to show portraits of group's subscribers or not.
+   * @attr background_color Color of Groups box background.
+   * @attr button_color Color of "Subscribe" button in Groups box.
+   * @attr text_color Color of Groups box text labels.
+   */
+  def groups = { attrs ->
+    if (!attrs.account || !attrs.width || !attrs.height)
+    {
+      return
+    }
+
+    def config =
+    [
+      "group" : attrs.account,
+      "max_sub": 50,
+      "show_subscribers" : attrs.subscribers != null ? attrs.subscribers.toBoolean() : true,
+      "width": attrs.width,
+      "height": attrs.height
+    ]
+
+    if (attrs.background_color)
+    {
+      config.background = attrs.background_color
+    }
+    if (attrs.text_color)
+    {
+      config.color = attrs.text_color
+    }
+    if (attrs.button_color)
+    {
+      config.button_background = attrs.button_color
+    }
+    if (attrs.domain)
+    {
+      config.domain = attrs.domain
+    }
+
+    def query = config.collect { pair -> "${pair.key.encodeAsURL()}=${pair.value.encodeAsURL()}" }.join("&amp;")
+
+    out << "<a target=\"_blank\" class=\"mrc__plugin_groups_widget\" href=\"http://connect.mail.ru/groups_widget?${query}\" rel=\"${(config as JSON).encodeAsHTML()}\">Группы</a>"
+  }
 
   /**
    * Adds "ICQ On-Site" widget to web page.
@@ -29,9 +147,9 @@ class MailRuTagLib
    * @attr layout Visual layout/appearance of button (MailRuLikeButtonLayout or integer).
    * @attr type Type of button (MailRuLikeButtonType or string).
    * @attr counter Whether to render share counter next to a button. Default is true.
-   * @attr counterPosition Position of a share counter (MailRuLikeButtonCounterPosition or string).
+   * @attr counter_position Position of a share counter (MailRuLikeButtonCounterPosition or string).
    * @attr text Whether to show text label on button. Default is true.
-   * @attr textType Type of text label to show on button (MailRuLikeButtonTextType or integer).
+   * @attr text_type Type of text label to show on button (MailRuLikeButtonTextType or integer).
    */
   def like = { attrs ->
     def config = [:]
@@ -62,7 +180,7 @@ class MailRuTagLib
     {
       config.nc = 1
     }
-    else if (attrs.counterPosition?.toString()?.toLowerCase() == MailRuLikeButtonCounterPosition.UPPER.toString())
+    else if (attrs.counter_position?.toString()?.toLowerCase() == MailRuLikeButtonCounterPosition.UPPER.toString())
     {
       config.vt = 1
     }
@@ -73,7 +191,7 @@ class MailRuTagLib
     }
     else
     {
-      def textType = (attrs.textType ?: MailRuLikeButtonTextType.FIRST).toString()
+      def textType = (attrs.text_type ?: MailRuLikeButtonTextType.FIRST).toString()
       config.cm = textType
       config.ck = textType
     }
@@ -103,44 +221,15 @@ class MailRuTagLib
     out << g.withTag(
       name: "iframe",
       attrs:
-        [
-          frameborder: "0",
-          allowfullscreen: true,
-          webkitallowfullscreen: true,
-          mozallowfullscreen: true,
-          width: attrs.width,
-          height: attrs.height,
-          src: "http://api.video.mail.ru/videos/embed/mail/${attrs.video}"
-        ])
-  }
-
-  /**
-   * Renders hyperlink to Mail.ru video.
-   * @attr video REQUIRED Identifier of video, possibly including username of uploader.
-   */
-  def videoLink = { attrs, body ->
-    if (!attrs.video)
-    {
-      return
-    }
-
-    attrs.href = videoUrl([video: attrs.video])
-    attrs.remove("video")
-
-    out << g.withTag(name: "a", attrs: attrs, body())
-  }
-
-  /**
-   * Generates URL for Mail.ru video.
-   * @attr video REQUIRED Identifier of video, possibly including username of uploader.
-   */
-  def videoUrl = { attrs ->
-    if (!attrs.video)
-    {
-      return
-    }
-
-    out << "http://my.mail.ru/video/mail/${attrs.video}"
+      [
+        frameborder: "0",
+        allowfullscreen: true,
+        webkitallowfullscreen: true,
+        mozallowfullscreen: true,
+        width: attrs.width,
+        height: attrs.height,
+        src: "http://api.video.mail.ru/videos/embed/mail/${attrs.video}"
+      ])
   }
 }
 
@@ -289,5 +378,41 @@ enum MailRuLikeButtonTextType
   String toString()
   {
     return (ordinal() + 1).toString()
+  }
+}
+
+/**
+ *
+ */
+enum MailRuFacesFont
+{
+  /**
+   *
+   */
+  ARIAL,
+
+  /**
+   *
+   */
+  TAHOMA,
+
+  /**
+   *
+   */
+  GEORGIA
+
+  String toString()
+  {
+    switch (this)
+    {
+      case ARIAL :
+        return "Arial"
+
+      case TAHOMA :
+        return "Tahoma"
+
+      case GEORGIA :
+        return "Georgia";
+    }
   }
 }
