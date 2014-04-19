@@ -4,7 +4,13 @@ It provides useful social media widgets to include on web pages of your site.
 
 ***
 
-This project requires your support. Please donate !
+**Support**
+
+This project needs your support for further developments ! Please consider donating.
+
+- _Yandex.Money_ : 41001577953208
+
+- _WebMoney (WMR)_ : R399275865890
 
 [![Image](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=APHM8MU9N76V8 "Donate")
 
@@ -205,6 +211,38 @@ You must include `<r:require module="mailru"/>` directive first to use below tag
 > `<mailru:groups account="mail_ru" width="640" height="480"/>`
 
 > `<mailru:groups account="mail_ru" width="640" height="480" background_color="aaffaa" button_color="ffaaff" subscribers="false" text_color="aaaadd"/>`
+
+**Pinterest**
+
+You must include `<r:require module="pinterest"/>` directive first to use below tags.
+
+> Renders Pinterest "Follow Me" button
+
+> `<pinterest:follow account="pinterest"/>`
+
+> `<pinterest:follow account="pinterest" label="Pinterest"/>`
+
+> Renders Pinterest embedded pin widget.
+
+> `<pinterest:pin id="99360735500167749"/>`
+
+> Renders Pinterest Board widget with latest pins.
+
+> `<pinterest:board account="pinterest" id="pin-pets"/>`
+
+> `<pinterest:board account="pinterest" id="pin-pets" image_width="60" height="800" width="150"/>`
+
+> Renders Pinterest Profile widget with user's latest pins.
+
+> `<pinterest:profile account="pinterest"/>`
+
+> `<pinterest:profile account="pinterest" image_width="60" height="800" width="150"/>`
+
+> Renders Pinterest "Pin It" button widget.
+
+> `<pinterest:pinit url="http://www.flickr.com/photos/kentbrew/6851755809" image="http://farm8.staticflickr.com/7027/6851755809_df5b2051c9_z.jpg" description="Next stop: Pinterest"/>`
+
+> `<pinterest:pinit url="http://www.flickr.com/photos/kentbrew/6851755809" image="http://farm8.staticflickr.com/7027/6851755809_df5b2051c9_z.jpg" description="Next stop: Pinterest" counter_position="${PinterestPinItButtonPinCountPosition.NONE}" size="${PinterestPinItButtonSize.LARGE}" color="${PinterestPinItButtonColor.RED}" shape="${PinterestPinItButtonShape.RECTANGULAR}" language="ja"/>`
 
 **RuTube**
 

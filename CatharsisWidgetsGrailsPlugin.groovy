@@ -1,6 +1,6 @@
 class CatharsisWidgetsGrailsPlugin
 {
-  def version = "2.0"
+  def version = "2.1"
   def grailsVersion = "2.0 > *"
   def title = "Catharsis Web Widgets"
   def description = """\
@@ -23,6 +23,8 @@ As of the latest version, the following areas are covered :
 - LiveJournal [Like Button, Repost Button]
 
 - Mail.ru [Faces widget, Groups widget, ICQ On-Site widget, "Like" button (mail.ru/odnoklassniki.ru), Embedded video, Video hyperlink]
+
+- Pinterest [Pin It Button, Follow Button, Pin Widget, Profile Widget, Board Widget]
 
 - RuTube [Embedded video, Video hyperlink]
 

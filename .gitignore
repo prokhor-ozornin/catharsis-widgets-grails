@@ -1,4 +1,5 @@
 /web-app/WEB-INF
+/out
 /.idea
 /.iml
 /.classpath

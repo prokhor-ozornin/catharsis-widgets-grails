@@ -21,6 +21,10 @@ modules =
   {
     resource url: "http://cdn.connect.mail.ru/js/loader.js"
   }
+  pinterest
+  {
+    resource url: "http://assets.pinterest.com/js/pinit.js"
+  }
   surfingbird
   {
     resource url: "http://surfingbird.ru/share/share.min.js"
@@ -49,6 +53,6 @@ modules =
   }
   widgets
   {
-    dependsOn(["cackle", "disqus", "google", "mailru", "surfingbird", "twitter", "videojs", "vkontakte", "yandex"])
+    dependsOn(["cackle", "disqus", "google", "mailru", "pinterest", "surfingbird", "tumblr", "twitter", "videojs", "vkontakte", "yandex"])
   }
 }
