@@ -51,8 +51,4 @@ modules =
     resource url: "js/yandex_like.js"
     resource url: "http://yandex.st/share/share.js"
   }
-  widgets
-  {
-    dependsOn(["cackle", "disqus", "google", "mailru", "pinterest", "surfingbird", "tumblr", "twitter", "videojs", "vkontakte", "yandex"])
-  }
 }

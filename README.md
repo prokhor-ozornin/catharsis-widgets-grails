@@ -16,390 +16,594 @@ This project needs your support for further developments ! Please consider donat
 
 ***
 
-**Usage examples**
+**Installation and usage**
+
+Grails 2 tag library plugin: [Catharsis Widgets](http://grails.org/plugin/catharsis-widgets)
 
 Installation of the plugin follows basic Grails plugin conventions, and custom tags from this library can be used the same way as described in official Grails documentation : [Grails Tag Libraries](http://grails.org/doc/latest/guide/theWebLayer.html#taglibs)
 
-Parameters for each tag are documented, and you can always refer to the source code if required.
+Some tags make use of core [Resources](http://grails.org/plugin/resources) plugin, and therefore `<r:require>` tag with a proper module name must be included in a `<head>` section of web page as described.
 
-Some tags make use of core [Resources](http://grails.org/plugin/resources) plugin, and therefore `<r:require>` tag with a proper module name must be included in a `<head>` section of web page as described below.
+***
+
+**API examples**
 
 **Cackle**
 
-You must include `<r:require module="cackle"/>` directive first to use below tags.
+**1. Comments**
 
-> Render Cackle comments widget
+_Requirements:_ `<r:require module="cackle"/>` directive
 
-> `<cackle:comments account="20049"/>`
+_Code:_
 
-> Render required JavaScript to display number of comments next to hyperlinks. Hyperlinks must have a specific CSS class for this to work, as described in Cackle documentation.
+`<cackle:comments account="20049"/>`
 
-> `<cackle:commentsCount account="20049"/>`
+**2. Comments count hyperlink**
 
-> Render Cackle list of latest comments
+_Requirements:_ `<r:require module="cackle"/>` directive
 
-> `<cackle:latestComments account="20049"/>`
+_Note:_ Hyperlinks must have a specific CSS class for this to work, as described in Cackle documentation.
 
-> `<cackle:latestComments account="20049" max="15" avatarSize="32" titleSize="50" textSize="255"/>`
+_Code:_
 
-> Render Cackle OAuth login widget
+`<cackle:comments_count account="20049"/>`
 
-> `<cackle:login account="20049"/>`
+**3. Latest comments**
+
+_Requirements:_ `<r:require module="cackle"/>` directive
+
+_Code:_
+
+`<cackle:latest_comments account="20049"/>`
+
+`<cackle:latest_comments account="20049" max="15" avatar_size="32" title_size="50" text_size="255"/>`
+
+**4. OAuth login**
+
+_Requirements:_ `<r:require module="cackle"/>` directive
+
+_Code:_
+
+`<cackle:login account="20049"/>`
 
 **Disqus**
 
-You must include `<r:require module="disqus"/>` directive first to use below tags.
+**1. Comments**
 
-> Render Disqus comments widget
+_Requirements:_ `<r:require module="disqus"/>` directive
 
-> `<disqus:comments account="v-svete-snov"/>`
+_Code:_
+
+`<disqus:comments account="v-svete-snov"/>`
 
 **Facebook**
 
-> Render Facebook embedded video
+**1. JS API initialization**
 
-> `<facebook:video height="480" width="640" video="10203121281421359"/>`
+_Requirements:_ None
 
-> Performs Facebook JavaScript API initialization
+_Code:_
 
-> `<facebook:initialize appId="1437917246425293"/>`
+`<facebook:initialize app_id="1437917246425293"/>`
 
-You must call `<facebook:initialize"/>` directive first to use below tags.
+**2. Activity Feed**
 
-> Render Facebook Activity Feed widget
+_Requirements:_ Call to `<facebook:initialize>`
 
-> `<facebook:activityFeed/>`
+_Code:_
 
-> `<facebook:activityFeed domain="http://yandex.ru"/>`
+`<facebook:activity_feed/>`
 
-> `<facebook:activityFeed domain="http://yandex.ru" header="false" recommendations="true" colorScheme="dark"/>`
+`<facebook:activity_feed domain="http://yandex.ru"/>`
 
-> Render Facebook Recommendations Feed widget
+`<facebook:activity_feed domain="http://yandex.ru" header="false" recommendations="true" color_scheme="${FacebookColorScheme.DARK}"/>`
 
-> `<facebook:recommendationsFeed/>`
+**3. Recommendations Feed**
 
-> `<facebook:recommendationsFeed domain="yandex.ru"/>`
+_Requirements:_ Call to `<facebook:initialize>`
 
-> `<facebook:recommendationsFeed domain="yandex.ru" header="false" colorScheme="dark"/>`
+_Code:_
 
-> Render Facebook comments widget
+`<facebook:recommendations_feed/>`
 
-> `<facebook:comments/>`
+`<facebook:recommendations_feed domain="yandex.ru"/>`
 
-> `<facebook:comments url="http://yandex.ru"/>`
+`<facebook:recommendations_feed domain="yandex.ru" header="false" color_scheme="${FacebookColorScheme.DARK}"/>`
 
-> `<facebook:comments url="http://yandex.ru" order="${FacebookCommentsOrder.REVERSE_TIME}" posts="1" width="500"/>`
+**4. Comments**
 
-> Render Facebook Facepile widget
+_Requirements:_ Call to `<facebook:initialize>`
 
-> `<facebook:facepile/>`
+_Code:_
 
-> `<facebook:facepile url="http://yandex.ru"/>`
+`<facebook:comments/>`
 
-> `<facebook:facepile url="http://yandex.ru" maxRows="5" size="${FacebookFacepileSize.LARGE}" height="300"/>`
+`<facebook:comments url="http://yandex.ru"/>`
 
-> Render Facebook "Follow" button
+`<facebook:comments url="http://yandex.ru" order="${FacebookCommentsOrder.REVERSE_TIME}" posts="1" width="500"/>`
 
-> `<facebook:follow url="http://www.facebook.com/zuck"/>`
+**5. Facepile**
 
-> `<facebook:follow url="http://www.facebook.com/zuck" kids="true" faces="true" layout="box_count"/>`
+_Requirements:_ Call to `<facebook:initialize>`
 
-> Render Facebook Like Box
+_Code:_
 
-> `<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070"/>`
+`<facebook:facepile/>`
 
-> `<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070" header="false" border="false" faces="false" stream="true" width="500"/>`
+`<facebook:facepile url="http://yandex.ru"/>`
 
-> Render Facebook "Like" button
+`<facebook:facepile url="http://yandex.ru" max_rows="5" size="${FacebookFacepileSize.LARGE}" height="300"/>`
 
-> `<facebook:like/>`
+**6. Follow Button**
 
-> `<facebook:like url="http://yandex.ru"/>`
+_Requirements:_ Call to `<facebook:initialize>`
 
-> `<facebook:like url="http://yandex.ru" layout="box_count" faces="true" verb="recommend"/>`
+_Code:_
 
-> Render Facebook embedded post
+`<facebook:follow url="http://www.facebook.com/zuck"/>`
 
-> `<facebook:post url="https://www.facebook.com/prokhor.ozornin/posts/10203109769053557" width="640"/>`
+`<facebook:follow url="http://www.facebook.com/zuck" kids="true" faces="true" layout="${FacebookButtonLayout.BOX_COUNT}"/>`
 
-> Render Facebook "Send" button
+**7. Like Box**
 
-> `<facebook:send/>`
+_Requirements:_ Call to `<facebook:initialize>`
 
-> `<facebook:send url="http://yandex.ru"/>`
+_Code:_
 
-> `<facebook:send url="url" colorScheme="${FacebookColorScheme.DARK}" kids="true"/>`
+`<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070"/>`
+
+`<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070" header="false" border="false" faces="false" stream="true" width="500"/>`
+
+**8. Like Button**
+
+_Requirements:_ Call to `<facebook:initialize>`
+
+_Code:_
+
+`<facebook:like/>`
+
+`<facebook:like url="http://yandex.ru"/>`
+
+`<facebook:like url="http://yandex.ru" layout="${FacebookButtonLayout.BOX_COUNT}" faces="true" verb="${FacebookLikeButtonVerb.RECOMMEND}"/>`
+
+**9. Embedded post**
+
+_Requirements:_ Call to `<facebook:initialize>`
+
+_Code:_
+
+`<facebook:post url="https://www.facebook.com/prokhor.ozornin/posts/10203109769053557" width="640"/>`
+
+**10. Send Button**
+
+_Requirements:_ Call to `<facebook:initialize>`
+
+_Code:_
+
+`<facebook:send/>`
+
+`<facebook:send url="http://yandex.ru"/>`
+
+`<facebook:send url="url" color_scheme="${FacebookColorScheme.DARK}" kids="true"/>`
+
+**11. Embedded video**
+
+_Requirements:_ None
+
+_Code:_
+
+`<facebook:video height="480" width="640" video="10203121281421359"/>`
 
 **Google**
 
-> Render Google Analytics tracking code
+**1. Analytics**
 
-> `<google:analytics domain="v-svete-snov.ru" account="UA-27123759-16"/>`
+_Requirements:_ None
 
-You must include `<r:require module="google"/>` directive first to use below tags.
+_Code:_
 
-> Render Google "+1" button
+`<google:analytics domain="v-svete-snov.ru" account="UA-27123759-16"/>`
 
-> `<google:plusone/>`
+**2. +1 Button**
 
-> `<google:plusone url="http://yandex.ru" align="right" size="tall" annotation="inline" recommendations="false"/>`
+_Requirements:_ `<r:require module="google"/>` directive
+
+_Code:_
+
+`<google:plusone/>`
+
+`<google:plusone url="http://yandex.ru" align="${GooglePlusOneButtonAlign.RIGHT}" size="${GooglePlusOneButtonSize.TALL}" annotation="${GooglePlusOneButtonAnnotation.INLINE}" recommendations="false"/>`
 
 **Gravatar**
 
-> Render Gravatar's avatar image URL.
+**1. Avatar image URL**
 
-> `<gravatar:image_url email="prokhor.ozornin@yandex.ru"/>`
+_Requirements:_ None
 
-> `<gravatar:image_url email="prokhor.ozornin@yandex.ru" extension="jpg" force_default="true" size="320"/>`
+_Code:_
 
-> Render Gravatar's user profile URL.
+`<gravatar:image_url email="prokhor.ozornin@yandex.ru"/>`
 
-> `<gravatar:profile_url email="prokhor.ozornin@yandex.ru"/>`
+`<gravatar:image_url email="prokhor.ozornin@yandex.ru" extension="jpg" force_default="true" size="320"/>`
 
-> `<gravatar:profile_url email="prokhor.ozornin@yandex.ru" format="xml"/>`
+**2. User profile URL**
+
+_Requirements:_ None
+
+_Code:_
+
+`<gravatar:profile_url email="prokhor.ozornin@yandex.ru"/>`
+
+`<gravatar:profile_url email="prokhor.ozornin@yandex.ru" format="xml"/>`
 
 **IntenseDebate**
 
-> Render IntenseDebate comments widget
+**1. Comments**
 
-> `<intensedebate:comments account="a639ec3507d53023d4f213666651b6c2"/>`
+_Requirements:_ None
 
-> Render IntenseDebate hyperlink with comments count
+_Code:_
 
-> `<intensedebate:link account="a639ec3507d53023d4f213666651b6c2"/>`
+`<intensedebate:comments account="a639ec3507d53023d4f213666651b6c2"/>`
+
+**2. Comments count hyperlink**
+
+_Requirements:_ None
+
+_Code:_
+
+`<intensedebate:link account="a639ec3507d53023d4f213666651b6c2"/>`
 
 **LiveJournal**
 
-> Renders LiveJournal "Like" button
+**1. Like Button**
 
-> `<livejournal:like/>`
+_Requirements:_ None
 
-> Renders LiveJournal "Repost" button
+_Code:_
 
-> `<livejournal:repost/>`
+`<livejournal:like/>`
 
-> `<livejournal:repost title="title">text</livejournal:repost>`
+**2. Repost Button**
+
+_Requirements:_ None
+
+_Code:_
+
+`<livejournal:repost/>`
+
+`<livejournal:repost title="title">text</livejournal:repost>`
 
 **Mail.ru**
 
-> Render ICQ On-Site widget
+**1. ICQ On-Site**
 
-> `<mailru:icq/>`
+_Requirements:_ None
 
-> `<mailru:icq account="12345678" language="en"/>`
+_Code:_
 
-> Render Mail.ru embedded video
+`<mailru:icq/>`
 
-> `<mailru:video height="480" width="640" video="tommylordau/4271/4279.html"/>`
+`<mailru:icq account="12345678" language="en"/>`
 
-You must include `<r:require module="mailru"/>` directive first to use below tags.
+**2. Embedded video**
 
-> Render Mail.ru + Odnoklassniki.ru "Like" buttons pair
+_Requirements:_ None
 
-> `<mailru:like/>`
+_Code:_
 
-> `<mailru:like layout="2" text="false" counterPosition="upper" size="30"/>`
+`<mailru:video height="480" width="640" video="tommylordau/4271/4279.html"/>`
 
-> Renders Mail.ru Faces (People On Site) widget.
+**3. Like Button**
 
-> `<mailru:faces domain="mail.ru" width="640" height="480"/>`
+_Requirements:_ `<r:require module="mailru"/>` directive
 
-> `<mailru:faces domain="mail.ru" width="640" height="480" font="${MailRuFacesFont.TAHOMA}" show_title="false" background_color="aaffaa" hyperlink_color="ffaaff" border_color="aaaaaa"/>`
+_Code:_
 
-> Renders Mail.ru Group (People In Group) widget.
+`<mailru:like/>`
 
-> `<mailru:groups account="mail_ru" width="640" height="480"/>`
+`<mailru:like layout="${MailRuLikeButtonLayout.FIRST}" text="false" counter_position="${MailRuLikeButtonCounterPosition.UPPER}" size="30"/>`
 
-> `<mailru:groups account="mail_ru" width="640" height="480" background_color="aaffaa" button_color="ffaaff" subscribers="false" text_color="aaaadd"/>`
+**4. Faces**
+
+_Requirements:_ `<r:require module="mailru"/>` directive
+
+_Code:_
+
+`<mailru:faces domain="mail.ru" width="640" height="480"/>`
+
+`<mailru:faces domain="mail.ru" width="640" height="480" font="${MailRuFacesFont.TAHOMA}" show_title="false" background_color="aaffaa" hyperlink_color="ffaaff" border_color="aaaaaa"/>`
+
+**5. Groups**
+
+_Requirements:_ `<r:require module="mailru"/>` directive
+
+_Code:_
+
+`<mailru:groups account="mail_ru" width="640" height="480"/>`
+
+`<mailru:groups account="mail_ru" width="640" height="480" background_color="aaffaa" button_color="ffaaff" subscribers="false" text_color="aaaadd"/>`
 
 **Pinterest**
 
-You must include `<r:require module="pinterest"/>` directive first to use below tags.
+**1. Follow Button**
 
-> Renders Pinterest "Follow Me" button
+_Requirements:_ `<r:require module="pinterest"/>` directive
 
-> `<pinterest:follow account="pinterest"/>`
+_Code:_
 
-> `<pinterest:follow account="pinterest" label="Pinterest"/>`
+`<pinterest:follow account="pinterest"/>`
 
-> Renders Pinterest embedded pin widget.
+`<pinterest:follow account="pinterest" label="Pinterest"/>`
 
-> `<pinterest:pin id="99360735500167749"/>`
+**2. Embedded Pin**
 
-> Renders Pinterest Board widget with latest pins.
+_Requirements:_ `<r:require module="pinterest"/>` directive
 
-> `<pinterest:board account="pinterest" id="pin-pets"/>`
+_Code:_
 
-> `<pinterest:board account="pinterest" id="pin-pets" image_width="60" height="800" width="150"/>`
+`<pinterest:pin id="99360735500167749"/>`
 
-> Renders Pinterest Profile widget with user's latest pins.
+**3. Board**
 
-> `<pinterest:profile account="pinterest"/>`
+_Requirements:_ `<r:require module="pinterest"/>` directive
 
-> `<pinterest:profile account="pinterest" image_width="60" height="800" width="150"/>`
+_Code:_
 
-> Renders Pinterest "Pin It" button widget.
+`<pinterest:board account="pinterest" id="pin-pets"/>`
 
-> `<pinterest:pinit url="http://www.flickr.com/photos/kentbrew/6851755809" image="http://farm8.staticflickr.com/7027/6851755809_df5b2051c9_z.jpg" description="Next stop: Pinterest"/>`
+`<pinterest:board account="pinterest" id="pin-pets" image_width="60" height="800" width="150"/>`
 
-> `<pinterest:pinit url="http://www.flickr.com/photos/kentbrew/6851755809" image="http://farm8.staticflickr.com/7027/6851755809_df5b2051c9_z.jpg" description="Next stop: Pinterest" counter_position="${PinterestPinItButtonPinCountPosition.NONE}" size="${PinterestPinItButtonSize.LARGE}" color="${PinterestPinItButtonColor.RED}" shape="${PinterestPinItButtonShape.RECTANGULAR}" language="ja"/>`
+**4. Profile**
+
+_Requirements:_ `<r:require module="pinterest"/>` directive
+
+_Code:_
+
+`<pinterest:profile account="pinterest"/>`
+
+`<pinterest:profile account="pinterest" image_width="60" height="800" width="150"/>`
+
+**5. Pin It Button**
+
+_Requirements:_ `<r:require module="pinterest"/>` directive
+
+_Code:_
+
+`<pinterest:pinit url="http://www.flickr.com/photos/kentbrew/6851755809" image="http://farm8.staticflickr.com/7027/6851755809_df5b2051c9_z.jpg" description="Next stop: Pinterest"/>`
+
+`<pinterest:pinit url="http://www.flickr.com/photos/kentbrew/6851755809" image="http://farm8.staticflickr.com/7027/6851755809_df5b2051c9_z.jpg" description="Next stop: Pinterest" counter_position="${PinterestPinItButtonPinCountPosition.NONE}" size="${PinterestPinItButtonSize.LARGE}" color="${PinterestPinItButtonColor.RED}" shape="${PinterestPinItButtonShape.RECTANGULAR}" language="ja"/>`
 
 **RuTube**
 
-> Render RuTube embedded video
+**1. Embedded video**
 
-> `<rutube:video height="480" width="640" video="6785018"/>`
+_Requirements:_ None
+
+_Code:_
+
+`<rutube:video height="480" width="640" video="6785018"/>`
 
 **SoundCloud**
 
-> Renders SoundCloud user's profile icon
+**1. User's profile icon**
 
-> `<soundcloud:profile_icon account="prokhor-ozornin"/>`
+_Requirements:_ None
 
-> `<soundcloud:profile_icon account="prokhor-ozornin" color="${SoundCloudProfileIconColor.BLACK_WHITE}" size="${SoundCloudProfileIconSize.SIZE_64}"/>`
+_Code:_
+
+`<soundcloud:profile_icon account="prokhor-ozornin"/>`
+
+`<soundcloud:profile_icon account="prokhor-ozornin" color="${SoundCloudProfileIconColor.BLACK_WHITE}" size="${SoundCloudProfileIconSize.SIZE_64}"/>`
 
 **Surfingbird**
 
-You must include `<r:require module="surfingbird"/>` directive first to use below tags.
+**1. Surf Button**
 
-> Render Surfingbird "Surf" button
+_Requirements:_ `<r:require module="surfingbird"/>` directive
 
-> `<surfingbird:surf/>`
+_Code:_
 
-> `<surfingbird:surf color="blue" counter="true" label="Share" url="http://yandex.ru" layout="${SurfingbirdSurfButtonLayout.COMMON}"/>`
+`<surfingbird:surf/>`
+
+`<surfingbird:surf color="${SurfingbirdSurfButtonColor.BLUE}" counter="true" label="Share" url="http://yandex.ru" layout="${SurfingbirdSurfButtonLayout.COMMON}"/>`
 
 **Tumblr**
 
-> Render Tumblr "Follow" button
+**1. Follow Button**
 
-> `<tumblr:follow account="clear-words-en"/>`
+_Requirements:_ None
 
-> `<tumblr:follow account="clear-words-en" colorScheme="dark" type="${TumblrFollowButtonType.SECOND}"/>`
+_Code:_
 
-You must include `<r:require module="tumblr"/>` directive first to use below tags.
+`<tumblr:follow account="clear-words-en"/>`
 
-> Render Tumblr "Share" button
+`<tumblr:follow account="clear-words-en" color_scheme="${TumblrFollowButtonColorScheme.DARK}" type="${TumblrFollowButtonType.SECOND}"/>`
 
-> `<tumblr:share/>`
+**2. Share Button**
 
-> `<tumblr:share colorScheme="dark" type="${TumblrShareButtonType.THIRD}"/>`
+_Requirements:_ `<r:require module="tumblr"/>` directive
+
+_Code:_
+
+`<tumblr:share/>`
+
+`<tumblr:share color_scheme="${TumblrShareButtonColorScheme.GRAY}" type="${TumblrShareButtonType.THIRD}"/>`
 
 **Twitter**
 
-You must include `<r:require module="twitter"/>` directive first to use below tags.
+**1. Tweet Button**
 
-> Render Twitter "Tweet" button
+_Requirements:_ `<r:require module="twitter"/>` directive
 
-> `<twitter:tweet/>`
+_Code:_
 
-> `<twitter:tweet tags="first,second,third" url="http://yandex.ru" text="Let's share it !" via="Prokhor" dnt="true"/>`
+`<twitter:tweet/>`
 
-> Render Twitter "Follow" button
+`<twitter:tweet tags="first,second,third" url="http://yandex.ru" text="Let's share it !" via="Prokhor" dnt="true"/>`
 
-> `<twitter:follow account="prokhor_ozornin"/>`
+**2. Follow Button**
 
-> `<twitter:follow account="prokhor_ozornin" dnt="false" count="false" screenName="false"/>`
+_Requirements:_ `<r:require module="twitter"/>` directive
+
+_Code:_
+
+`<twitter:follow account="prokhor_ozornin"/>`
+
+`<twitter:follow account="prokhor_ozornin" dnt="false" count="false" screen_name="false"/>`
 
 **Vimeo**
 
-> Render Vimeo embedded video
+**1. Embedded video**
 
-> `<vimeo:video height="480" width="640" video="55456906"/>`
+_Requirements:_ None
 
-**VKontakte**
+_Code:_
 
-> Render VKontakte embedded video
+`<vimeo:video height="480" width="640" video="55456906"/>`
 
-> `<vkontakte:video height="360" hash="7a0cdf6ef7a69e67" user="5707198" width="607" video="167533148" hd="true"/>`
+**Vkontakte**
 
-You must include `<r:require module="vkontakte"/>` directive first to use below tags.
+**1. Embedded video**
 
-> Performs initialization of VKontakte API
+_Requirements:_ None
 
-> `<vkontakte:initialize apiId="3816272"/>`
+_Code:_
 
-> Render VKontakte comments widget
+`<vkontakte:video height="360" hash="7a0cdf6ef7a69e67" user="5707198" width="607" video="167533148" hd="true"/>`
 
-> `<vkontakte:comments/>`
+**2. JS API initialization**
 
-> `<vkontakte:comments attach="${VkontakteCommentsAttach.ALL}" limit="15"/>`
+_Requirements:_ `<r:require module="vkontakte"/>` directive
 
-> Render VKontakte community widget
+_Code:_
 
-> `<vkontakte:community account="44545550"/>`
+`<vkontakte:initialize api_id="3816272"/>`
 
-> `<vkontakte:community account="44545550" mode="${VkontakteCommunityMode.NEWS}" height="400" width="600"/>`
+**3. Comments**
 
-> Render VKontakte "Like" button
+_Requirements:_ Call to `<vkontakte:initialize>`
 
-> `<vkontakte:like/>`
+_Code:_
 
-> Render VKontakte Subscribe widget
+`<vkontakte:comments/>`
 
-> `<vkontakte:subscribe account="5707198"/>`
+`<vkontakte:comments attach="${VkontakteCommentsAttach.ALL}" limit="${VkontakteCommentsLimit.FIFTEEN}"/>`
 
-> `<vkontakte:subscribe account="5707198" onlyButton="true"/>`
+**4. Community**
+
+_Requirements:_ Call to `<vkontakte:initialize>`
+
+_Code:_
+
+`<vkontakte:community account="44545550"/>`
+
+`<vkontakte:community account="44545550" mode="${VkontakteCommunityMode.NEWS}" height="400" width="600"/>`
+
+**5. Like Button**
+
+_Requirements:_ Call to `<vkontakte:initialize>`
+
+_Code:_
+
+`<vkontakte:like/>`
+
+**6. Subscription**
+
+_Requirements:_ Call to `<vkontakte:initialize>`
+
+_Code:_
+
+`<vkontakte:subscribe account="5707198"/>`
+
+`<vkontakte:subscribe account="5707198" only_button="true"/>`
 
 **Yandex**
 
-> Render Yandex.Metrika analytics web counter
+**1. Metrika**
 
-> `<yandex:analytics account="12066574"/>`
+_Requirements:_ None
 
-You must include `<r:require module="yandex"/>` directive first to use below tags.
+_Code:_
 
-> Render Yandex "Like" button
+`<yandex:analytics account="12066574"/>`
 
-> `<yandex:like/>`
+**2. Like Button**
 
-> `<yandex:like title="Yandex Main Page" text="Share" url="http://yandex.ru" size="${YandexLikeButtonSize.SMALL}"/>`
+_Requirements:_ None
 
-> Render Yandex.Money payment button
+_Code:_
 
-> `<yandex:moneyButton account="41001577953208" sum="15.5" description="Test Payment"/>`
+`<yandex:like/>`
 
-> `<yandex:moneyButton account="41001577953208" sum="15.5" description="Test Payment" type="${YandexMoneyButtonType.CARD}" text="${YandexMoneyButtonText.BUY}" size="${YandexMoneyButtonSize.MEDIUM}" color="${YandexMoneyButtonColor.WHITE}" payerAddress="true" payerEmail="true" payerFullName="true" payerPhone="true"/>`
+`<yandex:like title="Yandex Main Page" text="Share" url="http://yandex.ru" size="${YandexLikeButtonSize.SMALL}"/>`
 
-> Render Yandex.Money donation form
+**3. Embedded video**
 
-> `<yandex:moneyDonateForm account="41001577953208" description="Test Donation"/>`
+_Requirements:_ None
 
-> `<yandex:moneyDonateForm account="41001577953208" description="Test Donation" showDescription="true" sum="15.5" cards="true" projectName="Yandex" projectSite="http://yandex.ru" text="${YandexMoneyDonateFormText.GIVE}" payerPhone="true" payerFullName="true" payerComment="true" payerEmail="true"/>`
+_Code:_
 
-> Render Yandex.Money payment form
+`<yandex:video height="253" width="450" user="leonevskiy" video="6ea0ugstkx.2528"/>`
 
-> `<yandex:moneyPaymentForm account="41001577953208" description="Test Payment"/>`
+**4. Yandex.Money payment button**
 
-> `<yandex:moneyPaymentForm account="41001577953208" description="Test Payment" sum="15.5" cards="false" text="${YandexMoneyPaymentFormText.TRANSFER}" payerComment="true" payerEmail="true" payerFullName="true" payerAddress="true" payerPhone="true" payerPurpose="true" />`
+_Requirements:_ None
 
-> Render Yandex "Share" button
+_Code:_
 
-> `<yandex:share/>`
+`<yandex:money_button account="41001577953208" sum="15.5" description="Test Payment"/>`
 
-> `<yandex:share services="facebook" language="en"/>`
+`<yandex:money_button account="41001577953208" sum="15.5" description="Test Payment" type="${YandexMoneyButtonType.CARD}" text="${YandexMoneyButtonText.BUY}" size="${YandexMoneyButtonSize.MEDIUM}" color="${YandexMoneyButtonColor.WHITE}" payer_address="true" payer_email="true" payer_full_name="true" payer_phone="true"/>`
 
-> Render Yandex embedded video
+**5. Yandex.Money donation form**
 
-> `<yandex:video height="253" width="450" user="leonevskiy" video="6ea0ugstkx.2528"/>`
+_Requirements:_ None
+
+_Code:_
+
+`<yandex:money_donate_form account="41001577953208" description="Test Donation"/>`
+
+`<yandex:money_donate_form account="41001577953208" description="Test Donation" show_description="true" sum="15.5" cards="true" project_name="Yandex" project_site="http://yandex.ru" text="${YandexMoneyDonateFormText.GIVE}" payerPhone="true" payer_full_name="true" payer_comment="true" payer_email="true"/>`
+
+**6. Yandex.Money payment form**
+
+_Requirements:_ None
+
+_Code:_
+
+`<yandex:money_payment_form account="41001577953208" description="Test Payment"/>`
+
+`<yandex:money_payment_form account="41001577953208" description="Test Payment" sum="15.5" cards="false" text="${YandexMoneyPaymentFormText.TRANSFER}" payer_comment="true" payer_email="true" payer_full_name="true" payer_address="true" payer_phone="true" payer_purpose="true" />`
+
+**7. Share Button**
+
+_Requirements:_ `<r:require module="yandex"/>` directive
+
+_Code:_
+
+`<yandex:share/>`
+
+`<yandex:share services="facebook" language="en"/>`
 
 **YouTube**
 
-> Render YouTube embedded video
+**1. Embedded video**
 
-> `<youtube:video height="480" width="100%" video="eYJSlHiXegI"/>`
+_Requirements:_ None
+
+_Code:_
+
+`<youtube:video height="480" width="100%" video="eYJSlHiXegI"/>`
 
 **VideoJS**
 
-You must include `<r:require module="videojs"/>` directive first to use below tags.
+**1. Media Player**
 
-> Render VideoJS media player
+_Requirements:_ `<r:require module="videojs"/>` directive
 
-> `<videojs:player width="640" height="480" videos="${["http://vjs.zencdn.net/v/oceans.mp4":"video/mp4","http://vjs.zencdn.net/v/oceans.webm":"video/webm"]}"><track kind="captions" src="http://www.videojs.com/vtt/captions.vtt" srclang="en" label="English"></track></videojs:player>`
+_Code:_
 
-_Note:_ Instead of using different modules with `<r:require/>` directive for separate social tags, you can use all-in-one module bundle, called "widgets" once :
+`def videos = ["http://vjs.zencdn.net/v/oceans.mp4":"video/mp4","http://vjs.zencdn.net/v/oceans.webm":"video/webm"]`
 
-`<head>`
-
-  `<r:require module="widgets"/>`
-
-`</head>`
+`<videojs:player width="640" height="480" videos="${videos}"><track kind="captions" src="http://www.videojs.com/vtt/captions.vtt" srclang="en" label="English"></track></videojs:player>`
