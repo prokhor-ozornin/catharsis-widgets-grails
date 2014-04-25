@@ -128,7 +128,7 @@ class FacebookTagLib
    * @see "https://developers.facebook.com/docs/plugins/facepile"
    * @attr url Display photos of the people who have liked this absolute URL. Default is current page URL.
    * @attr actions Collection or a comma-separated string of Open Graph action types.
-   * @attr size Controls the size of the photos shown in the widget (FacebookFacepileSize or string). Default is "medium".
+   * @attr photo_size Controls the size of the photos shown in the widget (FacebookFacepileSize or string). Default is "medium".
    * @attr width The width of the widget in pixels. Minimum is 200. Default is 300.
    * @attr height The height of the widget in pixels.
    * @attr max_rows The maximum number of rows of faces to display. Default is 1.
@@ -147,9 +147,9 @@ class FacebookTagLib
       attributes["data-action"] = attrs.actions instanceof Collection ? attrs.actions.join(",") : attrs.actions.toString()
     }
 
-    if (attrs.size)
+    if (attrs.photo_size)
     {
-      attributes["data-size"] = attrs.size.toString()
+      attributes["data-size"] = attrs.photo_size.toString()
     }
 
     if (attrs.width)
@@ -183,11 +183,11 @@ class FacebookTagLib
    * @attr width The width of the button. The layout you choose affects the minimum and default widths you can use.
    * @attr height The height of the button.
    * @attr color_scheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
-   * @attr kids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
+   * @attr kids_mode If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
    * @attr layout Selects one of the different layouts that are available for the button (FacebookButtonLayout or string). Default is "standard".
    * @attr faces Specifies whether to display profile photos below the button (standard layout only). You must not enable this on child-directed sites.
    */
-  def follow = { attrs ->
+  def follow_button = { attrs ->
     if (!attrs.url)
     {
       return
@@ -218,13 +218,13 @@ class FacebookTagLib
    * @attr url The absolute URL of the page that will be liked. Default is current page URL.
    * @attr verb The verb to display on the button (FacebookLikeButtonVerb or string). Default is "like".
    * @attr color_scheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
-   * @attr kids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
+   * @attr kids_mode If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
    * @attr layout Selects one of the different layouts that are available for the button (FacebookButtonLayout or string). Default is "standard".
    * @attr track_label A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    * @attr faces Specifies whether to display profile photos below the button (standard layout only). You must not enable this on child-directed sites. Default is false.
    * @attr width The width of the button. The layout you choose affects the minimum and default widths you can use.
    */
-  def like = { attrs ->
+  def like_button = { attrs ->
     if (!attrs.url)
     {
       attrs.url = request.requestURL
@@ -267,7 +267,7 @@ class FacebookTagLib
    * @attr faces Specifies whether to display profile photos of people who like the page. Default is true.
    * @attr stream Specifies whether to display a stream of the latest posts by the Page. Default is true.
    */
-  def likebox = { attrs ->
+  def like_box = { attrs ->
     if (!attrs.url)
     {
       return
@@ -356,10 +356,10 @@ class FacebookTagLib
    * @attr width The width of the button.
    * @attr height The height of the button.
    * @attr color_scheme The color scheme used by the button (FacebookColorScheme or string). Default is "light".
-   * @attr kids If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
+   * @attr kids_mode If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
    * @attr track_label A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    */
-  def send = { attrs ->
+  def send_button = { attrs ->
     def buttonAttributes =
     [
       class: "fb-send",
@@ -370,12 +370,12 @@ class FacebookTagLib
 
   /**
    * Renders embedded Facebook video on web page.
-   * @attr video REQUIRED Identifier of Facebook video.
+   * @attr id REQUIRED Identifier of Facebook video.
    * @attr width REQUIRED Width of video control.
    * @attr height REQUIRED Height of video control.
    */
   def video = { attrs ->
-    if (!attrs.video || !attrs.width || !attrs.height)
+    if (!attrs.id || !attrs.width || !attrs.height)
     {
       return
     }
@@ -388,7 +388,7 @@ class FacebookTagLib
       mozallowfullscreen: true,
       width: attrs.width,
       height: attrs.height,
-      src: "http://www.facebook.com/video/embed?video_id=${attrs.video}"
+      src: "http://www.facebook.com/video/embed?video_id=${attrs.id}"
     ])
   }
 
@@ -464,9 +464,9 @@ class FacebookTagLib
       buttonAttributes["data-colorscheme"] = attrs.color_scheme.toString()
     }
 
-    if (attrs.kids != null)
+    if (attrs.kids_mode != null)
     {
-      buttonAttributes["data-kid-directed-site"] = attrs.kids.toBoolean().toString()
+      buttonAttributes["data-kid-directed-site"] = attrs.kids_mode.toBoolean().toString()
     }
 
     if (attrs.track_label)
@@ -511,7 +511,7 @@ enum FacebookButtonLayout
   }
 }
 
-enum FacebookFacepileSize
+enum FacebookFacepilePhotoSize
 {
   SMALL,
   MEDIUM,

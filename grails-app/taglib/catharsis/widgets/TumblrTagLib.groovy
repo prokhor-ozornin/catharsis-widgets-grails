@@ -15,7 +15,7 @@ class TumblrTagLib
    * @attr type Visual layout/appearance of button (TumblrFollowButtonType or string).
    * @attr color_scheme Visual color scheme of button (TumblrFollowButtonColorScheme or string).
    */
-  def follow = { attrs ->
+  def follow_button = { attrs ->
     if (!attrs.account)
     {
       return
@@ -55,7 +55,7 @@ class TumblrTagLib
    * @attr type Visual layout/appearance of button (TumblrShareButtonType or string).
    * @attr color_scheme Visual color scheme of button (TumblrShareButtonColorScheme or string).
    */
-  def share = { attrs ->
+  def share_button = { attrs ->
     def type = (attrs.type ?: TumblrShareButtonType.FIRST).toString()
 
     def width

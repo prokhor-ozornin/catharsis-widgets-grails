@@ -12,7 +12,7 @@ class YouTubeTagLibTests
     assert !applyTemplate('<youtube:video id="id" width="width"/>')
     assert !applyTemplate('<youtube:video height="height" width="width"/>')
 
-    assert applyTemplate('<youtube:video video="video" width="width" height="height"/>') == '<iframe frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" width="width" height="height" src="http://www.youtube.com/embed/video"></iframe>'
-    assert applyTemplate('<youtube:video video="video" width="width" height="height" private="true" secure="true"/>') == '<iframe frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" width="width" height="height" src="https://www.youtube-nocookie.com/embed/video"></iframe>'
+    assert applyTemplate('<youtube:video id="id" width="width" height="height"/>') == '<iframe frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" width="width" height="height" src="http://www.youtube.com/embed/id"></iframe>'
+    assert applyTemplate('<youtube:video id="id" width="width" height="height" private_mode="true" secure_mode="true"/>') == '<iframe frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" width="width" height="height" src="https://www.youtube-nocookie.com/embed/id"></iframe>'
   }
 }

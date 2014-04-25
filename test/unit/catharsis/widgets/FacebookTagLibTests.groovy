@@ -35,33 +35,33 @@ class FacebookTagLibTests
   void test_facepile_tag()
   {
     assert applyTemplate('<facebook:facepile/>') == "<div class=\"fb-facepile\" data-href=\"${request.requestURL}\"></div>"
-    assert applyTemplate("<facebook:facepile url=\"url\" actions=\"actions\" size=\"${FacebookFacepileSize.LARGE}\" width=\"width\" height=\"height\" max_rows=\"10\" color_scheme=\"${FacebookColorScheme.DARK}\"/>") == '<div class="fb-facepile" data-href="url" data-action="actions" data-size="large" data-width="width" data-height="height" data-max-rows="10" data-colorscheme="dark"></div>'
+    assert applyTemplate("<facebook:facepile url=\"url\" actions=\"actions\" photo_size=\"${FacebookFacepilePhotoSize.LARGE}\" width=\"width\" height=\"height\" max_rows=\"10\" color_scheme=\"${FacebookColorScheme.DARK}\"/>") == '<div class="fb-facepile" data-href="url" data-action="actions" data-size="large" data-width="width" data-height="height" data-max-rows="10" data-colorscheme="dark"></div>'
   }
 
-  void test_follow_tag()
+  void test_follow_button_tag()
   {
-    assert !applyTemplate('<facebook:follow/>')
-    assert applyTemplate('<facebook:follow url="url"/>') == '<div class="fb-follow" data-href="url"></div>'
-    assert applyTemplate("<facebook:follow color_scheme=\"${FacebookColorScheme.DARK}\" url=\"url\" kids=\"true\" layout=\"${FacebookButtonLayout.BOX_COUNT}\" faces=\"true\" width=\"width\" height=\"height\"/>") == '<div class="fb-follow" data-layout="box_count" data-show-faces="true" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-width="width" data-height="height"></div>'
+    assert !applyTemplate('<facebook:follow_button/>')
+    assert applyTemplate('<facebook:follow_button url="url"/>') == '<div class="fb-follow" data-href="url"></div>'
+    assert applyTemplate("<facebook:follow_button color_scheme=\"${FacebookColorScheme.DARK}\" url=\"url\" kids_mode=\"true\" layout=\"${FacebookButtonLayout.BOX_COUNT}\" faces=\"true\" width=\"width\" height=\"height\"/>") == '<div class="fb-follow" data-layout="box_count" data-show-faces="true" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-width="width" data-height="height"></div>'
   }
 
-  void test_like_tag()
+  void test_like_button_tag()
   {
-    assert applyTemplate('<facebook:like/>') == "<div class=\"fb-like\" data-href=\"${request.requestURL}\"></div>"
-    assert applyTemplate("<facebook:like verb=\"${FacebookLikeButtonVerb.RECOMMEND}\" color_scheme=\"${FacebookColorScheme.DARK}\" url=\"url\" kids=\"true\" layout=\"${FacebookButtonLayout.BOX_COUNT}\" track_label=\"track_label\" faces=\"true\" width=\"width\"/>") == '<div class="fb-like" data-action="recommend" data-layout="box_count" data-show-faces="true" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-ref="track_label" data-width="width"></div>'
+    assert applyTemplate('<facebook:like_button/>') == "<div class=\"fb-like\" data-href=\"${request.requestURL}\"></div>"
+    assert applyTemplate("<facebook:like_button verb=\"${FacebookLikeButtonVerb.RECOMMEND}\" color_scheme=\"${FacebookColorScheme.DARK}\" url=\"url\" kids_mode=\"true\" layout=\"${FacebookButtonLayout.BOX_COUNT}\" track_label=\"track_label\" faces=\"true\" width=\"width\"/>") == '<div class="fb-like" data-action="recommend" data-layout="box_count" data-show-faces="true" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-ref="track_label" data-width="width"></div>'
   }
 
-  void test_likebox_tag()
+  void test_like_box_tag()
   {
-    assert !applyTemplate('<facebook:likebox/>')
-    assert applyTemplate('<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070"/>') == '<div class="fb-like-box" data-href="https://www.facebook.com/pages/Clear-Words/515749945120070"></div>'
-    assert applyTemplate("<facebook:likebox url=\"https://www.facebook.com/pages/Clear-Words/515749945120070\" width=\"width\" height=\"height\" color_scheme=\"${FacebookColorScheme.DARK}\" wall=\"true\" header=\"true\" border=\"true\" faces=\"true\" stream=\"true\"/>") == '<div class="fb-like-box" data-href="https://www.facebook.com/pages/Clear-Words/515749945120070" data-width="width" data-height="height" data-colorscheme="dark" data-force-wall="true" data-header="true" data-show-border="true" data-show-faces="true" data-stream="true"></div>'
+    assert !applyTemplate('<facebook:like_box/>')
+    assert applyTemplate('<facebook:like_box url="https://www.facebook.com/pages/Clear-Words/515749945120070"/>') == '<div class="fb-like-box" data-href="https://www.facebook.com/pages/Clear-Words/515749945120070"></div>'
+    assert applyTemplate("<facebook:like_box url=\"https://www.facebook.com/pages/Clear-Words/515749945120070\" width=\"width\" height=\"height\" color_scheme=\"${FacebookColorScheme.DARK}\" wall=\"true\" header=\"true\" border=\"true\" faces=\"true\" stream=\"true\"/>") == '<div class="fb-like-box" data-href="https://www.facebook.com/pages/Clear-Words/515749945120070" data-width="width" data-height="height" data-colorscheme="dark" data-force-wall="true" data-header="true" data-show-border="true" data-show-faces="true" data-stream="true"></div>'
   }
 
-  void test_send_tag()
+  void test_send_button_tag()
   {
-    assert applyTemplate('<facebook:send/>') == '<div class="fb-send"></div>'
-    assert applyTemplate("<facebook:send url=\"url\" color_scheme=\"${FacebookColorScheme.DARK}\" kids=\"true\" width=\"width\" height=\"height\"/>") == '<div class="fb-send" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-width="width" data-height="height"></div>'
+    assert applyTemplate('<facebook:send_button/>') == '<div class="fb-send"></div>'
+    assert applyTemplate("<facebook:send_button url=\"url\" color_scheme=\"${FacebookColorScheme.DARK}\" kids_mode=\"true\" width=\"width\" height=\"height\"/>") == '<div class="fb-send" data-href="url" data-colorscheme="dark" data-kid-directed-site="true" data-width="width" data-height="height"></div>'
   }
 
   void test_post_tag()
@@ -77,6 +77,6 @@ class FacebookTagLibTests
     assert !applyTemplate('<facebook:video id="id" width="width"/>')
     assert !applyTemplate('<facebook:video height="height" width="width"/>')
 
-    assert applyTemplate('<facebook:video video="video" width="width" height="height"/>') == '<iframe frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" width="width" height="height" src="http://www.facebook.com/video/embed?video_id=video"></iframe>'
+    assert applyTemplate('<facebook:video id="id" width="width" height="height"/>') == '<iframe frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" width="width" height="height" src="http://www.facebook.com/video/embed?video_id=id"></iframe>'
   }
 }

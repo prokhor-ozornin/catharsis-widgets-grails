@@ -1,6 +1,6 @@
 class CatharsisWidgetsGrailsPlugin
 {
-  def version = "2.1"
+  def version = "2.3"
   def grailsVersion = "2.0 > *"
   def title = "Catharsis Web Widgets"
   def description = """\

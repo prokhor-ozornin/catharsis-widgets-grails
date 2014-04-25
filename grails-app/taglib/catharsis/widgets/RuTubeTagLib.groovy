@@ -10,12 +10,12 @@ class RuTubeTagLib
 
   /**
    * Renders embedded RuTube video on web page.
-   * @attr video REQUIRED Identifier or hash of RuTube video.
+   * @attr id REQUIRED Identifier or hash of RuTube video.
    * @attr width REQUIRED Width of video control.
    * @attr height REQUIRED Height of video control.
    */
   def video = { attrs ->
-    if (!attrs.video || !attrs.width || !attrs.height)
+    if (!attrs.id || !attrs.width || !attrs.height)
     {
       return
     }
@@ -31,7 +31,7 @@ class RuTubeTagLib
         scrolling: "no",
         width: attrs.width,
         height: attrs.height,
-        src: "http://rutube.ru/embed/${attrs.video}"
+        src: "http://rutube.ru/embed/${attrs.id}"
       ])
   }
 }

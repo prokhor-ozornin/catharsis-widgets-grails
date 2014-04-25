@@ -14,14 +14,14 @@ class TwitterTagLib
    * @see "https://dev.twitter.com/docs/follow-button"
    * @attr account REQUIRED Twitter account name.
    * @attr language The language for the "Follow" button. Default is request locale's language.
-   * @attr count Whether to display user's followers count. Default is false.
+   * @attr counter Whether to display user's followers count. Default is false.
    * @attr size The size of the rendered button (TwitterFollowButtonSize or string). Default is "medium".
    * @attr width Width of the button.
    * @attr align Horizontal alignment of the button (TwitterFollowButtonAlignment or string).
    * @attr screen_name Whether to show user's screen name. Default is true.
-   * @attr dnt Whether to opt-out of twitter suggestions. Default is false.
+   * @attr suggestions Whether to enable twitter suggestions. Default is true.
    */
-  def follow = { attrs ->
+  def follow_button = { attrs ->
     if (!attrs.account)
     {
       return
@@ -34,9 +34,9 @@ class TwitterTagLib
       "data-lang": attrs.language ?: request.locale.language
     ]
 
-    if (attrs.count != null)
+    if (attrs.counter != null)
     {
-      attributes["data-show-count"] = attrs.count.toBoolean().toString()
+      attributes["data-show-count"] = attrs.counter.toBoolean().toString()
     }
 
     if (attrs.size)
@@ -59,9 +59,9 @@ class TwitterTagLib
       attributes["data-show-screen-name"] = attrs.screen_name.toBoolean().toString()
     }
 
-    if (attrs.dnt != null)
+    if (attrs.suggestions != null)
     {
-      attributes["data-dnt"] = attrs.dnt.toBoolean().toString()
+      attributes["data-dnt"] = (!attrs.suggestions.toBoolean()).toString()
     }
 
     out << g.withTag(name: "a", attrs: attributes)
@@ -75,14 +75,14 @@ class TwitterTagLib
    * @attr via Screen name of the user to attribute the Tweet to.
    * @attr text	Tweet text. Default is content of the <title> tag.
    * @attr related Collection of related accounts, or comma-separated values as a string.
-   * @attr count Count box position (TwitterTweetButtonCountBoxPosition or string). Default is "horizontal".
+   * @attr counter_position Count box position (TwitterTweetButtonCountBoxPosition or string). Default is "horizontal".
    * @attr language The language for the "Tweet" Button. Default is request locale's language.
    * @attr count_url URL to which your shared URL resolves. Default is the URL being shared.
    * @attr tags Collection of hashtags which are to be appended to tweet text, or comma-separated values as a string.
    * @attr size The size of the rendered button (TwitterTweetButtonSize or string). Default is "medium".
-   * @attr dnt Whether to opt-out of twitter suggestions. Default is false.
+   * @attr suggestions Whether to enable twitter suggestions. Default is true.
    */
-  def tweet = { attrs ->
+  def tweet_button = { attrs ->
     def attributes =
     [
       href: "https://twitter.com/share",
@@ -110,9 +110,9 @@ class TwitterTagLib
       attributes["data-related"] = attrs.related instanceof Collection ? attrs.related.join(",") : attrs.related
     }
 
-    if (attrs.count)
+    if (attrs.counter_position)
     {
-      attributes["data-count"] = attrs.count
+      attributes["data-count"] = attrs.counter_position
     }
 
     if (attrs.count_url)
@@ -130,9 +130,9 @@ class TwitterTagLib
       attributes["data-size"] = attrs.size
     }
 
-    if (attrs.dnt != null)
+    if (attrs.suggestions != null)
     {
-      attributes["data-dnt"] = attrs.dnt.toBoolean().toString()
+      attributes["data-dnt"] = (!attrs.suggestions.toBoolean()).toString()
     }
 
     out << g.withTag(name: "a", attrs: attributes)

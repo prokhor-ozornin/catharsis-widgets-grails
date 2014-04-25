@@ -18,8 +18,8 @@ class MailRuTagLib
    * @attr width REQUIRED Width of Faces box area.
    * @attr height REQUIRED Height of Faces box area.
    * @attr font Name of font, used for text labels.
-   * @attr title Title text label of Faces box.
-   * @attr show_title Whether to show or hide Faces box title.
+   * @attr title_text Title text label of Faces box.
+   * @attr title Whether to show or hide Faces box title.
    * @attr title_color Color of Faces box title.
    * @attr background_color Color of Faces box background.
    * @attr border_color Color of Faces box border.
@@ -40,11 +40,11 @@ class MailRuTagLib
       "height": attrs.height
     ]
 
-    if (attrs.title)
+    if (attrs.title_text)
     {
-      config.title = attrs.title
+      config.title = attrs.title_text
     }
-    if (attrs.show_title != null && !attrs.show_title.toBoolean())
+    if (attrs.title != null && !attrs.title.toBoolean())
     {
       config.notitle = true
     }
@@ -151,7 +151,7 @@ class MailRuTagLib
    * @attr text Whether to show text label on button. Default is true.
    * @attr text_type Type of text label to show on button (MailRuLikeButtonTextType or integer).
    */
-  def like = { attrs ->
+  def like_button = { attrs ->
     def config = [:]
 
     config.sz = (attrs.size ?: MailRuLikeButtonSize.SIZE_20).toString()
@@ -208,12 +208,12 @@ class MailRuTagLib
 
   /**
    * Renders embedded Mail.ru video on web page.
-   * @attr video REQUIRED Identifier of video, possibly including username of uploader.
+   * @attr id REQUIRED Identifier of video, possibly including username of uploader.
    * @attr width REQUIRED Width of video control.
    * @attr height REQUIRED Height of video control.
    */
   def video = { attrs ->
-    if (!attrs.video || !attrs.width || !attrs.height)
+    if (!attrs.id || !attrs.width || !attrs.height)
     {
       return
     }
@@ -228,7 +228,7 @@ class MailRuTagLib
         mozallowfullscreen: true,
         width: attrs.width,
         height: attrs.height,
-        src: "http://api.video.mail.ru/videos/embed/mail/${attrs.video}"
+        src: "http://api.video.mail.ru/videos/embed/mail/${attrs.id}"
       ])
   }
 }

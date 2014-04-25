@@ -60,7 +60,7 @@ class YandexTagLib
    * @attr url URL address of web page to share.
    * @attr title Custom title text for shared page.
    */
-  def like = { attrs ->
+  def like_button = { attrs ->
     def attributes =
     [
       name: "ya-share",
@@ -103,10 +103,10 @@ class YandexTagLib
    * @attr text Text to display on button (YandexMoneyButtonText or integer). Default is YandexMoneyButtonText.PAY.
    * @attr size Size of button (YandexMoneyButtonSize or string). Default is YandexMoneyButtonSize.LARGE.
    * @attr color Color of button (YandexMoneyButtonColor or string). Default is YandexMoneyButtonColor.ORANGE.
-   * @attr payer_fullname Whether to ask for full name of payer during transaction. Default is false.
-   * @attr payer_email Whether to ask for email address of payer during transaction. Default is false.
-   * @attr payer_phone Whether to ask for payer phone number during transaction. Default is false.
-   * @attr payer_address Whether to ask for payer address during transaction. Default is false.
+   * @attr ask_payer_full_name Whether to ask for full name of payer during transaction. Default is false.
+   * @attr ask_payer_email Whether to ask for email address of payer during transaction. Default is false.
+   * @attr ask_payer_phone Whether to ask for payer phone number during transaction. Default is false.
+   * @attr ask_payer_address Whether to ask for payer address during transaction. Default is false.
    */
   def money_button = { attrs ->
     if (!attrs.account || !attrs.sum || !attrs.description)
@@ -157,7 +157,7 @@ class YandexTagLib
         scrolling: "no",
         width: width,
         height: 54,
-        src: "https://money.yandex.ru/embed/small.xml?account=${attrs.account}&quickpay=small&${(attrs.type ?: YandexMoneyButtonType.WALLET).toString()}=on&button-text=${text}&button-size=${(attrs.size ?: YandexMoneyButtonSize.LARGE).toString()}&button-color=${(attrs.color ?: YandexMoneyButtonColor.ORANGE).toString()}&targets=${attrs.description.encodeAsURL()}&default-sum=${attrs.sum.toBigDecimal()}${attrs.payer_fullname?.toBoolean() ? "&fio=on" : ""}${attrs.payer_email?.toBoolean() ? "&mail=on" : ""}${attrs.payer_phone?.toBoolean() ? "&phone=on" : ""}${attrs.payer_address?.toBoolean() ? "&address=on" : ""}"
+        src: "https://money.yandex.ru/embed/small.xml?account=${attrs.account}&quickpay=small&${(attrs.type ?: YandexMoneyButtonType.WALLET).toString()}=on&button-text=${text}&button-size=${(attrs.size ?: YandexMoneyButtonSize.LARGE).toString()}&button-color=${(attrs.color ?: YandexMoneyButtonColor.ORANGE).toString()}&targets=${attrs.description.encodeAsURL()}&default-sum=${attrs.sum.toBigDecimal()}${attrs.ask_payer_full_name?.toBoolean() ? "&fio=on" : ""}${attrs.ask_payer_email?.toBoolean() ? "&mail=on" : ""}${attrs.ask_payer_phone?.toBoolean() ? "&phone=on" : ""}${attrs.ask_payer_address?.toBoolean() ? "&address=on" : ""}"
       ])
   }
 
@@ -165,21 +165,21 @@ class YandexTagLib
    * Renders donation form for Yandex.Money (http://money.yandex.ru) payment system that allows financial transactions to be performed.
    * @see "https://money.yandex.ru/embed/quickpay/donate.xml"
    * @attr account REQUIRED Identifier of account in the Yandex.Money payment system which is to receive money.
-   * @attr description REQUIRED Description of payment goal/purpose.
-   * @attr show_description Whether to show description of payment goal/purpose in the form. Default is false.
+   * @attr description_text REQUIRED Description of payment goal/purpose.
+   * @attr description Whether to show description of payment goal/purpose in the form. Default is false.
    * @attr sum Monetary sum to transfer to Yandex.Money account.
    * @attr cards Whether to accept payment from Visa/Master Card cards. Default is true.
    * @attr text Text to display on button (YandexMoneyDonateFormText or integer). Default is YandexMoneyDonateFormText.DONATE.
    * @attr project_name Name of charitable project or program.
    * @attr project_site URL address of charitable project or program website.
-   * @attr payer_comment Whether to allow payer add custom payment comment. Default is false.
-   * @attr payer_comment_hint Hint text for comment field.
-   * @attr payer_fullname Whether to ask for full name of payer during transaction. Default is false.
-   * @attr payer_email Whether to ask for email address of payer during transaction. Default is false.
-   * @attr payer_phone Whether to ask for payer phone number during transaction. Default is false.
+   * @attr ask_payer_comment Whether to allow payer add custom payment comment. Default is false.
+   * @attr comment_hint Hint text for comment field.
+   * @attr ask_payer_full_name Whether to ask for full name of payer during transaction. Default is false.
+   * @attr ask_payer_email Whether to ask for email address of payer during transaction. Default is false.
+   * @attr ask_payer_phone Whether to ask for payer phone number during transaction. Default is false.
    */
   def money_donate_form = { attrs ->
-    if (!attrs.account || !attrs.description)
+    if (!attrs.account || !attrs.description_text)
     {
       return
     }
@@ -227,8 +227,8 @@ class YandexTagLib
         allowtransparency: true,
         scrolling: "no",
         width: width,
-        height: attrs.payer_comment?.toBoolean() ? 210 : 133,
-        src: "https://money.yandex.ru/embed/donate.xml?account=${attrs.account}&quickpay=donate${cards ? "&payment-type-choice=on" : ""}&default-sum=${attrs.sum != null ? attrs.sum.toBigDecimal() : ""}&targets=${attrs.description.encodeAsURL()}${attrs.show_description ? "&target-visibility=on" : ""}&project-name=${attrs.project_name != null ? attrs.project_name.encodeAsURL() : ""}&project-site=${attrs.project_site != null ? attrs.project_site.encodeAsURL() : ""}&button-text=${text}${attrs.payer_comment?.toBoolean() ? "&comment=on&hint=${attrs.payer_comment_hint != null ? attrs.payer_comment_hint?.encodeAsURL() : ""}" : ""}${attrs.payer_fullname?.toBoolean() ? "&fio=on" : ""}${attrs.payer_email?.toBoolean() ? "&mail=on" : ""}${attrs.payer_phone?.toBoolean() ? "&phone=on" : ""}"
+        height: attrs.ask_payer_comment?.toBoolean() ? 210 : 133,
+        src: "https://money.yandex.ru/embed/donate.xml?account=${attrs.account}&quickpay=donate${cards ? "&payment-type-choice=on" : ""}&default-sum=${attrs.sum != null ? attrs.sum.toBigDecimal() : ""}&targets=${attrs.description_text.encodeAsURL()}${attrs.description ? "&target-visibility=on" : ""}&project-name=${attrs.project_name != null ? attrs.project_name.encodeAsURL() : ""}&project-site=${attrs.project_site != null ? attrs.project_site.encodeAsURL() : ""}&button-text=${text}${attrs.ask_payer_comment?.toBoolean() ? "&comment=on&hint=${attrs.comment_hint != null ? attrs.comment_hint?.encodeAsURL() : ""}" : ""}${attrs.ask_payer_full_name?.toBoolean() ? "&fio=on" : ""}${attrs.ask_payer_email?.toBoolean() ? "&mail=on" : ""}${attrs.ask_payer_phone?.toBoolean() ? "&phone=on" : ""}"
       ])
   }
 
@@ -240,12 +240,12 @@ class YandexTagLib
    * @attr sum Monetary sum to transfer to Yandex.Money account.
    * @attr cards Whether to accept payment from Visa/Master Card cards. Default is true.
    * @attr text Text to display on button (YandexMoneyPaymentFormText or integer). Default is YandexMoneyPaymentFormText.PAY.
-   * @attr payer_purpose Whether to allow payer specify custom payment purpose text (true) or use predefined purpose text (false). Default is false.
-   * @attr payer_comment Whether to allow payer add custom payment comment. Default is false.
-   * @attr payer_fullname Whether to ask for full name of payer during transaction. Default is false.
-   * @attr payer_email Whether to ask for email address of payer during transaction. Default is false.
-   * @attr payer_phone Whether to ask for payer phone number during transaction. Default is false.
-   * @attr payer_address Whether to ask for payer address during transaction. Default is false.
+   * @attr ask_payer_purpose Whether to allow payer specify custom payment purpose text (true) or use predefined purpose text (false). Default is false.
+   * @attr ask_payer_comment Whether to allow payer add custom payment comment. Default is false.
+   * @attr ask_payer_full_name Whether to ask for full name of payer during transaction. Default is false.
+   * @attr ask_payer_email Whether to ask for email address of payer during transaction. Default is false.
+   * @attr ask_payer_phone Whether to ask for payer phone number during transaction. Default is false.
+   * @attr ask_payer_address Whether to ask for payer address during transaction. Default is false.
    */
   def money_payment_form = { attrs ->
     if (!attrs.account || !attrs.description)
@@ -261,8 +261,8 @@ class YandexTagLib
         allowtransparency: true,
         scrolling: "no",
         width: 450,
-        height: attrs.payer_comment?.toBoolean() ? 255 : 200,
-        src: "https://money.yandex.ru/embed/shop.xml?account=${attrs.account}&quickpay=shop${attrs.cards == null || attrs.cards.toBoolean() ? "&payment-type-choice=on" : ""}&writer=${attrs.payer_purpose?.toBoolean() ? "buyer" : "seller"}&${attrs.payer_purpose?.toBoolean() ? "targets-hint" : "targets"}=${attrs.description.encodeAsURL()}&default-sum=${attrs.sum != null ? attrs.sum.toBigDecimal() : ""}&button-text=${(attrs.text ?: YandexMoneyPaymentFormText.PAY).toString()}${attrs.payer_comment?.toBoolean() ? "&comment=on" : ""}${attrs.payer_fullname?.toBoolean() ? "&fio=on" : ""}${attrs.payer_email?.toBoolean() ? "&mail=on" : ""}${attrs.payer_phone?.toBoolean() ? "&phone=on" : ""}${attrs.payer_address?.toBoolean() ? "&address=on" : ""}"
+        height: attrs.ask_payer_comment?.toBoolean() ? 255 : 200,
+        src: "https://money.yandex.ru/embed/shop.xml?account=${attrs.account}&quickpay=shop${attrs.cards == null || attrs.cards.toBoolean() ? "&payment-type-choice=on" : ""}&writer=${attrs.ask_payer_purpose?.toBoolean() ? "buyer" : "seller"}&${attrs.ask_payer_purpose?.toBoolean() ? "targets-hint" : "targets"}=${attrs.description.encodeAsURL()}&default-sum=${attrs.sum != null ? attrs.sum.toBigDecimal() : ""}&button-text=${(attrs.text ?: YandexMoneyPaymentFormText.PAY).toString()}${attrs.ask_payer_comment?.toBoolean() ? "&comment=on" : ""}${attrs.ask_payer_full_name?.toBoolean() ? "&fio=on" : ""}${attrs.ask_payer_email?.toBoolean() ? "&mail=on" : ""}${attrs.ask_payer_phone?.toBoolean() ? "&phone=on" : ""}${attrs.ask_payer_address?.toBoolean() ? "&address=on" : ""}"
       ])
   }
 
@@ -273,7 +273,7 @@ class YandexTagLib
    * @attr layout Visual layout/appearance of the button (YandexShareButtonLayout or string).
    * @attr language Button's interface language.
    */
-  def share = { attrs ->
+  def share_panel = { attrs ->
     if (!attrs.services)
     {
       attrs.services = "yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,friendfeed,moikrug,gplus,pinterest,surfingbird"
@@ -290,13 +290,13 @@ class YandexTagLib
 
   /**
    * Renders embedded Yandex video on web page.
-   * @attr video REQUIRED Identifier of video.
+   * @attr id REQUIRED Identifier of video.
    * @attr width REQUIRED Width of video in player control.
    * @attr height REQUIRED Height of video in player control.
    * @attr user REQUIRED Account identifier of video's uploader.
    */
   def video = { attrs ->
-    if (!attrs.video || !attrs.width || !attrs.height || !attrs.user)
+    if (!attrs.id || !attrs.width || !attrs.height || !attrs.user)
     {
       return
     }
@@ -311,7 +311,7 @@ class YandexTagLib
         mozallowfullscreen: true,
         width: attrs.width,
         height: attrs.height,
-        src: "http://video.yandex.ru/iframe/${attrs.user}/${attrs.video}"
+        src: "http://video.yandex.ru/iframe/${attrs.user}/${attrs.id}"
       ])
   }
 }

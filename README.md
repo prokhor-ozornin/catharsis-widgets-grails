@@ -132,7 +132,7 @@ _Code:_
 
 `<facebook:facepile url="http://yandex.ru"/>`
 
-`<facebook:facepile url="http://yandex.ru" max_rows="5" size="${FacebookFacepileSize.LARGE}" height="300"/>`
+`<facebook:facepile url="http://yandex.ru" max_rows="5" photo_size="${FacebookFacepilePhotoSize.LARGE}" height="300"/>`
 
 **6. Follow Button**
 
@@ -140,9 +140,9 @@ _Requirements:_ Call to `<facebook:initialize>`
 
 _Code:_
 
-`<facebook:follow url="http://www.facebook.com/zuck"/>`
+`<facebook:follow_button url="http://www.facebook.com/zuck"/>`
 
-`<facebook:follow url="http://www.facebook.com/zuck" kids="true" faces="true" layout="${FacebookButtonLayout.BOX_COUNT}"/>`
+`<facebook:follow_button url="http://www.facebook.com/zuck" kids_mode="true" faces="true" layout="${FacebookButtonLayout.BOX_COUNT}"/>`
 
 **7. Like Box**
 
@@ -150,9 +150,9 @@ _Requirements:_ Call to `<facebook:initialize>`
 
 _Code:_
 
-`<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070"/>`
+`<facebook:like_box url="https://www.facebook.com/pages/Clear-Words/515749945120070"/>`
 
-`<facebook:likebox url="https://www.facebook.com/pages/Clear-Words/515749945120070" header="false" border="false" faces="false" stream="true" width="500"/>`
+`<facebook:like_box url="https://www.facebook.com/pages/Clear-Words/515749945120070" header="false" border="false" faces="false" stream="true" width="500"/>`
 
 **8. Like Button**
 
@@ -160,11 +160,11 @@ _Requirements:_ Call to `<facebook:initialize>`
 
 _Code:_
 
-`<facebook:like/>`
+`<facebook:like_button/>`
 
-`<facebook:like url="http://yandex.ru"/>`
+`<facebook:like_button url="http://yandex.ru"/>`
 
-`<facebook:like url="http://yandex.ru" layout="${FacebookButtonLayout.BOX_COUNT}" faces="true" verb="${FacebookLikeButtonVerb.RECOMMEND}"/>`
+`<facebook:like_button url="http://yandex.ru" layout="${FacebookButtonLayout.BOX_COUNT}" faces="true" verb="${FacebookLikeButtonVerb.RECOMMEND}"/>`
 
 **9. Embedded post**
 
@@ -182,9 +182,9 @@ _Code:_
 
 `<facebook:send/>`
 
-`<facebook:send url="http://yandex.ru"/>`
+`<facebook:send_button url="http://yandex.ru"/>`
 
-`<facebook:send url="url" color_scheme="${FacebookColorScheme.DARK}" kids="true"/>`
+`<facebook:send_button url="url" color_scheme="${FacebookColorScheme.DARK}" kids_mode="true"/>`
 
 **11. Embedded video**
 
@@ -192,7 +192,7 @@ _Requirements:_ None
 
 _Code:_
 
-`<facebook:video height="480" width="640" video="10203121281421359"/>`
+`<facebook:video height="480" width="640" id="10203121281421359"/>`
 
 **Google**
 
@@ -210,9 +210,9 @@ _Requirements:_ `<r:require module="google"/>` directive
 
 _Code:_
 
-`<google:plusone/>`
+`<google:plus_one_button/>`
 
-`<google:plusone url="http://yandex.ru" align="${GooglePlusOneButtonAlign.RIGHT}" size="${GooglePlusOneButtonSize.TALL}" annotation="${GooglePlusOneButtonAnnotation.INLINE}" recommendations="false"/>`
+`<google:plus_one_button url="http://yandex.ru" align="${GooglePlusOneButtonAlign.RIGHT}" size="${GooglePlusOneButtonSize.TALL}" annotation="${GooglePlusOneButtonAnnotation.INLINE}" recommendations="false"/>`
 
 **Gravatar**
 
@@ -262,7 +262,7 @@ _Requirements:_ None
 
 _Code:_
 
-`<livejournal:like/>`
+`<livejournal:like_button/>`
 
 **2. Repost Button**
 
@@ -270,9 +270,9 @@ _Requirements:_ None
 
 _Code:_
 
-`<livejournal:repost/>`
+`<livejournal:repost_button/>`
 
-`<livejournal:repost title="title">text</livejournal:repost>`
+`<livejournal:repost_button title="title">text</livejournal:repost>`
 
 **Mail.ru**
 
@@ -292,7 +292,7 @@ _Requirements:_ None
 
 _Code:_
 
-`<mailru:video height="480" width="640" video="tommylordau/4271/4279.html"/>`
+`<mailru:video height="480" width="640" id="tommylordau/4271/4279.html"/>`
 
 **3. Like Button**
 
@@ -300,9 +300,9 @@ _Requirements:_ `<r:require module="mailru"/>` directive
 
 _Code:_
 
-`<mailru:like/>`
+`<mailru:like_button/>`
 
-`<mailru:like layout="${MailRuLikeButtonLayout.FIRST}" text="false" counter_position="${MailRuLikeButtonCounterPosition.UPPER}" size="30"/>`
+`<mailru:like_button layout="${MailRuLikeButtonLayout.FIRST}" text="false" counter_position="${MailRuLikeButtonCounterPosition.UPPER}" size="30"/>`
 
 **4. Faces**
 
@@ -332,9 +332,9 @@ _Requirements:_ `<r:require module="pinterest"/>` directive
 
 _Code:_
 
-`<pinterest:follow account="pinterest"/>`
+`<pinterest:follow_button account="pinterest"/>`
 
-`<pinterest:follow account="pinterest" label="Pinterest"/>`
+`<pinterest:follow_button account="pinterest" label="Pinterest"/>`
 
 **2. Embedded Pin**
 
@@ -352,7 +352,7 @@ _Code:_
 
 `<pinterest:board account="pinterest" id="pin-pets"/>`
 
-`<pinterest:board account="pinterest" id="pin-pets" image_width="60" height="800" width="150"/>`
+`<pinterest:board account="pinterest" id="pin-pets" image="60" height="800" width="150"/>`
 
 **4. Profile**
 
@@ -362,7 +362,7 @@ _Code:_
 
 `<pinterest:profile account="pinterest"/>`
 
-`<pinterest:profile account="pinterest" image_width="60" height="800" width="150"/>`
+`<pinterest:profile account="pinterest" image="60" height="800" width="150"/>`
 
 **5. Pin It Button**
 
@@ -370,9 +370,9 @@ _Requirements:_ `<r:require module="pinterest"/>` directive
 
 _Code:_
 
-`<pinterest:pinit url="http://www.flickr.com/photos/kentbrew/6851755809" image="http://farm8.staticflickr.com/7027/6851755809_df5b2051c9_z.jpg" description="Next stop: Pinterest"/>`
+`<pinterest:pin_it_button url="http://www.flickr.com/photos/kentbrew/6851755809" image="http://farm8.staticflickr.com/7027/6851755809_df5b2051c9_z.jpg" description="Next stop: Pinterest"/>`
 
-`<pinterest:pinit url="http://www.flickr.com/photos/kentbrew/6851755809" image="http://farm8.staticflickr.com/7027/6851755809_df5b2051c9_z.jpg" description="Next stop: Pinterest" counter_position="${PinterestPinItButtonPinCountPosition.NONE}" size="${PinterestPinItButtonSize.LARGE}" color="${PinterestPinItButtonColor.RED}" shape="${PinterestPinItButtonShape.RECTANGULAR}" language="ja"/>`
+`<pinterest:pin_it_button url="http://www.flickr.com/photos/kentbrew/6851755809" image="http://farm8.staticflickr.com/7027/6851755809_df5b2051c9_z.jpg" description="Next stop: Pinterest" counter="${PinterestPinItButtonPinCountPosition.NONE}" size="${PinterestPinItButtonSize.LARGE}" color="${PinterestPinItButtonColor.RED}" shape="${PinterestPinItButtonShape.RECTANGULAR}" language="ja"/>`
 
 **RuTube**
 
@@ -382,7 +382,7 @@ _Requirements:_ None
 
 _Code:_
 
-`<rutube:video height="480" width="640" video="6785018"/>`
+`<rutube:video height="480" width="640" id="6785018"/>`
 
 **SoundCloud**
 
@@ -404,9 +404,9 @@ _Requirements:_ `<r:require module="surfingbird"/>` directive
 
 _Code:_
 
-`<surfingbird:surf/>`
+`<surfingbird:surf_button/>`
 
-`<surfingbird:surf color="${SurfingbirdSurfButtonColor.BLUE}" counter="true" label="Share" url="http://yandex.ru" layout="${SurfingbirdSurfButtonLayout.COMMON}"/>`
+`<surfingbird:surf_button color="${SurfingbirdSurfButtonColor.BLUE}" counter="true" label="Share" url="http://yandex.ru" layout="${SurfingbirdSurfButtonLayout.COMMON}"/>`
 
 **Tumblr**
 
@@ -416,9 +416,9 @@ _Requirements:_ None
 
 _Code:_
 
-`<tumblr:follow account="clear-words-en"/>`
+`<tumblr:follow_button account="clear-words-en"/>`
 
-`<tumblr:follow account="clear-words-en" color_scheme="${TumblrFollowButtonColorScheme.DARK}" type="${TumblrFollowButtonType.SECOND}"/>`
+`<tumblr:follow_button account="clear-words-en" color_scheme="${TumblrFollowButtonColorScheme.DARK}" type="${TumblrFollowButtonType.SECOND}"/>`
 
 **2. Share Button**
 
@@ -426,9 +426,9 @@ _Requirements:_ `<r:require module="tumblr"/>` directive
 
 _Code:_
 
-`<tumblr:share/>`
+`<tumblr:share_button/>`
 
-`<tumblr:share color_scheme="${TumblrShareButtonColorScheme.GRAY}" type="${TumblrShareButtonType.THIRD}"/>`
+`<tumblr:share_button color_scheme="${TumblrShareButtonColorScheme.GRAY}" type="${TumblrShareButtonType.THIRD}"/>`
 
 **Twitter**
 
@@ -438,9 +438,9 @@ _Requirements:_ `<r:require module="twitter"/>` directive
 
 _Code:_
 
-`<twitter:tweet/>`
+`<twitter:tweet_button/>`
 
-`<twitter:tweet tags="first,second,third" url="http://yandex.ru" text="Let's share it !" via="Prokhor" dnt="true"/>`
+`<twitter:tweet_button tags="first,second,third" url="http://yandex.ru" text="Let's share it !" via="Prokhor" suggestions="false"/>`
 
 **2. Follow Button**
 
@@ -448,9 +448,9 @@ _Requirements:_ `<r:require module="twitter"/>` directive
 
 _Code:_
 
-`<twitter:follow account="prokhor_ozornin"/>`
+`<twitter:follow_button account="prokhor_ozornin"/>`
 
-`<twitter:follow account="prokhor_ozornin" dnt="false" count="false" screen_name="false"/>`
+`<twitter:follow_button account="prokhor_ozornin" suggestions="false" count="false" screen_name="false"/>`
 
 **Vimeo**
 
@@ -460,7 +460,7 @@ _Requirements:_ None
 
 _Code:_
 
-`<vimeo:video height="480" width="640" video="55456906"/>`
+`<vimeo:video height="480" width="640" id="55456906"/>`
 
 **Vkontakte**
 
@@ -470,7 +470,7 @@ _Requirements:_ None
 
 _Code:_
 
-`<vkontakte:video height="360" hash="7a0cdf6ef7a69e67" user="5707198" width="607" video="167533148" hd="true"/>`
+`<vkontakte:video height="360" hash="7a0cdf6ef7a69e67" user="5707198" width="607" id="167533148" hd="true"/>`
 
 **2. JS API initialization**
 
@@ -506,7 +506,7 @@ _Requirements:_ Call to `<vkontakte:initialize>`
 
 _Code:_
 
-`<vkontakte:like/>`
+`<vkontakte:like_button/>`
 
 **6. Subscription**
 
@@ -514,9 +514,9 @@ _Requirements:_ Call to `<vkontakte:initialize>`
 
 _Code:_
 
-`<vkontakte:subscribe account="5707198"/>`
+`<vkontakte:subscription account="5707198"/>`
 
-`<vkontakte:subscribe account="5707198" only_button="true"/>`
+`<vkontakte:subscription account="5707198" only_button="true"/>`
 
 **Yandex**
 
@@ -534,9 +534,9 @@ _Requirements:_ None
 
 _Code:_
 
-`<yandex:like/>`
+`<yandex:like_button/>`
 
-`<yandex:like title="Yandex Main Page" text="Share" url="http://yandex.ru" size="${YandexLikeButtonSize.SMALL}"/>`
+`<yandex:like_button title="Yandex Main Page" text="Share" url="http://yandex.ru" size="${YandexLikeButtonSize.SMALL}"/>`
 
 **3. Embedded video**
 
@@ -544,7 +544,7 @@ _Requirements:_ None
 
 _Code:_
 
-`<yandex:video height="253" width="450" user="leonevskiy" video="6ea0ugstkx.2528"/>`
+`<yandex:video height="253" width="450" user="leonevskiy" id="6ea0ugstkx.2528"/>`
 
 **4. Yandex.Money payment button**
 
@@ -554,7 +554,7 @@ _Code:_
 
 `<yandex:money_button account="41001577953208" sum="15.5" description="Test Payment"/>`
 
-`<yandex:money_button account="41001577953208" sum="15.5" description="Test Payment" type="${YandexMoneyButtonType.CARD}" text="${YandexMoneyButtonText.BUY}" size="${YandexMoneyButtonSize.MEDIUM}" color="${YandexMoneyButtonColor.WHITE}" payer_address="true" payer_email="true" payer_full_name="true" payer_phone="true"/>`
+`<yandex:money_button account="41001577953208" sum="15.5" description="Test Payment" type="${YandexMoneyButtonType.CARD}" text="${YandexMoneyButtonText.BUY}" size="${YandexMoneyButtonSize.MEDIUM}" color="${YandexMoneyButtonColor.WHITE}" ask_payer_address="true" ask_payer_email="true" ask_payer_full_name="true" ask_payer_phone="true"/>`
 
 **5. Yandex.Money donation form**
 
@@ -562,9 +562,9 @@ _Requirements:_ None
 
 _Code:_
 
-`<yandex:money_donate_form account="41001577953208" description="Test Donation"/>`
+`<yandex:money_donate_form account="41001577953208" description_text="Test Donation"/>`
 
-`<yandex:money_donate_form account="41001577953208" description="Test Donation" show_description="true" sum="15.5" cards="true" project_name="Yandex" project_site="http://yandex.ru" text="${YandexMoneyDonateFormText.GIVE}" payerPhone="true" payer_full_name="true" payer_comment="true" payer_email="true"/>`
+`<yandex:money_donate_form account="41001577953208" description_text="Test Donation" description="true" sum="15.5" cards="true" project_name="Yandex" project_site="http://yandex.ru" text="${YandexMoneyDonateFormText.GIVE}" ask_payer_phone="true" ask_payer_full_name="true" ask_payer_comment="true" ask_payer_email="true"/>`
 
 **6. Yandex.Money payment form**
 
@@ -574,7 +574,7 @@ _Code:_
 
 `<yandex:money_payment_form account="41001577953208" description="Test Payment"/>`
 
-`<yandex:money_payment_form account="41001577953208" description="Test Payment" sum="15.5" cards="false" text="${YandexMoneyPaymentFormText.TRANSFER}" payer_comment="true" payer_email="true" payer_full_name="true" payer_address="true" payer_phone="true" payer_purpose="true" />`
+`<yandex:money_payment_form account="41001577953208" description="Test Payment" sum="15.5" cards="false" text="${YandexMoneyPaymentFormText.TRANSFER}" ask_payer_comment="true" ask_payer_email="true" ask_payer_full_name="true" ask_payer_address="true" ask_payer_phone="true" ask_payer_purpose="true" />`
 
 **7. Share Button**
 
@@ -582,9 +582,9 @@ _Requirements:_ `<r:require module="yandex"/>` directive
 
 _Code:_
 
-`<yandex:share/>`
+`<yandex:share_panel/>`
 
-`<yandex:share services="facebook" language="en"/>`
+`<yandex:share_panel services="facebook" language="en"/>`
 
 **YouTube**
 
@@ -594,7 +594,7 @@ _Requirements:_ None
 
 _Code:_
 
-`<youtube:video height="480" width="100%" video="eYJSlHiXegI"/>`
+`<youtube:video height="480" width="100%" id="eYJSlHiXegI"/>`
 
 **VideoJS**
 

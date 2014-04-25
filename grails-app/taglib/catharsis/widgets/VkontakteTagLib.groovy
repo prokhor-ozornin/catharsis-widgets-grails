@@ -100,15 +100,15 @@ class VkontakteTagLib
    * @see "http://vk.com/dev/Like"
    * @attr layout Visual layout/appearance of the button (VkontakteLikeButtonLayout or string).
    * @attr width Width of button in pixels (integer value > 200, default value is 350). Parameter value has meaning only for a button with a text counter (layout = "full").
-   * @attr page_title Title of the page (to display in preview mode for record on the wall).
-   * @attr page_description Description of the page (to display in preview mode for record on the wall).
-   * @attr page_url URL of the page to "like" (this URL will be shown in a record on the wall). Default is URL of the current page.
-   * @attr page_image URL of the thumbnail image (to display in preview mode for record on the wall).
+   * @attr title Title of the page (to display in preview mode for record on the wall).
+   * @attr description Description of the page (to display in preview mode for record on the wall).
+   * @attr url URL of the page to "like" (this URL will be shown in a record on the wall). Default is URL of the current page.
+   * @attr image URL of the thumbnail image (to display in preview mode for record on the wall).
    * @attr text Text to be published on the wall when "Tell to friends" is pressed. Maximum length is 140 characters. Default value equals to page's title.
    * @attr height Vertical height of the button in pixels (VkontakteLikeButtonHeight or string). Default value is "22".
    * @attr verb Type of text to display on the button (VkontakteLikeButtonVerb or integer).
    */
-  def like = { attrs ->
+  def like_button = { attrs ->
     def config = [:]
 
     if (attrs.layout)
@@ -121,24 +121,24 @@ class VkontakteTagLib
       config.width = attrs.width
     }
 
-    if (attrs.page_title)
+    if (attrs.title)
     {
-      config.pageTitle = attrs.page_title
+      config.pageTitle = attrs.title
     }
 
-    if (attrs.page_description)
+    if (attrs.description)
     {
-      config.pageDescription = attrs.page_description
+      config.pageDescription = attrs.description
     }
 
-    if (attrs.page_url)
+    if (attrs.url)
     {
-      config.pageUrl = attrs.page_url
+      config.pageUrl = attrs.url
     }
 
-    if (attrs.page_image)
+    if (attrs.image)
     {
-      config.pageImage = attrs.page_image
+      config.pageImage = attrs.image
     }
 
     if (attrs.text)
@@ -168,7 +168,7 @@ class VkontakteTagLib
    * @attr layout Visual layout/appearance of the button (VkontakteSubscribeButtonLayout or integer).
    * @attr only_button Whether to display both author and button (false) or button only (true).
    */
-  def subscribe = { attrs ->
+  def subscription = { attrs ->
     if (!attrs.account)
     {
       return
@@ -190,7 +190,7 @@ class VkontakteTagLib
 
   /**
    * Renders embedded VKontakte video on web page.
-   * @attr video REQUIRED Identifier of video.
+   * @attr id REQUIRED Identifier of video.
    * @attr user REQUIRED Account identifier of video's uploader.
    * @attr hash REQUIRED Hash code of video.
    * @attr width REQUIRED Width of video control.
@@ -198,7 +198,7 @@ class VkontakteTagLib
    * @attr hd Whether to play video in High Definition format. Default is false.
    */
   def video = { attrs ->
-    if (!attrs.video || !attrs.user || !attrs.hash || !attrs.width || !attrs.height)
+    if (!attrs.id || !attrs.user || !attrs.hash || !attrs.width || !attrs.height)
     {
       return
     }
@@ -211,7 +211,7 @@ class VkontakteTagLib
       mozallowfullscreen: true,
       width: attrs.width,
       height: attrs.height,
-      src: "http://vk.com/video_ext.php?oid=${attrs.user}&id=${attrs.video}&hash=${attrs.hash}&hd=${attrs.hd?.toBoolean() ? 1 : 0}"
+      src: "http://vk.com/video_ext.php?oid=${attrs.user}&id=${attrs.id}&hash=${attrs.hash}&hd=${attrs.hd?.toBoolean() ? 1 : 0}"
     ])
   }
 }
@@ -422,7 +422,7 @@ enum VkontakteLikeButtonVerb
   }
 }
 
-enum VkontakteSubscribeButtonLayout
+enum VkontakteSubscriptionButtonLayout
 {
   FIRST,
   SECOND

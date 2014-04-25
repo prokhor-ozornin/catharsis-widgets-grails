@@ -16,7 +16,7 @@ class PinterestTagLib
    * @attr id REQUIRED Identifier of account's board.
    * @attr height Total height of board in pixels.
    * @attr width Total width of board in pixels.
-   * @attr image_width Width of board's image in pixels.
+   * @attr image Width of board's image in pixels.
    */
   def board = { attrs ->
     if (!attrs.account || !attrs.id)
@@ -29,7 +29,7 @@ class PinterestTagLib
       "data-pin-board-width": attrs.width,
       "data-pin-do": "embedBoard",
       "data-pin-scale-height": attrs.height,
-      "data-pin-scale-width": attrs.image_width,
+      "data-pin-scale-width": attrs.image,
       "href": "http://www.pinterest.com/${attrs.account}/${attrs.id}"
     ]])
   }
@@ -41,7 +41,7 @@ class PinterestTagLib
    * @attr account REQUIRED Pinterest user account.
    * @attr label Text label on the button.
    */
-  def follow = { attrs ->
+  def follow_button = { attrs ->
     if (!attrs.account)
     {
       return
@@ -62,19 +62,19 @@ class PinterestTagLib
    * @attr image REQUIRED URL address of the "pinned" image.
    * @attr description REQUIRED Description of the "pinned" image.
    * @attr color Background color of the button (PinterestPinItButtonColor or string).
-   * @attr counter_position Position of button's pin counter (PinterestPinItButtonPinCountPosition or string).
+   * @attr counter Position of button's pin counter (PinterestPinItButtonPinCountPosition or string).
    * @attr shape Shape of the button (PinterestPinItButtonShape or string).
    * @attr size Size of the button (PinterestPinItButtonSize or string).
    * @attr language Language of button's label.
    */
-  def pinit = { attrs ->
+  def pin_it_button = { attrs ->
     if (!attrs.url || !attrs.image || !attrs.description)
     {
       return
     }
 
     def color = (attrs.color ?: "gray").toString()
-    def counterPosition = (attrs.counter_position ?: PinterestPinItButtonPinCountPosition.NONE).toString()
+    def counterPosition = (attrs.counter ?: PinterestPinItButtonPinCountPosition.NONE).toString()
     def language = attrs.language ?: "en"
     def shape = (attrs.shape ?: PinterestPinItButtonShape.RECTANGULAR).toString()
     def size = (attrs.size ?: PinterestPinItButtonSize.SMALL).toString()
@@ -148,7 +148,7 @@ class PinterestTagLib
    * @attr account REQUIRED Pinterest user account.
    * @attr height Total height of profile area in pixels.
    * @attr width Total width of profile area in pixels.
-   * @attr image_width Width of profile area's image in pixels.
+   * @attr image Width of profile area's image in pixels.
    */
   def profile = { attrs ->
     if (!attrs.account)
@@ -161,7 +161,7 @@ class PinterestTagLib
         "data-pin-board-width": attrs.width,
         "data-pin-do": "embedUser",
         "data-pin-scale-height": attrs.height,
-        "data-pin-scale-width": attrs.image_width,
+        "data-pin-scale-width": attrs.image,
         "href": "http://www.pinterest.com/${attrs.account}"
       ]])
   }

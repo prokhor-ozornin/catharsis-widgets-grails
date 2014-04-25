@@ -12,7 +12,7 @@ class LiveJournalTagLib
    * Renders LiveJournal "Like" button.
    * @see "http://www.livejournal.com/support/faq/313.html"
    */
-  def like = { attrs ->
+  def like_button = { attrs ->
     out << '<lj-like buttons="repost"/>'
   }
 
@@ -21,7 +21,7 @@ class LiveJournalTagLib
    * @see "http://www.livejournal.com/support/faq/313.html"
    * @attr title Label text to display on the button.
    */
-  def repost = { attrs, body ->
+  def repost_button = { attrs, body ->
     out << g.withTag([name: "lj-repost", attrs: [button: attrs.title]], body)
   }
 }

@@ -22,7 +22,7 @@ class SurfingbirdTagLib
    * @attr width Horizontal width of the button. Default is 500px.
    * @attr height Vertical height of the button. Default is 25px.
    */
-  def surf = { attrs ->
+  def surf_button = { attrs ->
     def config =
     [
       layout : "${(attrs.layout ?: SurfingbirdSurfButtonLayout.COMMON).toString()}${attrs.counter?.toBoolean() ? "" : "-nocount"}${attrs.color ? "-" + attrs.color : ""}",

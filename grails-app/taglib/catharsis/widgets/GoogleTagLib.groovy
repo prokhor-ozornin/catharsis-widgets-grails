@@ -46,7 +46,7 @@ class GoogleTagLib
    * @attr callback Callback JavaScript function that is called after the user clicks the +1 button.
    * @attr recommendations Whether to show recommendations within the +1 hover bubble. Default is true.
    */
-  def plusone = { attrs ->
+  def plus_one_button = { attrs ->
     def attributes = [:]
 
     if (attrs.url)

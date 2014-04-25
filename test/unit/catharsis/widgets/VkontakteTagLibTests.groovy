@@ -42,28 +42,28 @@ class VkontakteTagLibTests
     assert html.contains('VK.Widgets.Group("vk_groups", {"mode":"2","wide":1,"width":"width","height":"height"}, "account");')
   }
 
-  void test_like_tag()
+  void test_like_button_tag()
   {
-    def html = applyTemplate('<vkontakte:like/>')
+    def html = applyTemplate('<vkontakte:like_button/>')
     assert html.contains('<div id="vk_like"></div>')
     assert html.contains('<script type="text/javascript">')
     assert html.contains('VK.Widgets.Like("vk_like", {});')
 
-    html = applyTemplate("<vkontakte:like layout=\"${VkontakteLikeButtonLayout.BUTTON}\" width=\"width\" page_title=\"page_title\" page_description=\"page_description\" page_url=\"page_url\" page_image=\"page_image\" text=\"text\" height=\"height\" verb=\"1\"/>")
+    html = applyTemplate("<vkontakte:like_button layout=\"${VkontakteLikeButtonLayout.BUTTON}\" width=\"width\" title=\"title\" description=\"description\" url=\"url\" image=\"image\" text=\"text\" height=\"height\" verb=\"1\"/>")
     assert html.contains('<div id="vk_like"></div>')
     assert html.contains('<script type="text/javascript">')
-    assert html.contains('VK.Widgets.Like("vk_like", {"type":"button","pageTitle":"page_title","pageDescription":"page_description","pageUrl":"page_url","pageImage":"page_image","text":"text","height":"height","verb":1});')
+    assert html.contains('VK.Widgets.Like("vk_like", {"type":"button","pageTitle":"title","pageDescription":"description","pageUrl":"url","pageImage":"image","text":"text","height":"height","verb":1});')
   }
 
   void test_subscribe_tag()
   {
-    assert !applyTemplate("<vkontakte:subscribe/>")
+    assert !applyTemplate("<vkontakte:subscription/>")
 
-    def html = applyTemplate('<vkontakte:subscribe account="account"/>')
+    def html = applyTemplate('<vkontakte:subscription account="account"/>')
     assert html.contains('<div id="vk_subscribe"></div>')
     assert html.contains('VK.Widgets.Subscribe("vk_subscribe", {"mode":"1"}, "account");')
 
-    html = applyTemplate("<vkontakte:subscribe account=\"account\" layout=\"${VkontakteSubscribeButtonLayout.SECOND}\" only_button=\"true\"/>")
+    html = applyTemplate("<vkontakte:subscription account=\"account\" layout=\"${VkontakteSubscriptionButtonLayout.SECOND}\" only_button=\"true\"/>")
     assert html.contains('<div id="vk_subscribe"></div>')
     assert html.contains('VK.Widgets.Subscribe("vk_subscribe", {"mode":"2","soft":1}, "account");')
   }
@@ -72,12 +72,12 @@ class VkontakteTagLibTests
   {
     assert !applyTemplate('<vkontakte:video/>')
     assert !applyTemplate('<vkontakte:video oid="oid" hash="hash" width="width" height="height"/>')
-    assert !applyTemplate('<vkontakte:video video="video" hash="hash" width="width" height="height"/>')
-    assert !applyTemplate('<vkontakte:video video="video" oid="oid" width="width" height="height"/>')
-    assert !applyTemplate('<vkontakte:video video="video" oid="oid" hash="hash" height="height"/>')
-    assert !applyTemplate('<vkontakte:video video="video" oid="oid" hash="hash" width="width"/>')
+    assert !applyTemplate('<vkontakte:video id="id" hash="hash" width="width" height="height"/>')
+    assert !applyTemplate('<vkontakte:video id="id" oid="oid" width="width" height="height"/>')
+    assert !applyTemplate('<vkontakte:video id="id" oid="oid" hash="hash" height="height"/>')
+    assert !applyTemplate('<vkontakte:video id="id" oid="oid" hash="hash" width="width"/>')
 
-    assert applyTemplate('<vkontakte:video video="video" user="user" hash="hash" width="width" height="height"/>') == '<iframe frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" width="width" height="height" src="http://vk.com/video_ext.php?oid=user&id=video&hash=hash&hd=0"></iframe>'
-    assert applyTemplate('<vkontakte:video video="video" user="user" hash="hash" width="width" height="height" hd="true"/>') == '<iframe frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" width="width" height="height" src="http://vk.com/video_ext.php?oid=user&id=video&hash=hash&hd=1"></iframe>'
+    assert applyTemplate('<vkontakte:video id="id" user="user" hash="hash" width="width" height="height"/>') == '<iframe frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" width="width" height="height" src="http://vk.com/video_ext.php?oid=user&id=id&hash=hash&hd=0"></iframe>'
+    assert applyTemplate('<vkontakte:video id="id" user="user" hash="hash" width="width" height="height" hd="true"/>') == '<iframe frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" width="width" height="height" src="http://vk.com/video_ext.php?oid=user&id=id&hash=hash&hd=1"></iframe>'
   }
 }
