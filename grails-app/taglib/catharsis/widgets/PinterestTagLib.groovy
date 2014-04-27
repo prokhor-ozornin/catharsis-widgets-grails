@@ -55,6 +55,25 @@ class PinterestTagLib
   }
 
   /**
+   * Renders Pinterest embedded pin widget.
+   * Requires "pinterest" module to be loaded with Resources plugin.
+   * @see "http://business.pinterest.com/widget-builder/#do_embed_pin"
+   * @attr id REQUIRED Unique identifier of Pinterest Pin.
+   */
+  def pin = { attrs ->
+    if (!attrs.id)
+    {
+      return
+    }
+
+    out << g.withTag([name: "a", attrs:
+      [
+        "data-pin-do": "embedPin",
+        "href": "http://www.pinterest.com/pin/${attrs.id}"
+      ]])
+  }
+
+  /**
    * Renders Pinterest "Pin It" button widget.
    * Requires "pinterest" module to be loaded with Resources plugin.
    * @see "http://business.pinterest.com/widget-builder/#do_pin_it_button"
@@ -123,25 +142,6 @@ class PinterestTagLib
   }
 
   /**
-   * Renders Pinterest embedded pin widget.
-   * Requires "pinterest" module to be loaded with Resources plugin.
-   * @see "http://business.pinterest.com/widget-builder/#do_embed_pin"
-   * @attr id REQUIRED Unique identifier of Pinterest Pin.
-   */
-  def pin = { attrs ->
-    if (!attrs.id)
-    {
-      return
-    }
-
-    out << g.withTag([name: "a", attrs:
-    [
-      "data-pin-do": "embedPin",
-      "href": "http://www.pinterest.com/pin/${attrs.id}"
-    ]])
-  }
-
-  /**
    * Renders Pinterest Profile widget with user's latest pins.
    * Requires "pinterest" module to be loaded with Resources plugin.
    * @see "http://business.pinterest.com/widget-builder/#do_embed_user"
@@ -167,6 +167,31 @@ class PinterestTagLib
   }
 }
 
+/**
+ * Color of Pinterest "Pin It" button
+ */
+enum PinterestPinItButtonColor
+{
+  /**
+   * Gray.
+   */
+  GRAY,
+
+  /**
+   * Red.
+   */
+  RED,
+
+  /**
+   * White.
+   */
+  WHITE
+
+  String toString()
+  {
+    name().toLowerCase()
+  }
+}
 /**
  * Position of pin counter for Pinterest "Pin It" button.
  */
@@ -235,32 +260,6 @@ enum PinterestPinItButtonSize
    * Large.
    */
   LARGE
-
-  String toString()
-  {
-    name().toLowerCase()
-  }
-}
-
-/**
- * Color of Pinterest "Pin It" button
- */
-enum PinterestPinItButtonColor
-{
-  /**
-   * Gray.
-   */
-  GRAY,
-
-  /**
-   * Red.
-   */
-  RED,
-
-  /**
-   * White.
-   */
-  WHITE
 
   String toString()
   {

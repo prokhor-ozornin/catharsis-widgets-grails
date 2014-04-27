@@ -21,6 +21,12 @@ class PinterestTagLibTests
     assert applyTemplate('<pinterest:follow_button account="account" label="label"/>') == '<a data-pin-do="buttonFollow" href="http://www.pinterest.com/account">label</a>'
   }
 
+  void test_pin_tag()
+  {
+    assert !applyTemplate('<pinterest:pin/>')
+    assert applyTemplate('<pinterest:pin id="id"/>') == '<a data-pin-do="embedPin" href="http://www.pinterest.com/pin/id"></a>'
+  }
+
   void test_pin_it_button_tag()
   {
     assert !applyTemplate('<pinterest:pin_it_button/>')
@@ -29,12 +35,6 @@ class PinterestTagLibTests
     assert !applyTemplate('<pinterest:pin_it_button image="image" description="description"/>')
     assert applyTemplate('<pinterest:pin_it_button url="url" image="image" description="description"/>') == '<a data-pin-color="gray" data-pin-config="none" data-pin-do="buttonPin" data-pin-height="20" data-pin-lang="en" data-pin-shape="rect" href="http://www.pinterest.com/pin/create/button/?url=url&media=image&description=description"><img src="http://assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png"/></a>'
     assert applyTemplate("<pinterest:pin_it_button url=\"url\" image=\"image\" description=\"description\" color=\"color\" counter=\"${PinterestPinItButtonPinCountPosition.ABOVE}\" language=\"language\" size=\"${PinterestPinItButtonSize.LARGE}\"/>") == '<a data-pin-color="color" data-pin-config="above" data-pin-do="buttonPin" data-pin-height="28" data-pin-lang="language" data-pin-shape="rect" href="http://www.pinterest.com/pin/create/button/?url=url&media=image&description=description"><img src="http://assets.pinterest.com/images/pidgets/pinit_fg_language_rect_color_28.png"/></a>'
-  }
-
-  void test_pin_tag()
-  {
-    assert !applyTemplate('<pinterest:pin/>')
-    assert applyTemplate('<pinterest:pin id="id"/>') == '<a data-pin-do="embedPin" href="http://www.pinterest.com/pin/id"></a>'
   }
 
   void test_profile_tag()

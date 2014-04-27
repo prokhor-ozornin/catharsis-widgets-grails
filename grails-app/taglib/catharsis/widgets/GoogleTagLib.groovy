@@ -88,12 +88,10 @@ class GoogleTagLib
   }
 }
 
-enum GooglePlusOneButtonSize
+enum GooglePlusOneButtonAlign
 {
-  SMALL,
-  MEDIUM,
-  STANDARD,
-  TALL
+  LEFT,
+  RIGHT
 
   String toString()
   {
@@ -124,10 +122,12 @@ enum GooglePlusOneButtonAnnotation
   }
 }
 
-enum GooglePlusOneButtonAlign
+enum GooglePlusOneButtonSize
 {
-  LEFT,
-  RIGHT
+  SMALL,
+  MEDIUM,
+  STANDARD,
+  TALL
 
   String toString()
   {

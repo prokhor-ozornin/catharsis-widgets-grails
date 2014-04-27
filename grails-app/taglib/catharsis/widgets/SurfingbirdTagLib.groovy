@@ -51,6 +51,18 @@ class SurfingbirdTagLib
   }
 }
 
+enum SurfingbirdSurfButtonColor
+{
+  BLUE,
+  GREEN,
+  GRAY
+
+  String toString()
+  {
+    return name().toLowerCase()
+  }
+}
+
 enum SurfingbirdSurfButtonLayout
 {
   COMMON,
@@ -73,17 +85,5 @@ enum SurfingbirdSurfButtonLayout
         return "vert"
       break
     }
-  }
-}
-
-enum SurfingbirdSurfButtonColor
-{
-  BLUE,
-  GREEN,
-  GRAY
-
-  String toString()
-  {
-    return name().toLowerCase()
   }
 }

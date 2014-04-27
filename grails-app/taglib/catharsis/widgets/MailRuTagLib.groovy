@@ -233,6 +233,65 @@ class MailRuTagLib
   }
 }
 
+/**
+ *
+ */
+enum MailRuFacesFont
+{
+  /**
+   *
+   */
+  ARIAL,
+
+  /**
+   *
+   */
+  TAHOMA,
+
+  /**
+   *
+   */
+  GEORGIA
+
+  String toString()
+  {
+    switch (this)
+    {
+      case ARIAL :
+        return "Arial"
+
+      case TAHOMA :
+        return "Tahoma"
+
+      case GEORGIA :
+        return "Georgia";
+    }
+  }
+}
+
+enum MailRuLikeButtonCounterPosition
+{
+  RIGHT,
+  UPPER
+
+  String toString()
+  {
+    return name().toLowerCase()
+  }
+}
+
+enum MailRuLikeButtonLayout
+{
+  FIRST,
+  SECOND,
+  THIRD
+
+  String toString()
+  {
+    return (ordinal() + 1).toString()
+  }
+}
+
 enum MailRuLikeButtonSize
 {
   /**
@@ -305,10 +364,21 @@ enum MailRuLikeButtonSize
   }
 }
 
-enum MailRuLikeButtonLayout
+enum MailRuLikeButtonTextType
 {
+  /**
+   * Like
+   */
   FIRST,
+
+  /**
+   * Share
+   */
   SECOND,
+
+  /**
+   * Recommend
+   */
   THIRD
 
   String toString()
@@ -316,7 +386,6 @@ enum MailRuLikeButtonLayout
     return (ordinal() + 1).toString()
   }
 }
-
 enum MailRuLikeButtonType
 {
   // "Odnoklassniki.ru" button only
@@ -343,76 +412,6 @@ enum MailRuLikeButtonType
       case ALL :
         return "combo"
       break
-    }
-  }
-}
-
-enum MailRuLikeButtonCounterPosition
-{
-  RIGHT,
-  UPPER
-
-  String toString()
-  {
-    return name().toLowerCase()
-  }
-}
-
-enum MailRuLikeButtonTextType
-{
-  /**
-   * Like
-   */
-  FIRST,
-
-  /**
-   * Share
-   */
-  SECOND,
-
-  /**
-   * Recommend
-   */
-  THIRD
-
-  String toString()
-  {
-    return (ordinal() + 1).toString()
-  }
-}
-
-/**
- *
- */
-enum MailRuFacesFont
-{
-  /**
-   *
-   */
-  ARIAL,
-
-  /**
-   *
-   */
-  TAHOMA,
-
-  /**
-   *
-   */
-  GEORGIA
-
-  String toString()
-  {
-    switch (this)
-    {
-      case ARIAL :
-        return "Arial"
-
-      case TAHOMA :
-        return "Tahoma"
-
-      case GEORGIA :
-        return "Georgia";
     }
   }
 }

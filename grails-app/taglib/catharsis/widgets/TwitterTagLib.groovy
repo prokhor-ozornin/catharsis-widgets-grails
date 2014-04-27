@@ -139,10 +139,10 @@ class TwitterTagLib
   }
 }
 
-enum TwitterFollowButtonSize
+enum TwitterFollowButtonAlignment
 {
-  MEDIUM,
-  LARGE
+  LEFT,
+  RIGHT
 
   String toString()
   {
@@ -150,10 +150,10 @@ enum TwitterFollowButtonSize
   }
 }
 
-enum TwitterFollowButtonAlignment
+enum TwitterFollowButtonSize
 {
-  LEFT,
-  RIGHT
+  MEDIUM,
+  LARGE
 
   String toString()
   {

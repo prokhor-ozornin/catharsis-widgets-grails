@@ -92,6 +92,17 @@ class TumblrTagLib
   }
 }
 
+enum TumblrFollowButtonColorScheme
+{
+  LIGHT,
+  DARK
+
+  String toString()
+  {
+    return name().toLowerCase()
+  }
+}
+
 enum TumblrFollowButtonType
 {
   FIRST,
@@ -104,10 +115,10 @@ enum TumblrFollowButtonType
   }
 }
 
-enum TumblrFollowButtonColorScheme
+enum TumblrShareButtonColorScheme
 {
   LIGHT,
-  DARK
+  GRAY
 
   String toString()
   {
@@ -125,16 +136,5 @@ enum TumblrShareButtonType
   String toString()
   {
     return (ordinal() + 1).toString()
-  }
-}
-
-enum TumblrShareButtonColorScheme
-{
-  LIGHT,
-  GRAY
-
-  String toString()
-  {
-    return name().toLowerCase()
   }
 }

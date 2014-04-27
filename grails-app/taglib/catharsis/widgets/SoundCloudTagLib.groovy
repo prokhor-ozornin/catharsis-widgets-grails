@@ -35,6 +35,24 @@ class SoundCloudTagLib
   }
 }
 
+enum SoundCloudProfileIconColor
+{
+  BLACK_WHITE,
+
+  ORANGE_TRANSPARENT,
+
+  ORANGE_WHITE,
+
+  WHITE_ORANGE,
+
+  WHITE_TRANSPARENT
+
+  String toString()
+  {
+    name().toLowerCase()
+  }
+}
+
 /**
  * Size of SoundCloud user's profile icon in pixels.
  */
@@ -100,23 +118,5 @@ enum SoundCloudProfileIconSize
       case SIZE_64 :
         return "64";
     }
-  }
-}
-
-enum SoundCloudProfileIconColor
-{
-  BLACK_WHITE,
-
-  ORANGE_TRANSPARENT,
-
-  ORANGE_WHITE,
-
-  WHITE_ORANGE,
-
-  WHITE_TRANSPARENT
-
-  String toString()
-  {
-    name().toLowerCase()
   }
 }

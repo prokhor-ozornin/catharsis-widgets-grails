@@ -316,17 +316,6 @@ class YandexTagLib
   }
 }
 
-enum YandexLikeButtonSize
-{
-  LARGE,
-  SMALL
-
-  String toString()
-  {
-    return name().toLowerCase()
-  }
-}
-
 enum YandexLikeButtonLayout
 {
   BUTTON,
@@ -338,31 +327,40 @@ enum YandexLikeButtonLayout
   }
 }
 
-/**
- * Type of payments source.
- */
-enum YandexMoneyButtonType
+enum YandexLikeButtonSize
 {
-  /**
-   * Visa/Master Card
-   */
-  CARD,
-
-  /**
-   * Yandex.Money wallet.
-   */
-  WALLET
+  LARGE,
+  SMALL
 
   String toString()
   {
-    switch (this)
-    {
-      case CARD:
-        return "any-card-payment-type";
+    return name().toLowerCase()
+  }
+}
 
-      case WALLET:
-        return "yamoney-payment-type";
-    }
+/**
+ * Color of the button.
+ */
+enum YandexMoneyButtonColor
+{
+  /**
+   * Orange
+   */
+  ORANGE,
+
+  /**
+   * White
+   */
+  WHITE,
+
+  /**
+   * Black
+   */
+  BLACK
+
+  String toString()
+  {
+    return name().toLowerCase()
   }
 }
 
@@ -399,32 +397,6 @@ enum YandexMoneyButtonSize
       case LARGE:
         return "l";
     }
-  }
-}
-
-/**
- * Color of the button.
- */
-enum YandexMoneyButtonColor
-{
-  /**
-   * Orange
-   */
-  ORANGE,
-
-  /**
-   * White
-   */
-  WHITE,
-
-  /**
-   * Black
-   */
-  BLACK
-
-  String toString()
-  {
-    return name().toLowerCase()
   }
 }
 
@@ -466,6 +438,34 @@ enum YandexMoneyButtonText
   String toString()
   {
     return "0${(ordinal() + 1)}"
+  }
+}
+
+/**
+ * Type of payments source.
+ */
+enum YandexMoneyButtonType
+{
+  /**
+   * Visa/Master Card
+   */
+  CARD,
+
+  /**
+   * Yandex.Money wallet.
+   */
+  WALLET
+
+  String toString()
+  {
+    switch (this)
+    {
+      case CARD:
+        return "any-card-payment-type";
+
+      case WALLET:
+        return "yamoney-payment-type";
+    }
   }
 }
 

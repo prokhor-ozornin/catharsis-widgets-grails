@@ -5,15 +5,6 @@ import grails.test.mixin.TestFor
 @TestFor(VkontakteTagLib)
 class VkontakteTagLibTests
 {
-  void test_initialize_tag()
-  {
-    assert !applyTemplate("<vkontakte:initialize/>")
-
-    /*def html = applyTemplate('<vkontakte:initialize apiId="id"/>')
-    assert html.contains('<script type="text/javascript">')
-    assert html.contains('VK.init({apiId:id, onlyWidgets:true})')*/
-  }
-
   void test_comments_tag()
   {
     def html = applyTemplate('<vkontakte:comments/>')
@@ -40,6 +31,15 @@ class VkontakteTagLibTests
     assert html.contains('<div id="vk_groups"></div>')
     assert html.contains('<script type="text/javascript">')
     assert html.contains('VK.Widgets.Group("vk_groups", {"mode":"2","wide":1,"width":"width","height":"height"}, "account");')
+  }
+
+  void test_initialize_tag()
+  {
+    assert !applyTemplate("<vkontakte:initialize/>")
+
+    /*def html = applyTemplate('<vkontakte:initialize apiId="id"/>')
+    assert html.contains('<script type="text/javascript">')
+    assert html.contains('VK.init({apiId:id, onlyWidgets:true})')*/
   }
 
   void test_like_button_tag()

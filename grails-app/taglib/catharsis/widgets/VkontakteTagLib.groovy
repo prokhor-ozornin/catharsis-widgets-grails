@@ -11,21 +11,6 @@ class VkontakteTagLib
   static final String namespace = "vkontakte"
 
   /**
-   * Performs initialization of VKontakte JavaScript API. Initialization must be performed before render any VKontakte widgets on web pages.
-   * Requires "vkontakte" module to be loaded with Resources plugin.
-   * @see "http://vk.com/dev/sites"
-   * @attr api_id REQUIRED API identifier of registered VKontakte application.
-   */
-  def initialize = { attrs ->
-    if (!attrs.api_id)
-    {
-      return
-    }
-
-    r.script(disposition: "head", "VK.init({apiId:${attrs.api_id}, onlyWidgets:true});")
-  }
-
-  /**
    * Renders VKontakte comments widget.
    * Requires "vkontakte" module to be loaded with Resources plugin.
    * @see "http://vk.com/dev/Comments"
@@ -35,9 +20,9 @@ class VkontakteTagLib
    */
   def comments = { attrs ->
     def config =
-    [
-      limit: (attrs.limit?.toInteger() ?: VkontakteCommentsLimit.FIVE).toString()
-    ]
+      [
+        limit: (attrs.limit?.toInteger() ?: VkontakteCommentsLimit.FIVE).toString()
+      ]
 
     if (attrs.attach)
     {
@@ -92,6 +77,21 @@ class VkontakteTagLib
 
     out << g.withTag(name: "div", attrs: ["id": "vk_groups"])
     out << g.javascript(null, "VK.Widgets.Group(\"vk_groups\", ${config as JSON}, \"${attrs.account}\");")
+  }
+
+  /**
+   * Performs initialization of VKontakte JavaScript API. Initialization must be performed before render any VKontakte widgets on web pages.
+   * Requires "vkontakte" module to be loaded with Resources plugin.
+   * @see "http://vk.com/dev/sites"
+   * @attr api_id REQUIRED API identifier of registered VKontakte application.
+   */
+  def initialize = { attrs ->
+    if (!attrs.api_id)
+    {
+      return
+    }
+
+    r.script(disposition: "head", "VK.init({apiId:${attrs.api_id}, onlyWidgets:true});")
   }
 
   /**
@@ -331,34 +331,6 @@ enum VkontakteCommunityMode
   }
 }
 
-enum VkontakteLikeButtonLayout
-{
-  /**
-   * Button with a text counter
-   */
-  FULL,
-
-  /**
-   * Button with a micro counter
-   */
-  BUTTON,
-
-  /**
-   * Micro button
-   */
-  MINI,
-
-  /**
-   * Micro button, counter is over the button
-   */
-  VERTICAL
-
-  String toString()
-  {
-    return name().toLowerCase()
-  }
-}
-
 enum VkontakteLikeButtonHeight
 {
   /**
@@ -401,6 +373,34 @@ enum VkontakteLikeButtonHeight
         return "24"
         break
     }
+  }
+}
+
+enum VkontakteLikeButtonLayout
+{
+  /**
+   * Button with a text counter
+   */
+  FULL,
+
+  /**
+   * Button with a micro counter
+   */
+  BUTTON,
+
+  /**
+   * Micro button
+   */
+  MINI,
+
+  /**
+   * Micro button, counter is over the button
+   */
+  VERTICAL
+
+  String toString()
+  {
+    return name().toLowerCase()
   }
 }
 
