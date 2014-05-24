@@ -488,10 +488,24 @@ class FacebookTagLib
   }
 }
 
+/**
+ * Visual appearance (layout) of Facebook buttons.
+ */
 enum FacebookButtonLayout
 {
+  /**
+   * Box with a counter.
+   */
   BOX_COUNT,
+
+  /**
+   * Button with a counter.
+   */
   BUTTON_COUNT,
+
+  /**
+   * Standard.
+   */
   STANDARD
 
   String toString()
@@ -500,9 +514,19 @@ enum FacebookButtonLayout
   }
 }
 
+/**
+ * Facebook widgets color scheme.
+ */
 enum FacebookColorScheme
 {
+  /**
+   * Light
+   */
   LIGHT,
+
+  /**
+   * Dark
+   */
   DARK
 
   String toString()

@@ -550,33 +550,45 @@ _Code:_
 
 `<vkontakte:initialize api_id="3816272"/>`
 
-**3. Comments**
+**3. OAuth Button**
 
-_Requirements:_ Call to `<vkontakte:initialize>`
+_Requirements:_ Call to `<vkontakte:initialize>` (_head_ section)
+
+_Code:_
+
+`<vkontakte:auth_button type="${VkontakteAuthButtonType.STANDARD}" url="http://yandex.ru"/>`
+
+`<vkontakte:auth_button type="${VkontakteAuthButtonType.DYNAMIC}" callback="onAuth" width="640"/>`
+
+![](http://img-fotki.yandex.ru/get/5204/80185211.1e/0_8ee77_efa1aeb_orig)
+
+**4. Comments**
+
+_Requirements:_ Call to `<vkontakte:initialize>` (_head_ section)
 
 _Code:_
 
 `<vkontakte:comments/>`
 
-`<vkontakte:comments attach="${VkontakteCommentsAttach.ALL}" limit="${VkontakteCommentsLimit.FIFTEEN}"/>`
+`<vkontakte:comments attach="${VkontakteCommentsAttach.ALL}" limit="${VkontakteCommentsLimit.FIFTEEN}" auto_publish="true" auto_update="true" mini="true"/>`
 
 ![](http://img-fotki.yandex.ru/get/9822/80185211.1d/0_8deef_1d93c587_orig)
 
-**4. Community**
+**5. Community**
 
-_Requirements:_ Call to `<vkontakte:initialize>`
+_Requirements:_ Call to `<vkontakte:initialize>` (_head_ section)
 
 _Code:_
 
 `<vkontakte:community account="44545550"/>`
 
-`<vkontakte:community account="44545550" mode="${VkontakteCommunityMode.NEWS}" height="400" width="600"/>`
+`<vkontakte:community account="44545550" mode="${VkontakteCommunityMode.NEWS}" height="400" width="600" backgroundColor="AABBCC" textColor="FF0000" buttonColor="00FF00"/>`
 
 ![](http://img-fotki.yandex.ru/get/5203/80185211.1e/0_8def1_155d6ab8_orig)
 
-**5. Like Button**
+**6. Like Button**
 
-_Requirements:_ Call to `<vkontakte:initialize>`
+_Requirements:_ Call to `<vkontakte:initialize>` (_head_ section)
 
 _Code:_
 
@@ -584,9 +596,45 @@ _Code:_
 
 ![](http://img-fotki.yandex.ru/get/9489/80185211.1e/0_8def2_6a491b94_orig)
 
-**6. Subscription**
+**7. Poll**
 
-_Requirements:_ Call to `<vkontakte:initialize>`
+_Requirements:_ Call to `<vkontakte:initialize>` (_head_ section)
+
+_Code:_
+
+`<vkontakte:poll id="6564504_c2a6ccb7df15aff473"/>`
+
+`<vkontakte:poll id="6564504_c2a6ccb7df15aff473" width="640"/>`
+
+![](http://img-fotki.yandex.ru/get/5204/80185211.1e/0_8ee78_e69406c8_orig)
+
+**8. Wall Post**
+
+_Requirements:_ Call to `<vkontakte:initialize>` (_head_ section)
+
+_Code:_
+
+`<vkontakte:post id="45616" owner="1" hash="Yss6aNhrrQhOL5FfXZeuga8yKA"/>`
+
+`<vkontakte:post id="45616" owner="1" hash="Yss6aNhrrQhOL5FfXZeuga8yKA" width="640"/>`
+
+![](http://img-fotki.yandex.ru/get/9489/80185211.1e/0_8def5_d36b01d0_orig)
+
+**9. Recommendations Feed**
+
+_Requirements:_ Call to `<vkontakte:initialize>` (_head_ section)
+
+_Code:_
+
+`<vkontakte:recommendations/>`
+
+`<vkontakte:recommendations limit="10" max="50" period="${VkontakteRecommendationsPeriod.MONTH}" sorting="${VkontakteRecommendationsSorting.LIKES}" verb="${VkontakteRecommendationsVerb.LIKE}" target="_blank"/>`
+
+![](http://img-fotki.yandex.ru/get/9489/80185211.1e/0_8def6_9a22aa7c_orig)
+
+**10. Subscription**
+
+_Requirements:_ Call to `<vkontakte:initialize>` (_head_ section)
 
 _Code:_
 
