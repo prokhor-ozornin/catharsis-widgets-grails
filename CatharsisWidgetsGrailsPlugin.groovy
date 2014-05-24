@@ -1,6 +1,6 @@
 class CatharsisWidgetsGrailsPlugin
 {
-  def version = "2.3"
+  def version = "2.7"
   def grailsVersion = "2.0 > *"
   def title = "Catharsis Web Widgets"
   def description = """\
@@ -38,7 +38,7 @@ As of the latest version, the following areas are covered :
 
 - Vimeo [Embedded video, Video hyperlink]
 
-- VKontakte [Comments widget, Community widget, "Like" button, Subscribe widget, Embedded video, Video hyperlink]
+- VKontakte [OAuth Button, Comments widget, Community widget, "Like" button, Poll widget, Wall Post, Recommendations Feed, Subscribe widget, Embedded video, Video hyperlink]
 
 - Yandex [Yandex Analytics, "Ya" button, "Share" button, Embedded video, Video hyperlink, Yandex.Money (payment buttons and forms)]
 
