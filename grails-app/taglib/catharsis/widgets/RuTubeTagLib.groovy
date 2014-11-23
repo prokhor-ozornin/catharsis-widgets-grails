@@ -6,7 +6,7 @@ package catharsis.widgets
  */
 class RuTubeTagLib
 {
-  static final String namespace = "rutube"
+  static final String namespace = 'rutube'
 
   /**
    * Renders embedded RuTube video on web page.
@@ -14,24 +14,29 @@ class RuTubeTagLib
    * @attr width REQUIRED Width of video control.
    * @attr height REQUIRED Height of video control.
    */
-  def video = { attrs ->
-    if (!attrs.id || !attrs.width || !attrs.height)
+  Closure video = { Map attrs ->
+    String id = attrs['id']?.toString()?.trim()
+    String width = attrs['width']?.toString()?.trim()
+    String height = attrs['height']?.toString()?.trim()
+
+    if (!id || !width || !height)
     {
       return
     }
 
     out << g.withTag(
-      name: "iframe",
-      attrs:
+      name : 'iframe',
+      attrs :
       [
-        frameborder: "0",
-        allowfullscreen: true,
-        webkitallowfullscreen: true,
-        mozallowfullscreen: true,
-        scrolling: "no",
-        width: attrs.width,
-        height: attrs.height,
-        src: "http://rutube.ru/embed/${attrs.id}"
-      ])
+        'frameborder' : '0',
+        'allowfullscreen' : true,
+        'webkitallowfullscreen' : true,
+        'mozallowfullscreen' : true,
+        'scrolling' : 'no',
+        'width' : width,
+        'height' : height,
+        'src' : "http://rutube.ru/embed/${id}"
+      ]
+    )
   }
 }

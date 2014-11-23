@@ -8,7 +8,7 @@ import grails.converters.JSON
  */
 class CackleTagLib
 {
-  static final String namespace = "cackle"
+  static final String namespace = 'cackle'
 
   /**
    * Renders Cackle comments widget for registered website.
@@ -16,20 +16,34 @@ class CackleTagLib
    * @see "http://ru.cackle.me/help/widget-api"
    * @attr account REQUIRED Identifier of registered website in the "Cackle" comments system.
    */
-  def comments = { attrs ->
-    if (!attrs.account)
+  Closure comments = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+
+    if (!account)
     {
       return
     }
 
-    def config =
+    Map config =
     [
-      widget: "Comment",
-      id: attrs.account
+      'widget' : 'Comment',
+      'id' : account
     ]
 
     out << '<div id="mc-container"></div>'
-    out << g.javascript(null, g.render(contextPath: pluginContextPath, template: "/cackle", model: [config: config as JSON]))
+
+    out << g.javascript(
+      null,
+      g.render(
+        contextPath : pluginContextPath,
+        template : '/cackle',
+        model :
+        [
+          'config' : (config as JSON).toString()
+        ]
+      )
+    )
+
     out << '<a id="mc-link" href="http://cackle.me">Социальные комментарии <b style="color:#4FA3DA">Cackl</b><b style="color:#F65077">e</b></a>'
   }
 
@@ -39,19 +53,31 @@ class CackleTagLib
    * @see "http://ru.cackle.me/help/widget-api"
    * @attr account REQUIRED Identifier of registered website in the "Cackle" comments system.
    */
-  def comments_count = { attrs ->
-    if (!attrs.account)
+  Closure comments_count = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+
+    if (!account)
     {
       return
     }
 
-    def config =
+    Map config =
     [
-      widget: "CommentCount",
-      id: attrs.account
+      'widget' : 'CommentCount',
+      'id' : account
     ]
 
-    out << g.javascript(null, g.render(contextPath: pluginContextPath, template: "/cackle", model: [config: config as JSON]))
+    out << g.javascript(
+      null,
+      g.render(
+        contextPath : pluginContextPath,
+        template : '/cackle',
+        model :
+        [
+          'config' : (config as JSON).toString()
+        ]
+      )
+    )
   }
 
   /**
@@ -64,24 +90,38 @@ class CackleTagLib
    * @attr text_size Maximum allowed count of characters in comment (0 - do not cut). Default is 150.
    * @attr title_size Maximum allowed count of characters in title (0 - do not cut). Default is 40.
    */
-  def latest_comments = { attrs ->
-    if (!attrs.account)
+  Closure latest_comments = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+
+    if (!account)
     {
       return
     }
 
-    def config =
+    Map config =
     [
-      widget: "CommentRecent",
-      id: attrs.account,
-      size: attrs.max?.toInteger() ?: 5,
-      avatarSize: attrs.avatar_size?.toInteger() ?: 32,
-      textSize: attrs.text_size?.toInteger() ?: 150,
-      titleSize: attrs.title_size?.toInteger() ?: 40
+      'widget' : 'CommentRecent',
+      'id' : account,
+      'size' : attrs['max']?.toString()?.toInteger() ?: 5,
+      'avatarSize' : attrs['avatar_size']?.toString()?.toInteger() ?: 32,
+      'textSize' : attrs['text_size']?.toString()?.toInteger() ?: 150,
+      'titleSize' : attrs['title_size']?.toString()?.toInteger() ?: 40
     ]
 
     out << '<div id="mc-last"></div>'
-    out << g.javascript(null, g.render(contextPath: pluginContextPath, template: "/cackle", model: [config: config as JSON]))
+
+    out << g.javascript(
+      null,
+      g.render(
+        contextPath : pluginContextPath,
+        template : '/cackle',
+        model :
+        [
+          'config' : (config as JSON).toString()
+        ]
+      )
+    )
+
     out << '<a id="mc-link" href="http://cackle.me">Социальные комментарии <b style="color:#4FA3DA">Cackl</b><b style="color:#F65077">e</b></a>'
   }
 
@@ -91,19 +131,32 @@ class CackleTagLib
    * @see "http://ru.cackle.me/help/widget-api"
    * @attr account REQUIRED Identifier of registered website in the "Cackle" comments system.
    */
-  def login = { attrs ->
-    if (!attrs.account)
+  Closure login = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+
+    if (!account)
     {
       return
     }
 
-    def config =
+    Map config =
     [
-      widget: "Login",
-      id: attrs.account
+      'widget' : 'Login',
+      'id' : account
     ]
 
     out << '<div id="mc-login"></div>'
-    out << g.javascript(null, g.render(contextPath: pluginContextPath, template: "/cackle", model: [config: config as JSON]))
+
+    out << g.javascript(
+      contextPath : pluginContextPath,
+      g.render(
+        contextPath : pluginContextPath,
+        template : '/cackle',
+        model :
+        [
+          'config' : (config as JSON).toString()
+        ]
+      )
+    )
   }
 }

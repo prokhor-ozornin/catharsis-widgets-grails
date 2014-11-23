@@ -1,6 +1,7 @@
 package catharsis.widgets
 
 import grails.converters.JSON
+import org.apache.http.client.utils.URIBuilder
 
 /**
  * Mail.ru tags library
@@ -8,7 +9,7 @@ import grails.converters.JSON
  */
 class MailRuTagLib
 {
-  static final String namespace = "mailru"
+  static final String namespace = 'mailru'
 
   /**
    * Renders Mail.ru Faces (People On Site) widget.
@@ -26,52 +27,75 @@ class MailRuTagLib
    * @attr text_tolor Color of Faces box text labels.
    * @attr hyperlink_color Color of Faces box hyperlinks.
    */
-  def faces = { attrs ->
-    if (!attrs.domain || !attrs.width || !attrs.height)
+  Closure faces = { Map attrs ->
+    String domain = attrs['domain']?.toString()?.trim()
+    String width = attrs['width']?.toString()?.trim()
+    String height = attrs['height']?.toString()?.trim()
+
+    if (!domain || !width || !height)
     {
       return
     }
 
-    def config =
+    Map config =
     [
-      "domain": attrs.domain,
-      "font": (attrs.font ?: MailRuFacesFont.ARIAL).toString(),
-      "width": attrs.width,
-      "height": attrs.height
+      'domain' : domain,
+      'font' : attrs['font']?.toString() ?: MailRuFacesFont.ARIAL.toString(),
+      'width' : width,
+      'height' : height
     ]
 
-    if (attrs.title_text)
+    if (attrs['title_text'])
     {
-      config.title = attrs.title_text
-    }
-    if (attrs.title != null && !attrs.title.toBoolean())
-    {
-      config.notitle = true
-    }
-    if (attrs.title_color)
-    {
-      config["title-color"] = attrs.title_color
-    }
-    if (attrs.background_color)
-    {
-      config.background = attrs.background_color
-    }
-    if (attrs.border_color)
-    {
-      config.border = attrs.border_color
-    }
-    if (attrs.text_color)
-    {
-      config.color = attrs.text_color
-    }
-    if (attrs.hyperlink_color)
-    {
-      config["link-color"] = attrs.hyperlink_color
+      config['title'] = attrs['title_text'].toString()
     }
 
-    def query = config.collect { pair -> "${pair.key.encodeAsURL()}=${pair.value.encodeAsURL()}" }.join("&amp;")
+    if (attrs['title'] != null && !attrs['title'].toString().toBoolean())
+    {
+      config['notitle'] = true
+    }
 
-    out << "<a class=\"mrc__plugin_share_friends\" href=\"http://connect.mail.ru/share_friends?${query}\" rel=\"${(config as JSON).encodeAsHTML()}\">Друзья</a>"
+    if (attrs['title_color'])
+    {
+      config['title-color'] = attrs['title_color'].toString()
+    }
+
+    if (attrs['background_color'])
+    {
+      config['background'] = attrs['background_color'].toString()
+    }
+
+    if (attrs['border_color'])
+    {
+      config['border'] = attrs['border_color'].toString()
+    }
+
+    if (attrs['text_color'])
+    {
+      config['color'] = attrs['text_color'].toString()
+    }
+
+    if (attrs['hyperlink_color'])
+    {
+      config['link-color'] = attrs['hyperlink_color'].toString()
+    }
+
+    URIBuilder uri = new URIBuilder('http://connect.mail.ru/share_friends')
+    config.each
+    {
+      uri.addParameter(it.key.toString(), it.value.toString())
+    }
+
+    out << g.withTag(
+      name : 'a',
+      attrs :
+      [
+        'class' : 'mrc__plugin_share_friends',
+        'href' : uri.toString(),
+        'rel' : (config as JSON).toString()
+      ],
+      'Друзья'
+    )
   }
 
   /**
@@ -87,41 +111,62 @@ class MailRuTagLib
    * @attr button_color Color of "Subscribe" button in Groups box.
    * @attr text_color Color of Groups box text labels.
    */
-  def groups = { attrs ->
-    if (!attrs.account || !attrs.width || !attrs.height)
+  Closure groups = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+    String width = attrs['width']?.toString()?.trim()
+    String height = attrs['height']?.toString()?.trim()
+
+    if (!account || !width || !height)
     {
       return
     }
 
-    def config =
+    Map config =
     [
-      "group" : attrs.account,
-      "max_sub": 50,
-      "show_subscribers" : attrs.subscribers != null ? attrs.subscribers.toBoolean() : true,
-      "width": attrs.width,
-      "height": attrs.height
+      'group' : account,
+      'max_sub' : 50,
+      'show_subscribers' : attrs['subscribers'] != null ? attrs['subscribers'].toString().toBoolean() : true,
+      'width' : width,
+      'height' : height
     ]
 
-    if (attrs.background_color)
+    if (attrs['background_color'])
     {
-      config.background = attrs.background_color
-    }
-    if (attrs.text_color)
-    {
-      config.color = attrs.text_color
-    }
-    if (attrs.button_color)
-    {
-      config.button_background = attrs.button_color
-    }
-    if (attrs.domain)
-    {
-      config.domain = attrs.domain
+      config['background'] = attrs['background_color'].toString()
     }
 
-    def query = config.collect { pair -> "${pair.key.encodeAsURL()}=${pair.value.encodeAsURL()}" }.join("&amp;")
+    if (attrs['text_color'])
+    {
+      config['color'] = attrs['text_color'].toString()
+    }
 
-    out << "<a target=\"_blank\" class=\"mrc__plugin_groups_widget\" href=\"http://connect.mail.ru/groups_widget?${query}\" rel=\"${(config as JSON).encodeAsHTML()}\">Группы</a>"
+    if (attrs['button_color'])
+    {
+      config['button_background'] = attrs['button_color'].toString()
+    }
+
+    if (attrs['domain'])
+    {
+      config['domain'] = attrs['domain'].toString()
+    }
+
+    URIBuilder uri = new URIBuilder('http://connect.mail.ru/groups_widget')
+    config.each
+    {
+      uri.addParameter(it.key.toString(), it.value.toString())
+    }
+
+    out << g.withTag(
+      name : 'a',
+      attrs :
+      [
+        'class' : 'mrc__plugin_groups_widget',
+        'href' : uri.toString(),
+        'target' : '_blank',
+        'rel' : (config as JSON).toString()
+      ],
+      'Группы'
+    )
   }
 
   /**
@@ -130,13 +175,15 @@ class MailRuTagLib
    * @attr language Two-letter ISO language code that determines the interface language. Default is "ru".
    * @attr account ICQ UIN number of contact person. If specified, "Ask Me" option will be added to the widget.
    */
-  def icq = { attrs ->
-    if (attrs.account)
+  Closure icq = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+
+    if (account)
     {
-      out << g.javascript(null, "window.ICQ = {siteOwner:'${attrs.account}'};")
+      out << g.javascript(null, "window.ICQ = {siteOwner:'${account}'};")
     }
 
-    out << g.javascript(base: "http://c.icq.com/siteim/icqbar/js/partners/", src: "initbar_${attrs.language ?: "ru"}.js")
+    out << g.javascript(base : 'http://c.icq.com/siteim/icqbar/js/partners/', src : "initbar_${attrs['language'] ?: 'ru'}.js")
   }
 
   /**
@@ -151,14 +198,14 @@ class MailRuTagLib
    * @attr text Whether to show text label on button. Default is true.
    * @attr text_type Type of text label to show on button (MailRuLikeButtonTextType or integer).
    */
-  def like_button = { attrs ->
-    def config = [:]
+  Closure like_button = { Map attrs ->
+    Map config = [:]
 
-    config.sz = (attrs.size ?: MailRuLikeButtonSize.SIZE_20).toString()
-    config.st = (attrs.layout ?: MailRuLikeButtonLayout.FIRST).toString()
+    config['sz'] = attrs['size']?.toString() ?: MailRuLikeButtonSize.SIZE_20.toString()
+    config['st'] = attrs['layout']?.toString() ?: MailRuLikeButtonLayout.FIRST.toString()
 
-    def type = MailRuLikeButtonType.ALL
-    def buttonType = attrs.type.toString()
+    MailRuLikeButtonType type = MailRuLikeButtonType.ALL
+    String buttonType = attrs['type'].toString()
     if (buttonType)
     {
       if (buttonType.contains(MailRuLikeButtonType.ODNOKLASSNIKI.toString()) && buttonType.contains(MailRuLikeButtonType.MAILRU.toString()))
@@ -174,36 +221,39 @@ class MailRuTagLib
         type = MailRuLikeButtonType.MAILRU
       }
     }
-    config.tp = type.toString()
+    config['tp'] = type.toString()
 
-    if (attrs.counter != null && !attrs.counter.toBoolean())
+    if (attrs['counter'] != null && !attrs['counter'].toString().toBoolean())
     {
-      config.nc = 1
+      config['nc'] = 1
     }
-    else if (attrs.counter_position?.toString()?.toLowerCase() == MailRuLikeButtonCounterPosition.UPPER.toString())
+    else if (attrs['counter_position']?.toString()?.toLowerCase() == MailRuLikeButtonCounterPosition.UPPER.toString())
     {
-      config.vt = 1
+      config['vt'] = 1
     }
 
-    if (attrs.text != null && !attrs.text.toBoolean())
+    if (attrs['text'] != null && !attrs['text'].toString().toBoolean())
     {
-      config.nt = 1
+      config['nt'] = 1
     }
     else
     {
-      def textType = (attrs.text_type ?: MailRuLikeButtonTextType.FIRST).toString()
-      config.cm = textType
-      config.ck = textType
+      String textType = attrs['text_type']?.toString() ?: MailRuLikeButtonTextType.FIRST.toString()
+      config['cm'] = textType
+      config['ck'] = textType
     }
 
-    out << g.withTag(name: "a", attrs:
-    [
-      target: "_blank",
-      class: "mrc__plugin_uber_like_button",
-      href: "http://connect.mail.ru/share",
-      "data-mrc-config": (config as JSON).encodeAsHTML()
-    ],
-    "Нравится")
+    out << g.withTag(
+      name : 'a',
+      attrs :
+      [
+        'target' : '_blank',
+        'class' : 'mrc__plugin_uber_like_button',
+        'href' : 'http://connect.mail.ru/share',
+        'data-mrc-config' : (config as JSON).toString()
+      ],
+      'Нравится'
+    )
   }
 
   /**
@@ -212,24 +262,29 @@ class MailRuTagLib
    * @attr width REQUIRED Width of video control.
    * @attr height REQUIRED Height of video control.
    */
-  def video = { attrs ->
-    if (!attrs.id || !attrs.width || !attrs.height)
+  Closure video = { Map attrs ->
+    String id = attrs['id']?.toString()?.trim()
+    String width = attrs['width']?.toString()?.trim()
+    String height = attrs['height']?.toString()?.trim()
+
+    if (!id || !width || !height)
     {
       return
     }
 
     out << g.withTag(
-      name: "iframe",
-      attrs:
+      'name' : 'iframe',
+      attrs :
       [
-        frameborder: "0",
-        allowfullscreen: true,
-        webkitallowfullscreen: true,
-        mozallowfullscreen: true,
-        width: attrs.width,
-        height: attrs.height,
-        src: "http://api.video.mail.ru/videos/embed/mail/${attrs.id}"
-      ])
+        'frameborder' : '0',
+        'allowfullscreen' : true,
+        'webkitallowfullscreen' : true,
+        'mozallowfullscreen' : true,
+        'width' : width,
+        'height' : height,
+        'src' : "http://api.video.mail.ru/videos/embed/mail/${id}"
+      ]
+    )
   }
 }
 
@@ -253,18 +308,19 @@ enum MailRuFacesFont
    */
   GEORGIA
 
+  @Override
   String toString()
   {
     switch (this)
     {
       case ARIAL :
-        return "Arial"
+        return 'Arial'
 
       case TAHOMA :
-        return "Tahoma"
+        return 'Tahoma'
 
       case GEORGIA :
-        return "Georgia";
+        return 'Georgia'
     }
   }
 }
@@ -274,9 +330,10 @@ enum MailRuLikeButtonCounterPosition
   RIGHT,
   UPPER
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -286,9 +343,10 @@ enum MailRuLikeButtonLayout
   SECOND,
   THIRD
 
+  @Override
   String toString()
   {
-    return (ordinal() + 1).toString()
+    (ordinal() + 1).toString()
   }
 }
 
@@ -329,37 +387,31 @@ enum MailRuLikeButtonSize
    */
   SIZE_150
 
+  @Override
   String toString()
   {
     switch (this)
     {
       case SIZE_12 :
-        return "12"
-      break
+        return 12
 
       case SIZE_20 :
-        return "20"
-      break
+        return 20
 
       case SIZE_30 :
-        return "30"
-      break
+        return 30
 
       case SIZE_45 :
-        return "45"
-      break
+        return 45
 
       case SIZE_70 :
-        return "70"
-      break
+        return 70
 
       case SIZE_100 :
-        return "100"
-      break
+        return 100
 
       case SIZE_150 :
-        return "150"
-      break
+        return 150
     }
   }
 }
@@ -381,9 +433,10 @@ enum MailRuLikeButtonTextType
    */
   THIRD
 
+  @Override
   String toString()
   {
-    return (ordinal() + 1).toString()
+    (ordinal() + 1).toString()
   }
 }
 enum MailRuLikeButtonType
@@ -397,21 +450,19 @@ enum MailRuLikeButtonType
   // Both "Odnoklassniki.ru" and "Mail.ru" buttons
   ALL
 
+  @Override
   String toString()
   {
     switch (this)
     {
       case ODNOKLASSNIKI :
-        return "ok"
-      break
+        return 'ok'
 
       case MAILRU :
-        return "mm"
-      break
+        return 'mm'
 
       case ALL :
-        return "combo"
-      break
+        return 'combo'
     }
   }
 }

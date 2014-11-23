@@ -6,13 +6,13 @@ package catharsis.widgets
  */
 class LiveJournalTagLib
 {
-  static final String namespace = "livejournal"
+  static final String namespace = 'livejournal'
 
   /**
    * Renders LiveJournal "Like" button.
    * @see "http://www.livejournal.com/support/faq/313.html"
    */
-  def like_button = { attrs ->
+  Closure like_button = { Map attrs ->
     out << '<lj-like buttons="repost"/>'
   }
 
@@ -21,7 +21,14 @@ class LiveJournalTagLib
    * @see "http://www.livejournal.com/support/faq/313.html"
    * @attr title Label text to display on the button.
    */
-  def repost_button = { attrs, body ->
-    out << g.withTag([name: "lj-repost", attrs: [button: attrs.title]], body)
+  Closure repost_button = { Map attrs, Closure body ->
+    out << g.withTag(
+      name : 'lj-repost',
+      attrs :
+      [
+        'button' : attrs['title']?.toString()
+      ],
+      body
+    )
   }
 }

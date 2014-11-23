@@ -6,7 +6,7 @@ package catharsis.widgets
  */
 class GoogleTagLib
 {
-  static final String namespace = "google"
+  static final String namespace = 'google'
 
   /**
    * Includes Google Analytics JavaScript code into web page.
@@ -14,25 +14,28 @@ class GoogleTagLib
    * @attr account REQUIRED Google Analytics site identifier (UA-*).
    * @attr domain REQUIRED Google Analytics site domain name.
    */
-  def analytics = { attrs ->
-    if (!attrs.account || !attrs.domain)
+  Closure analytics = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+    String domain = attrs['domain']?.toString()?.trim()
+
+    if (!account || !domain)
     {
       return
     }
 
-    out << g.javascript(contextPath: pluginContextPath, g.render(contextPath: pluginContextPath, template: "/google_analytics", model:
-    [
-      account: attrs.account,
-      domain: attrs.domain
-    ]))
+    out << g.javascript(
+      contextPath : pluginContextPath,
+      g.render(
+        contextPath : pluginContextPath,
+        template : '/google_analytics',
+        model :
+        [
+          'account' : account,
+          'domain' : domain
+        ]
+      )
+    )
   }
-
-  /*
-   *
-   *
-  def map = { attrs ->
-
-  }*/
 
   /**
    * Renders Google "+1" button.
@@ -46,45 +49,45 @@ class GoogleTagLib
    * @attr callback Callback JavaScript function that is called after the user clicks the +1 button.
    * @attr recommendations Whether to show recommendations within the +1 hover bubble. Default is true.
    */
-  def plus_one_button = { attrs ->
-    def attributes = [:]
+  Closure plus_one_button = { Map attrs ->
+    Map attributes = [:]
 
-    if (attrs.url)
+    if (attrs['url'])
     {
-      attributes.href = attrs.url
+      attributes['href'] = attrs['url'].toString()
     }
 
-    if (attrs.size)
+    if (attrs['size'])
     {
-      attributes.size = attrs.size.toString()
+      attributes['size'] = attrs['size'].toString()
     }
 
-    if (attrs.annotation)
+    if (attrs['annotation'])
     {
-      attributes.annotation = attrs.annotation.toString()
+      attributes['annotation'] = attrs['annotation'].toString()
     }
 
-    if (attrs.width)
+    if (attrs['width'])
     {
-      attributes.width = attrs.width
+      attributes['width'] = attrs['width'].toString()
     }
 
-    if (attrs.align)
+    if (attrs['align'])
     {
-      attributes.align = attrs.align.toString()
+      attributes['align'] = attrs['align'].toString()
     }
 
-    if (attrs.callback)
+    if (attrs['callback'])
     {
-      attributes["data-callback"] = attrs.callback
+      attributes['data-callback'] = attrs['callback'].toString()
     }
 
-    if (attrs.recommendations != null)
+    if (attrs['recommendations'] != null)
     {
-      attributes["data-recommendations"] = attrs.recommendations.toBoolean().toString()
+      attributes['data-recommendations'] = attrs['recommendations'].toString().toBoolean().toString()
     }
 
-    out << g.withTag(name: "g:plusone", attrs: attributes)
+    out << g.withTag(name : 'g:plusone', attrs : attributes)
   }
 }
 
@@ -93,9 +96,10 @@ enum GooglePlusOneButtonAlign
   LEFT,
   RIGHT
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -116,9 +120,10 @@ enum GooglePlusOneButtonAnnotation
    */
   INLINE
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -129,8 +134,9 @@ enum GooglePlusOneButtonSize
   STANDARD,
   TALL
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }

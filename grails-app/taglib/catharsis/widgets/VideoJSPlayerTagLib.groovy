@@ -6,7 +6,7 @@ package catharsis.widgets
  */
 class VideoJSPlayerTagLib
 {
-  static final String namespace = "videojs"
+  static final String namespace = 'videojs'
 
   /**
    * Renders Video.JS web player widget.
@@ -16,20 +16,38 @@ class VideoJSPlayerTagLib
    * @attr width REQUIRED Horizontal width of video.
    * @attr height REQUIRED Vertical height of video.
    */
-  def player = { attrs, body ->
-    if (!attrs.videos || !attrs.width || !attrs.height)
+  Closure player = { Map attrs, Closure body ->
+    Map videos = attrs['videos'] as Map
+    String width = attrs['width']?.toString()?.trim()
+    String height = attrs['height']?.toString()?.trim()
+
+    if (!videos || !width || !height)
     {
       return
     }
 
-    attrs.class = "video-js vjs-default-skin"
-    attrs.controls = "controls"
-    attrs.preload = attrs.preload ?: "auto"
-    attrs["data-setup"] = '{}'
+    attrs['class'] = 'video-js vjs-default-skin'
+    attrs['controls'] = 'controls'
+    attrs['preload'] = attrs['preload']?.toString() ?: 'auto'
+    attrs['data-setup'] = '{}'
 
-    def videos = attrs.videos.collect { video -> g.withTag(name: "source", attrs: [src: video.key, type: video.value]) }
-    attrs.remove("videos")
+    Collection<String> videoTags = videos.collect
+    {
+      g.withTag(
+        name : 'source',
+        attrs :
+        [
+          'src' : it.key,
+          'type' : it.value
+        ]
+      )
+    }
+    attrs.remove('videos')
 
-    out << g.withTag([name: "video", attrs: attrs], videos.join() + body())
+    out << g.withTag(
+      name : 'video',
+      attrs : attrs,
+      videoTags.join() + body()
+    )
   }
 }

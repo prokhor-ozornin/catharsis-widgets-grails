@@ -18,7 +18,7 @@
         (w[c] = w[c] || []).push(function ()
         {
             try {
-                w.yaCounter${account} = new Ya.Metrika(${config});
+                w.yaCounter${account} = new Ya.Metrika(${raw(config)});
             } catch (e) {
             }
         });

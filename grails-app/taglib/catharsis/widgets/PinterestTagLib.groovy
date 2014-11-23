@@ -1,12 +1,14 @@
 package catharsis.widgets
 
+import org.apache.http.client.utils.URIBuilder
+
 /**
  * Pinterest tags library
  * @see "http://pinterest.com"
  */
 class PinterestTagLib
 {
-  static final String namespace = "pinterest"
+  static final String namespace = 'pinterest'
 
   /**
    * Renders Pinterest Board widget with board's latest pins.
@@ -18,20 +20,26 @@ class PinterestTagLib
    * @attr width Total width of board in pixels.
    * @attr image Width of board's image in pixels.
    */
-  def board = { attrs ->
-    if (!attrs.account || !attrs.id)
+  Closure board = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+    String id = attrs['id']?.toString()?.trim()
+
+    if (!account || !id)
     {
       return
     }
 
-    out << g.withTag([name: "a", attrs:
-    [
-      "data-pin-board-width": attrs.width,
-      "data-pin-do": "embedBoard",
-      "data-pin-scale-height": attrs.height,
-      "data-pin-scale-width": attrs.image,
-      "href": "http://www.pinterest.com/${attrs.account}/${attrs.id}"
-    ]])
+    out << g.withTag(
+      name : 'a',
+      attrs :
+      [
+        'data-pin-board-width' : attrs['width']?.toString(),
+        'data-pin-do' : 'embedBoard',
+        'data-pin-scale-height' : attrs['height']?.toString(),
+        'data-pin-scale-width' : attrs['image']?.toString(),
+        'href' : "http://www.pinterest.com/${account}/${id}"
+      ]
+    )
   }
 
   /**
@@ -41,17 +49,23 @@ class PinterestTagLib
    * @attr account REQUIRED Pinterest user account.
    * @attr label Text label on the button.
    */
-  def follow_button = { attrs ->
-    if (!attrs.account)
+  Closure follow_button = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+
+    if (!account)
     {
       return
     }
 
-    out << g.withTag([name: "a", attrs:
-    [
-      "data-pin-do": "buttonFollow",
-      "href": "http://www.pinterest.com/${attrs.account}"
-    ]], attrs.label ?: "Follow")
+    out << g.withTag(
+      name : 'a',
+      attrs :
+      [
+        'data-pin-do' : 'buttonFollow',
+        'href' : "http://www.pinterest.com/${account}"
+      ],
+      attrs['label']?.toString() ?: 'Follow'
+    )
   }
 
   /**
@@ -60,17 +74,22 @@ class PinterestTagLib
    * @see "http://business.pinterest.com/widget-builder/#do_embed_pin"
    * @attr id REQUIRED Unique identifier of Pinterest Pin.
    */
-  def pin = { attrs ->
-    if (!attrs.id)
+  Closure pin = { Map attrs ->
+    String id = attrs['id']?.toString()?.trim()
+
+    if (!id)
     {
       return
     }
 
-    out << g.withTag([name: "a", attrs:
+    out << g.withTag(
+      name : 'a',
+      attrs :
       [
-        "data-pin-do": "embedPin",
-        "href": "http://www.pinterest.com/pin/${attrs.id}"
-      ]])
+        'data-pin-do' : 'embedPin',
+        'href' : "http://www.pinterest.com/pin/${id}"
+      ]
+    )
   }
 
   /**
@@ -86,17 +105,21 @@ class PinterestTagLib
    * @attr size Size of the button (PinterestPinItButtonSize or string).
    * @attr language Language of button's label.
    */
-  def pin_it_button = { attrs ->
-    if (!attrs.url || !attrs.image || !attrs.description)
+  Closure pin_it_button = { Map attrs ->
+    String url = attrs['url']?.toString()?.trim()
+    String image = attrs['image']?.toString()?.trim()
+    String description = attrs['description']?.toString()?.trim()
+
+    if (!url || !image || !description)
     {
       return
     }
 
-    def color = (attrs.color ?: "gray").toString()
-    def counterPosition = (attrs.counter ?: PinterestPinItButtonPinCountPosition.NONE).toString()
-    def language = attrs.language ?: "en"
-    def shape = (attrs.shape ?: PinterestPinItButtonShape.RECTANGULAR).toString()
-    def size = (attrs.size ?: PinterestPinItButtonSize.SMALL).toString()
+    String color = attrs['color']?.toString() ?: 'gray'
+    String counterPosition = attrs['counter']?.toString() ?: PinterestPinItButtonPinCountPosition.NONE.toString()
+    String language = attrs['language'] ?: 'en'
+    String shape = attrs['shape']?.toString() ?: PinterestPinItButtonShape.RECTANGULAR.toString()
+    String size = attrs['size']?.toString() ?: PinterestPinItButtonSize.SMALL.toString()
 
     byte height = 0
     switch (size)
@@ -128,17 +151,25 @@ class PinterestTagLib
         break;
     }
 
-    out << g.withTag([name: "a", attrs:
-    [
-      "data-pin-color": shape == PinterestPinItButtonShape.RECTANGULAR.toString() ? color : null,
-      "data-pin-config": shape == PinterestPinItButtonShape.RECTANGULAR.toString() ? counterPosition : null,
-      "data-pin-do": "buttonPin",
-      "data-pin-height": height,
-      "data-pin-lang": shape == PinterestPinItButtonShape.RECTANGULAR.toString() ? language : null,
-      "data-pin-shape": shape,
-      "href": "http://www.pinterest.com/pin/create/button/?url=${attrs.url.encodeAsURL()}&media=${attrs.image.encodeAsURL()}&description=${attrs.description.encodeAsURL()}"
-    ]],
-    "<img src=\"http://assets.pinterest.com/images/pidgets/pinit_fg_${language}_${shape}_${color}_${height}.png\"/>")
+    URIBuilder uri = new URIBuilder('http://www.pinterest.com/pin/create/button')
+      .addParameter('url', url)
+      .addParameter('media', image)
+      .addParameter('description', description)
+
+    out << g.withTag(
+      name : 'a',
+      attrs :
+      [
+        'data-pin-color' : shape == PinterestPinItButtonShape.RECTANGULAR.toString() ? color : null,
+        'data-pin-config' : shape == PinterestPinItButtonShape.RECTANGULAR.toString() ? counterPosition : null,
+        'data-pin-do' : 'buttonPin',
+        'data-pin-height' : height,
+        'data-pin-lang' : shape == PinterestPinItButtonShape.RECTANGULAR.toString() ? language : null,
+        'data-pin-shape' : shape,
+        'href' : uri.toString()
+      ],
+      "<img src=\"http://assets.pinterest.com/images/pidgets/pinit_fg_${language}_${shape}_${color}_${height}.png\"/>"
+    )
   }
 
   /**
@@ -150,20 +181,25 @@ class PinterestTagLib
    * @attr width Total width of profile area in pixels.
    * @attr image Width of profile area's image in pixels.
    */
-  def profile = { attrs ->
-    if (!attrs.account)
+  Closure profile = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+
+    if (!account)
     {
       return
     }
 
-    out << g.withTag([name: "a", attrs:
+    out << g.withTag(
+      name : 'a',
+      attrs :
       [
-        "data-pin-board-width": attrs.width,
-        "data-pin-do": "embedUser",
-        "data-pin-scale-height": attrs.height,
-        "data-pin-scale-width": attrs.image,
-        "href": "http://www.pinterest.com/${attrs.account}"
-      ]])
+        'data-pin-board-width' : attrs['width']?.toString(),
+        'data-pin-do' : 'embedUser',
+        'data-pin-scale-height' : attrs['height']?.toString(),
+        'data-pin-scale-width' : attrs['image']?.toString(),
+        'href' : "http://www.pinterest.com/${account}"
+      ]
+    )
   }
 }
 
@@ -187,9 +223,10 @@ enum PinterestPinItButtonColor
    */
   WHITE
 
+  @Override
   String toString()
   {
-    name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 /**
@@ -212,9 +249,10 @@ enum PinterestPinItButtonPinCountPosition
    */
   NONE
 
+  @Override
   String toString()
   {
-    name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -233,15 +271,16 @@ enum PinterestPinItButtonShape
    */
   CIRCULAR
 
+  @Override
   String toString()
   {
     switch (this)
     {
       case RECTANGULAR :
-        return "rect";
+        return 'rect'
 
       case CIRCULAR :
-        return "round";
+        return 'round'
     }
   }
 }
@@ -261,8 +300,9 @@ enum PinterestPinItButtonSize
    */
   LARGE
 
+  @Override
   String toString()
   {
-    name().toLowerCase()
+    this.name().toLowerCase()
   }
 }

@@ -6,7 +6,7 @@ package catharsis.widgets
  */
 class DisqusTagLib
 {
-  static final String namespace = "disqus"
+  static final String namespace = 'disqus'
 
   /**
    * Renders Disqus comments widget for registered website.
@@ -14,12 +14,21 @@ class DisqusTagLib
    * @see "http://disqus.com/websites"
    * @attr account REQUIRED Identifier of registered website in the "Disqus" comments system.
    */
-  def comments = { attrs ->
-    if (!attrs.account)
+  Closure comments = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+
+    if (!account)
     {
       return
     }
 
-    out << g.render(contextPath: pluginContextPath, template: "/disqus_comments", model: [account: attrs.account])
+    out << g.render(
+      contextPath : pluginContextPath,
+      template : '/disqus_comments',
+      model :
+      [
+        'account' : account
+      ]
+    )
   }
 }

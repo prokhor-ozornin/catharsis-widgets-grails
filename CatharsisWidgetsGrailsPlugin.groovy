@@ -1,8 +1,11 @@
 class CatharsisWidgetsGrailsPlugin
 {
-  def version = "2.7"
-  def grailsVersion = "2.0 > *"
-  def title = "Catharsis Web Widgets"
+  def version = '3.0'
+
+  def grailsVersion = '2.3 > *'
+
+  def title = 'Catharsis Web Widgets'
+
   def description = """\
 Catharsis.Grails.Widgets is a Grails 2 tag library, which provides useful social media tags to include on web pages of your site"
 
@@ -46,11 +49,16 @@ As of the latest version, the following areas are covered :
 
 - VideoJS player [Media player]"""
 
-  def documentation = "https://github.com/prokhor-ozornin/Catharsis.Grails.Widgets"
-  def license = "LGPL"
-  def developers = [
-    [name: 'Prokhor Ozornin', email: 'prokhor.ozornin@yandex.ru']
+  def documentation = 'https://github.com/prokhor-ozornin/Catharsis.Grails.Widgets'
+
+  def license = 'LGPL'
+
+  def developers =
+  [
+    [name : 'Prokhor Ozornin', email : 'prokhor.ozornin@yandex.ru']
   ]
-  def issueManagement = [system: 'GITHUB', url: 'https://github.com/prokhor-ozornin/Catharsis.Grails.Widgets/issues']
-  def scm = [url: 'https://github.com/prokhor-ozornin/Catharsis.Grails.Widgets']
+
+  def issueManagement = [system : 'GITHUB', url : 'https://github.com/prokhor-ozornin/Catharsis.Grails.Widgets/issues']
+
+  def scm = [url : 'https://github.com/prokhor-ozornin/Catharsis.Grails.Widgets']
 }

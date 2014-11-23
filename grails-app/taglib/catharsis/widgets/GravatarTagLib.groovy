@@ -1,12 +1,14 @@
 package catharsis.widgets
 
+import org.apache.http.client.utils.URIBuilder
+
 /**
  * Gravatar tags library
  * @see "http://gravatar.org"
  */
 class GravatarTagLib
 {
-  static final String namespace = "gravatar"
+  static final String namespace = 'gravatar'
 
   /**
    * Returns Gravatar's avatar image URL.
@@ -20,38 +22,47 @@ class GravatarTagLib
    * @attr size Size of avatar's image in pixels (both width and height).
    * @attr parameters Map of additional parameters for URL query part.
    */
-  def image_url = { attrs ->
-    if (!attrs.email && !attrs.hash)
+  Closure image_url = { Map attrs ->
+    String email = attrs['email']?.toString()?.trim()
+    String hash = attrs['hash']?.toString()?.trim()
+
+    if (!email && !hash)
     {
       return
     }
 
-    def parameters = [:]
-    if (attrs.parameters)
+    Map parameters = [:]
+    if (attrs['parameters'] && attrs['parameters'] instanceof Map)
     {
-      parameters.putAll(attrs.parameters)
+      parameters.putAll(attrs['parameters'])
     }
-    if (attrs.default)
+    if (attrs['default'])
     {
-      parameters.default = attrs.default.toString()
+      parameters['default'] = attrs['default'].toString()
     }
-    if (attrs.force_default?.toBoolean())
+    if (attrs['force_default']?.toString()?.toBoolean())
     {
-      parameters.forcedefault = "y"
+      parameters['forcedefault'] = 'y'
     }
-    if (attrs.rating)
+    if (attrs['rating'])
     {
-      parameters.rating = attrs.rating.toString()
+      parameters['rating'] = attrs['rating'].toString()
     }
-    if (attrs.size)
+    if (attrs['size'])
     {
-      parameters.size = attrs.size.toString()
+      parameters['size'] = attrs['size'].toString()
     }
 
-    def hash = attrs.hash ?: attrs.email.trim().toLowerCase().encodeAsMD5()
-    def query = parameters.collect { pair -> "${pair.key.encodeAsURL()}=${pair.value.encodeAsURL()}" }.join("&")
+    String emailHash = hash ?: email.toLowerCase().encodeAsMD5()
+    String extension = attrs['extension'] ? '.' + attrs['extension'] : ''
 
-    out << "http://www.gravatar.com/avatar/${hash}${attrs.extension ? ".${attrs.extension}" : ""}${query ? "?${query}" : ""}"
+    URIBuilder uri = new URIBuilder('http://www.gravatar.com/avatar/' + emailHash + extension)
+    parameters.each
+    {
+      uri.addParameter(it.key.toString(), it.value.toString())
+    }
+
+    out << uri.toString()
   }
 
   /**
@@ -62,16 +73,28 @@ class GravatarTagLib
    * @attr format Format in which to retrieve profile's data.
    * @attr parameters Map of additional parameters for URL query part.
    */
-  def profile_url = { attrs ->
-    if (!attrs.email && !attrs.hash)
+  Closure profile_url = { Map attrs ->
+    String email = attrs['email']?.toString()?.trim()
+    String hash = attrs['hash']?.toString()?.trim()
+
+    if (!email && !hash)
     {
       return
     }
 
-    def hash = attrs.hash ?: attrs.email.trim().toLowerCase().encodeAsMD5()
-    def query = attrs.parameters.collect { pair -> "${pair.key.encodeAsURL()}=${pair.value.encodeAsURL()}" }.join("&")
+    String emailHash = hash ?: email.toLowerCase().encodeAsMD5()
+    String format = attrs['format'] ? '.' + attrs['format'] : ''
 
-    out << "http://www.gravatar.com/${hash}${attrs.format ? ".${attrs.format}" : ""}${query ? "?${query}" : ""}"
+    URIBuilder uri = new URIBuilder('http://www.gravatar.com/' + emailHash + format)
+    if (attrs['parameters'] && attrs['parameters'] instanceof Map)
+    {
+      (attrs['parameters'] as Map).each
+      {
+        uri.addParameter(it.key.toString(), it.value.toString())
+      }
+    }
+
+    out << uri.toString()
   }
 }
 
@@ -115,30 +138,31 @@ enum GravatarDefaultImage
    */
   BLANK
 
+  @Override
   String toString()
   {
     switch (this)
     {
       case MYSTERY_MAN :
-        return "mm"
+        return 'mm'
 
       case IDENT_ICON :
-        return "identicon"
+        return 'identicon'
 
       case MONSTER_ID :
-        return "monsterid";
+        return 'monsterid'
 
       case WAVATAR :
-        return "wavatar";
+        return 'wavatar'
 
       case RETRO :
-        return "retro";
+        return 'retro'
 
       case BLANK :
-        return "blank";
+        return 'blank'
 
-      default:
-        return "404"
+      default :
+        return '404'
     }
   }
 }
@@ -168,9 +192,10 @@ enum GravatarImageRating
    */
   X
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -204,8 +229,9 @@ enum GravatarProfileFormat
    */
   QR
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }

@@ -6,7 +6,7 @@ package catharsis.widgets
  */
 class TwitterTagLib
 {
-  static final String namespace = "twitter"
+  static final String namespace = 'twitter'
 
   /**
    * Renders Twitter "Follow" button.
@@ -21,50 +21,52 @@ class TwitterTagLib
    * @attr screen_name Whether to show user's screen name. Default is true.
    * @attr suggestions Whether to enable twitter suggestions. Default is true.
    */
-  def follow_button = { attrs ->
-    if (!attrs.account)
+  Closure follow_button = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+
+    if (!account)
     {
       return
     }
 
-    def attributes =
+    Map attributes =
     [
-      href: "https://twitter.com/${attrs.account}",
-      class: "twitter-follow-button",
-      "data-lang": attrs.language ?: request.locale.language
+      'href' : "https://twitter.com/${account}",
+      'class' : 'twitter-follow-button',
+      'data-lang' : attrs['language']?.toString() ?: request.locale.language
     ]
 
-    if (attrs.counter != null)
+    if (attrs['counter'] != null)
     {
-      attributes["data-show-count"] = attrs.counter.toBoolean().toString()
+      attributes['data-show-count'] = attrs['counter'].toString().toBoolean().toString()
     }
 
-    if (attrs.size)
+    if (attrs['size'])
     {
-      attributes["data-size"] = attrs.size
+      attributes['data-size'] = attrs['size'].toString()
     }
 
-    if (attrs.width)
+    if (attrs['width'])
     {
-      attributes["data-width"] = attrs.width
+      attributes['data-width'] = attrs['width'].toString()
     }
 
-    if (attrs.align)
+    if (attrs['align'])
     {
-      attributes["data-align"] = attrs.align
+      attributes['data-align'] = attrs['align'].toString()
     }
 
-    if (attrs.screen_name != null)
+    if (attrs['screen_name'] != null)
     {
-      attributes["data-show-screen-name"] = attrs.screen_name.toBoolean().toString()
+      attributes['data-show-screen-name'] = attrs['screen_name'].toString().toBoolean().toString()
     }
 
-    if (attrs.suggestions != null)
+    if (attrs['suggestions'] != null)
     {
-      attributes["data-dnt"] = (!attrs.suggestions.toBoolean()).toString()
+      attributes['data-dnt'] = (!attrs['suggestions'].toString().toBoolean()).toString()
     }
 
-    out << g.withTag(name: "a", attrs: attributes)
+    out << g.withTag(name : 'a', attrs : attributes)
   }
 
   /**
@@ -82,60 +84,60 @@ class TwitterTagLib
    * @attr size The size of the rendered button (TwitterTweetButtonSize or string). Default is "medium".
    * @attr suggestions Whether to enable twitter suggestions. Default is true.
    */
-  def tweet_button = { attrs ->
-    def attributes =
+  Closure tweet_button = { Map attrs ->
+    Map attributes =
     [
-      href: "https://twitter.com/share",
-      class: attrs.tags ? "twitter-hashtag-button" : "twitter-share-button",
-      "data-lang": attrs.language ?: request.locale.language
+      'href' : 'https://twitter.com/share',
+      'class' : attrs['tags'] ? 'twitter-hashtag-button' : 'twitter-share-button',
+      'data-lang' : attrs['language']?.toString() ?: request.locale.language
     ]
 
-    if (attrs.url)
+    if (attrs['url'])
     {
-      attributes["data-url"] = attrs.url
+      attributes['data-url'] = attrs['url'].toString()
     }
 
-    if (attrs.via)
+    if (attrs['via'])
     {
-      attributes["data-via"] = attrs.via
+      attributes['data-via'] = attrs['via'].toString()
     }
 
-    if (attrs.text)
+    if (attrs['text'])
     {
-      attributes["data-text"] = attrs.text
+      attributes['data-text'] = attrs['text'].toString()
     }
 
-    if (attrs.related)
+    if (attrs['related'])
     {
-      attributes["data-related"] = attrs.related instanceof Collection ? attrs.related.join(",") : attrs.related
+      attributes['data-related'] = attrs['related'] instanceof Collection ? (attrs['related'] as Collection).join(',') : attrs['related'].toString()
     }
 
-    if (attrs.counter_position)
+    if (attrs['counter_position'])
     {
-      attributes["data-count"] = attrs.counter_position
+      attributes['data-count'] = attrs['counter_position'].toString()
     }
 
-    if (attrs.count_url)
+    if (attrs['count_url'])
     {
-      attributes["data-counturl"] = attrs.count_url
+      attributes['data-counturl'] = attrs['count_url'].toString()
     }
 
-    if (attrs.tags)
+    if (attrs['tags'])
     {
-      attributes["data-hashtags"] = attrs.tags instanceof Collection ? attrs.tags.join(" ") : attrs.tags
+      attributes['data-hashtags'] = attrs['tags'] instanceof Collection ? (attrs['tags'] as Collection).join(' ') : attrs['tags'].toString()
     }
 
-    if (attrs.size)
+    if (attrs['size'])
     {
-      attributes["data-size"] = attrs.size
+      attributes['data-size'] = attrs['size'].toString()
     }
 
-    if (attrs.suggestions != null)
+    if (attrs['suggestions'] != null)
     {
-      attributes["data-dnt"] = (!attrs.suggestions.toBoolean()).toString()
+      attributes['data-dnt'] = (!attrs['suggestions'].toString().toBoolean()).toString()
     }
 
-    out << g.withTag(name: "a", attrs: attributes)
+    out << g.withTag(name : 'a', attrs : attributes)
   }
 }
 
@@ -144,9 +146,10 @@ enum TwitterFollowButtonAlignment
   LEFT,
   RIGHT
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -155,9 +158,10 @@ enum TwitterFollowButtonSize
   MEDIUM,
   LARGE
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -167,9 +171,10 @@ enum TwitterTweetButtonCountBoxPosition
   HORIZONTAL,
   VERTICAL
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -178,8 +183,9 @@ enum TwitterTweetButtonSize
   MEDIUM,
   LARGE
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }

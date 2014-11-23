@@ -1,6 +1,7 @@
 package catharsis.widgets
 
 import grails.converters.JSON
+import org.apache.http.client.utils.URIBuilder
 
 /**
  * Vkontakte tags library
@@ -8,7 +9,7 @@ import grails.converters.JSON
  */
 class VkontakteTagLib
 {
-  static final String namespace = "vkontakte"
+  static final String namespace = 'vkontakte'
 
   /**
    * Renders VKontakte OAuth button widget.
@@ -20,34 +21,38 @@ class VkontakteTagLib
    * @attr url URL address of web page to be redirected to, if using standard mode.
    * @attr width Horizontal width of button.
    */
-  def auth_button = { attrs ->
-    if (attrs.type.toString() == VkontakteAuthButtonType.DYNAMIC.toString() && !attrs.callback)
+  Closure auth_button = { Map attrs ->
+    if (attrs['type'].toString() == VkontakteAuthButtonType.DYNAMIC.toString() && !attrs['callback'])
     {
       return
     }
 
-    if ((!attrs.type || attrs.type.toString() == VkontakteAuthButtonType.STANDARD.toString()) && !attrs.url)
+    if ((!attrs['type'] || attrs['type'].toString() == VkontakteAuthButtonType.STANDARD.toString()) && !attrs['url'])
     {
       return
     }
 
-    def config = [:]
-    if (attrs.callback)
+    Map config = [:]
+
+    if (attrs['callback'])
     {
-      config.onAuth = attrs.callback
-    }
-    if (attrs.url)
-    {
-      config.authUrl = attrs.url
-    }
-    if (attrs.width)
-    {
-      config.width = attrs.width
+      config['onAuth'] = attrs['callback'].toString()
     }
 
-    def element_id = attrs.element_id ?: "vk_auth";
+    if (attrs['url'])
+    {
+      config['authUrl'] = attrs['url'].toString()
+    }
 
-    out << g.withTag(name: "div", attrs: ["id": element_id])
+    if (attrs['width'])
+    {
+      config['width'] = attrs['width'].toString()
+    }
+
+    String element_id = attrs['element_id'] ?: 'vk_auth'
+
+    out << g.withTag(name : 'div', attrs : ['id' : element_id])
+
     out << g.javascript(null, "VK.Widgets.Auth(\"${element_id}\", ${config as JSON});")
   }
 
@@ -63,39 +68,51 @@ class VkontakteTagLib
    * @attr element_id Identifier of HTML container for the widget.
    * @attr mini Whether to use minimalistic mode of widget (small fonts, images, etc.). Default is to use auto mode (determine automatically).
    */
-  def comments = { attrs ->
-    def config =
+  Closure comments = { Map attrs ->
+    Map config =
     [
-      limit: (attrs.limit ?: VkontakteCommentsLimit.FIVE).toString()
+      'limit' : attrs['limit']?.toString() ?: VkontakteCommentsLimit.FIVE.toString()
     ]
-    if (attrs.attach)
+
+    if (attrs['attach'])
     {
-      config.attach = attrs.attach instanceof Collection ? attrs.attach.join(",") : attrs.attach.toString()
+      config['attach'] = attrs['attach'] instanceof Collection ? (attrs['attach'] as Collection).join(',') : attrs['attach'].toString()
     }
     else
     {
-      config.attach = false
-    }
-    if (attrs.width)
-    {
-      config.width = attrs.width
-    }
-    if (attrs.auto_publish != null)
-    {
-      config.autoPublish = attrs.auto_publish.toBoolean() ? 1 : 0;
-    }
-    if (attrs.auto_update != null)
-    {
-      config.norealtime = attrs.auto_update.toBoolean() ? 0 : 1;
-    }
-    if (attrs.mini != null)
-    {
-      config.mini = attrs.mini.toBoolean() ? 1 : 0;
+      config['attach'] = false
     }
 
-    def element_id = attrs.element_id ?: "vk_comments";
+    if (attrs['width'])
+    {
+      config['width'] = attrs['width'].toString()
+    }
 
-    out << g.withTag(name: "div", attrs: ["id": element_id])
+    if (attrs['auto_publish'] != null)
+    {
+      config['autoPublish'] = attrs['auto_publish'].toString().toBoolean() ? 1 : 0
+    }
+
+    if (attrs['auto_update'] != null)
+    {
+      config['norealtime'] = attrs['auto_update'].toString().toBoolean() ? 0 : 1
+    }
+
+    if (attrs['mini'] != null)
+    {
+      config['mini'] = attrs['mini'].toString().toBoolean() ? 1 : 0
+    }
+
+    String element_id = attrs['element_id'] ?: 'vk_comments'
+
+    out << g.withTag(
+      name : 'div',
+      attrs :
+      [
+        'id' : element_id
+      ]
+    )
+
     out << g.javascript(null, "VK.Widgets.Comments(\"${element_id}\", ${config as JSON});")
   }
 
@@ -112,44 +129,59 @@ class VkontakteTagLib
    * @attr button_color Button color of widget.
    * @attr text_color Text color of widget.
    */
-  def community = { attrs ->
-    if (!attrs.account)
+  Closure community = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+
+    if (!account)
     {
       return
     }
 
-    def config = [:]
+    Map config = [:]
 
-    config.mode = (attrs.mode ?: VkontakteCommunityMode.PARTICIPANTS).toString()
-    if (config.mode == VkontakteCommunityMode.NEWS.toString())
+    config['mode'] = attrs['mode']?.toString() ?: VkontakteCommunityMode.PARTICIPANTS.toString()
+
+    if (config['mode'] == VkontakteCommunityMode.NEWS.toString())
     {
-      config.wide = 1
-    }
-    if (attrs.width)
-    {
-      config.width = attrs.width
-    }
-    if (attrs.height)
-    {
-      config.height = attrs.height
-    }
-    if (attrs.background_color)
-    {
-      config.color1 = attrs.background_color
-    }
-    if (attrs.text_color)
-    {
-      config.color2 = attrs.text_color
-    }
-    if (attrs.button_color)
-    {
-      config.color3 = attrs.button_color
+      config['wide'] = 1
     }
 
-    def element_id = attrs.element_id ?: "vk_groups_${attrs.account}"
+    if (attrs['width'])
+    {
+      config['width'] = attrs['width'].toString()
+    }
 
-    out << g.withTag(name: "div", attrs: ["id": element_id])
-    out << g.javascript(null, "VK.Widgets.Group(\"${element_id}\", ${config as JSON}, \"${attrs.account}\");")
+    if (attrs['height'])
+    {
+      config['height'] = attrs['height'].toString()
+    }
+
+    if (attrs['background_color'])
+    {
+      config['color1'] = attrs['background_color'].toString()
+    }
+
+    if (attrs['text_color'])
+    {
+      config['color2'] = attrs['text_color'].toString()
+    }
+
+    if (attrs['button_color'])
+    {
+      config['color3'] = attrs['button_color'].toString()
+    }
+
+    String element_id = attrs['element_id'] ?: "vk_groups_${account}"
+
+    out << g.withTag(
+      name : 'div',
+      attrs :
+      [
+        'id' : element_id
+      ]
+    )
+
+    out << g.javascript(null, "VK.Widgets.Group(\"${element_id}\", ${config as JSON}, \"${account}\");")
   }
 
   /**
@@ -158,13 +190,15 @@ class VkontakteTagLib
    * @see "http://vk.com/dev/sites"
    * @attr api_id REQUIRED API identifier of registered VKontakte application.
    */
-  def initialize = { attrs ->
-    if (!attrs.api_id)
+  Closure initialize = { Map attrs ->
+    String appId = attrs['api_id']?.toString()?.trim()
+
+    if (!appId)
     {
       return
     }
 
-    r.script(disposition: "head", "VK.init({apiId:${attrs.api_id}, onlyWidgets:true});")
+    r.script(disposition : 'head', "VK.init({apiId:${appId}, onlyWidgets:true});")
   }
 
   /**
@@ -182,49 +216,64 @@ class VkontakteTagLib
    * @attr verb Type of text to display on the button (VkontakteLikeButtonVerb or integer).
    * @attr element_id Identifier of HTML container for the widget.
    */
-  def like_button = { attrs ->
-    def config = [:]
+  Closure like_button = { Map attrs ->
+    Map config = [:]
 
-    if (attrs.layout)
+    if (attrs['layout'])
     {
-      config.type = attrs.layout
-    }
-    if (config.width)
-    {
-      config.width = attrs.width
-    }
-    if (attrs.title)
-    {
-      config.pageTitle = attrs.title
-    }
-    if (attrs.description)
-    {
-      config.pageDescription = attrs.description
-    }
-    if (attrs.url)
-    {
-      config.pageUrl = attrs.url
-    }
-    if (attrs.image)
-    {
-      config.pageImage = attrs.image
-    }
-    if (attrs.text)
-    {
-      config.text = attrs.text
-    }
-    if (attrs.height)
-    {
-      config.height = attrs.height
-    }
-    if (attrs.verb)
-    {
-      config.verb = attrs.verb.toInteger()
+      config['type'] = attrs['layout'].toString()
     }
 
-    def element_id = attrs.element_id ?: "vk_like"
+    if (config['width'])
+    {
+      config['width'] = attrs['width'].toString()
+    }
 
-    out << g.withTag(name: "div", attrs: [id: element_id])
+    if (attrs['title'])
+    {
+      config['pageTitle'] = attrs['title'].toString()
+    }
+
+    if (attrs['description'])
+    {
+      config['pageDescription'] = attrs['description'].toString()
+    }
+
+    if (attrs['url'])
+    {
+      config['pageUrl'] = attrs['url'].toString()
+    }
+
+    if (attrs['image'])
+    {
+      config['pageImage'] = attrs['image'].toString()
+    }
+
+    if (attrs['text'])
+    {
+      config['text'] = attrs['text'].toString()
+    }
+
+    if (attrs['height'])
+    {
+      config['height'] = attrs['height'].toString()
+    }
+
+    if (attrs['verb'])
+    {
+      config['verb'] = attrs['verb'].toString().toInteger()
+    }
+
+    String element_id = attrs['element_id'] ?: 'vk_like'
+
+    out << g.withTag(
+      name : 'div',
+      attrs :
+      [
+        'id' : element_id
+      ]
+    )
+
     out << g.javascript(null, "VK.Widgets.Like(\"${element_id}\", ${config as JSON});")
   }
 
@@ -237,27 +286,37 @@ class VkontakteTagLib
    * @attr url URL address of poll's web page, if it differs from the current one.
    * @attr width Horizontal width of widget.
    */
-  def poll = { attrs ->
-    if (!attrs.id)
+  Closure poll = { Map attrs ->
+    String id = attrs['id']?.toString()?.trim()
+
+    if (!id)
     {
       return
     }
 
-    def config = [:]
+    Map config = [:]
 
-    if (attrs.url)
+    if (attrs['url'])
     {
-      config.pageUrl = attrs.url
-    }
-    if (attrs.width)
-    {
-      config.width = attrs.width
+      config['pageUrl'] = attrs['url'].toString()
     }
 
-    def element_id = attrs.element_id ?: "vk_poll_${attrs.id}"
+    if (attrs['width'])
+    {
+      config['width'] = attrs['width'].toString()
+    }
 
-    out << g.withTag(name: "div", attrs: [id: element_id])
-    out << g.javascript(null, "VK.Widgets.Poll(\"${element_id}\", ${config as JSON}, \"${attrs.id}\");")
+    String element_id = attrs['element_id'] ?: "vk_poll_${id}"
+
+    out << g.withTag(
+      name : 'div',
+      attrs :
+      [
+        'id' : element_id
+      ]
+    )
+
+    out << g.javascript(null, "VK.Widgets.Poll(\"${element_id}\", ${config as JSON}, \"${id}\");")
   }
 
   /**
@@ -270,23 +329,34 @@ class VkontakteTagLib
    * @attr element_id Identifier of HTML container for the widget.
    * @attr width Width of wall's post. Default is the width of entire screen.
    */
-  def post = { attrs ->
-    if (!attrs.id || !attrs.owner || !attrs.hash)
+  Closure post = { Map attrs ->
+    String id = attrs['id']?.toString()?.trim()
+    String owner = attrs['owner']?.toString()?.trim()
+    String hash = attrs['hash']?.toString()?.trim()
+
+    if (!id || !owner || !hash)
     {
       return
     }
 
-    def config = [:]
+    Map config = [:]
 
-    if (attrs.width)
+    if (attrs['width'])
     {
-      config.width = attrs.width
+      config['width'] = attrs['width'].toString()
     }
 
-    def element_id = attrs.element_id ?: "vk_post_${attrs.owner}_${attrs.id}"
+    String element_id = attrs['element_id'] ?: "vk_post_${owner}_${id}"
 
-    out << g.withTag(name: "div", attrs: [id: element_id])
-    out << g.javascript(null, "(function() { window.VK && VK.Widgets && VK.Widgets.Post && VK.Widgets.Post(\"${element_id}\", ${attrs.owner}, ${attrs.id}, \"${attrs.hash}\", ${config as JSON}) || setTimeout(arguments.callee, 50); }());")
+    out << g.withTag(
+      name : 'div',
+      attrs :
+      [
+        'id' : element_id
+      ]
+    )
+
+    out << g.javascript(null, "(function() { window.VK && VK.Widgets && VK.Widgets.Post && VK.Widgets.Post(\"${element_id}\", ${owner}, ${id}, \"${hash}\", ${config as JSON}) || setTimeout(arguments.callee, 50); }());")
   }
 
   /**
@@ -301,37 +371,49 @@ class VkontakteTagLib
    * @attr target Target attribute for recommendations HTML hyperlinks. Default is "parent".
    * @attr verb Numeric code of verb to use as a label (VkontakteRecommendationsVerb or integer). Default is 0 ("like").
    */
-  def recommendations  = { attrs ->
-    def config = [:]
+  Closure recommendations  = { Map attrs ->
+    Map config = [:]
 
-    if (attrs.limit)
+    if (attrs['limit'])
     {
-      config.limit = attrs.limit
-    }
-    if (attrs.max)
-    {
-      config.max = attrs.max
-    }
-    if (attrs.period)
-    {
-      config.period = attrs.period.toString()
-    }
-    if (attrs.verb)
-    {
-      config.verb = attrs.verb.toString()
-    }
-    if (attrs.sorting)
-    {
-      config.sort = attrs.sorting.toString()
-    }
-    if (attrs.target)
-    {
-      config.target = attrs.target
+      config['limit'] = attrs['limit'].toString()
     }
 
-    def element_id = attrs.element_id ?: "vk_recommendations"
+    if (attrs['max'])
+    {
+      config['max'] = attrs['max'].toString()
+    }
 
-    out << g.withTag(name: "div", attrs: [id: element_id])
+    if (attrs['period'])
+    {
+      config['period'] = attrs['period'].toString()
+    }
+
+    if (attrs['verb'])
+    {
+      config['verb'] = attrs['verb'].toString()
+    }
+
+    if (attrs['sorting'])
+    {
+      config['sort'] = attrs['sorting'].toString()
+    }
+
+    if (attrs['target'])
+    {
+      config['target'] = attrs['target'].toString()
+    }
+
+    String element_id = attrs['element_id'] ?: 'vk_recommendations'
+
+    out << g.withTag(
+      name : 'div',
+      attrs :
+      [
+        'id' : element_id
+      ]
+    )
+
     out << g.javascript(null, "VK.Widgets.Recommended(\"${element_id}\", ${config as JSON});")
   }
 
@@ -344,25 +426,35 @@ class VkontakteTagLib
    * @attr only_button Whether to display both author and button (false) or button only (true).
    * @attr element_id Identifier of HTML container for the widget.
    */
-  def subscription = { attrs ->
-    if (!attrs.account)
+  Closure subscription = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+
+    if (!account)
     {
       return
     }
 
-    def config =
+    Map config =
     [
-      mode : (attrs.layout ?: VkontakteSubscriptionButtonLayout.BUTTON).toString()
+      'mode' : attrs['layout']?.toString() ?: VkontakteSubscriptionButtonLayout.BUTTON.toString()
     ]
-    if (attrs.only_button?.toBoolean())
+
+    if (attrs['only_button']?.toString()?.toBoolean())
     {
-      config.soft = 1
+      config['soft'] = 1
     }
 
-    def element_id = attrs.element_id ?: "vk_subscribe_${attrs.account}"
+    String element_id = attrs['element_id'] ?: "vk_subscribe_${account}"
 
-    out << g.withTag(name: "div", attrs: [id: element_id])
-    out << g.javascript(null, "VK.Widgets.Subscribe(\"${element_id}\", ${config as JSON}, \"${attrs.account}\");")
+    out << g.withTag(
+      name : 'div',
+      attrs :
+      [
+        'id' : element_id
+      ]
+    )
+
+    out << g.javascript(null, "VK.Widgets.Subscribe(\"${element_id}\", ${config as JSON}, \"${account}\");")
   }
 
   /**
@@ -374,22 +466,38 @@ class VkontakteTagLib
    * @attr height REQUIRED Height of video control.
    * @attr hd Whether to play video in High Definition format. Default is false.
    */
-  def video = { attrs ->
-    if (!attrs.id || !attrs.user || !attrs.hash || !attrs.width || !attrs.height)
+  Closure video = { Map attrs ->
+    String id = attrs['id']?.toString()?.trim()
+    String user = attrs['user']?.toString()?.trim()
+    String hash = attrs['hash']?.toString()?.trim()
+    String width = attrs['width']?.toString()?.trim()
+    String height = attrs['height']?.toString()?.trim()
+
+    if (!id || !user || !hash || !width || !height)
     {
       return
     }
 
-    out << g.withTag(name: "iframe", attrs:
-    [
-      frameborder: "0",
-      allowfullscreen: true,
-      webkitallowfullscreen: true,
-      mozallowfullscreen: true,
-      width: attrs.width,
-      height: attrs.height,
-      src: "http://vk.com/video_ext.php?oid=${attrs.user}&id=${attrs.id}&hash=${attrs.hash}&hd=${attrs.hd?.toBoolean() ? 1 : 0}"
-    ])
+    URIBuilder uri =
+    new URIBuilder('http://vk.com/video_ext.php')
+      .addParameter('oid', user)
+      .addParameter('id', id)
+      .addParameter('hash', hash)
+      .addParameter('hd', attrs['hd']?.toString()?.toBoolean() ? '1' : '0')
+
+    out << g.withTag(
+      name : 'iframe',
+      attrs :
+      [
+        'frameborder' : '0',
+        'allowfullscreen' : true,
+        'webkitallowfullscreen' : true,
+        'mozallowfullscreen' : true,
+        'width' : width,
+        'height' : height,
+        'src' : uri.toString()
+      ]
+    )
   }
 }
 
@@ -408,9 +516,10 @@ enum VkontakteAuthButtonType
    */
   STANDARD
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -446,17 +555,16 @@ enum VkontakteCommentsAttach
    */
   LINK
 
+  @Override
   String toString()
   {
     switch (this)
     {
       case ALL :
-        return "*"
-        break
+        return '*'
 
       default :
-        return name().toLowerCase()
-        break
+        return this.name().toLowerCase()
     }
   }
 }
@@ -483,25 +591,22 @@ enum VkontakteCommentsLimit
    */
   TWENTY
 
+  @Override
   String toString()
   {
     switch (this)
     {
       case FIVE :
-        return "5"
-        break
+        return 5
 
       case TEN :
-        return "10"
-        break
+        return 10
 
       case FIFTEEN :
-        return "15"
-        break
+        return 15
 
       case TWENTY :
-        return "20"
-        break
+        return 20
     }
   }
 }
@@ -523,9 +628,10 @@ enum VkontakteCommunityMode
    */
   NEWS
 
+  @Override
   String toString()
   {
-    return ordinal().toString()
+    this.ordinal().toString()
   }
 }
 
@@ -551,25 +657,22 @@ enum VkontakteLikeButtonHeight
    */
   HEIGHT_24
 
+  @Override
   String toString()
   {
     switch (this)
     {
       case HEIGHT_18 :
-        return "18"
-        break
+        return 18
 
       case HEIGHT_20 :
-        return "20"
-        break
+        return 20
 
       case HEIGHT_22 :
-        return "22"
-        break
+        return 22
 
       case HEIGHT_24 :
-        return "24"
-        break
+        return 24
     }
   }
 }
@@ -596,9 +699,10 @@ enum VkontakteLikeButtonLayout
    */
   VERTICAL
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -614,9 +718,10 @@ enum VkontakteLikeButtonVerb
    */
   INTEREST
 
+  @Override
   String toString()
   {
-    return ordinal().toString()
+    this.ordinal().toString()
   }
 }
 
@@ -628,9 +733,10 @@ enum VkontakteRecommendationsPeriod
 
   MONTH
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -640,9 +746,10 @@ enum VkontakteRecommendationsSorting
 
   LIKES
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -652,9 +759,10 @@ enum VkontakteRecommendationsVerb
 
   INTEREST
 
+  @Override
   String toString()
   {
-    return ordinal().toString()
+    this.ordinal().toString()
   }
 }
 
@@ -664,8 +772,9 @@ enum VkontakteSubscriptionButtonLayout
   LIGHT_BUTTON,
   LINK
 
+  @Override
   String toString()
   {
-    return ordinal().toString()
+    this.ordinal().toString()
   }
 }

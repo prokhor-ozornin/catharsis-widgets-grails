@@ -1,6 +1,7 @@
 package catharsis.widgets
 
 import grails.converters.JSON
+import org.apache.http.client.utils.URIBuilder
 
 /**
  * Yandex tags library
@@ -8,7 +9,7 @@ import grails.converters.JSON
  */
 class YandexTagLib
 {
-  static final String namespace = "yandex"
+  static final String namespace = 'yandex'
 
   /**
    * Renders Yandex.Metrika web counter's JavaScript code.
@@ -22,33 +23,39 @@ class YandexTagLib
    * @attr no_index Whether to disable indexing of site's pages. Default is false.
    * @attr language Language of visual counter's interface to use. Default is current locale's language.
    */
-  def analytics = { attrs ->
-    if (!attrs.account)
+  Closure analytics = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+
+    if (!account)
     {
       return
     }
 
-    def config =
+    Map config =
     [
-      id: attrs.account,
-      webvisor: attrs.web_visor != null ? attrs.web_visor.toBoolean() : true,
-      clickmap: attrs.click_map != null? attrs.click_map.toBoolean() : true,
-      trackLinks: attrs.track_links != null ? attrs.track_links.toBoolean() : true,
-      accurateTrackBounce: attrs.accurate != null ? attrs.accurate.toBoolean() : true,
-      trackHash: attrs.track_hash != null ? attrs.track_hash.toBoolean() : true
+      'id' : account,
+      'webvisor' : attrs['web_visor'] != null ? attrs['web_visor'].toString().toBoolean() : true,
+      'clickmap' : attrs['click_map'] != null? attrs['click_map'].toString().toBoolean() : true,
+      'trackLinks' : attrs['track_links'] != null ? attrs['track_links'].toString().toBoolean() : true,
+      'accurateTrackBounce' : attrs['accurate'] != null ? attrs['accurate'].toString().toBoolean() : true,
+      'trackHash' : attrs['track_hash'] != null ? attrs['track_hash'].toString().toBoolean() : true
     ]
 
-    if (attrs.no_index?.toBoolean())
+    if (attrs['no_index']?.toString()?.toBoolean())
     {
-      config.ut = "noindex"
+      config['ut'] = 'noindex'
     }
 
-    out << g.render(contextPath: pluginContextPath, template: "/yandex_analytics", model:
-    [
-      account: attrs.account,
-      language: attrs.language ?: request.locale.language,
-      config: config as JSON
-    ])
+    out << g.render(
+      contextPath : pluginContextPath,
+      template : '/yandex_analytics',
+      model :
+      [
+        'account' : account,
+        'language' : attrs['language']?.toString() ?: request.locale.language,
+        'config' : (config as JSON).toString()
+      ]
+    )
   }
 
   /**
@@ -60,38 +67,31 @@ class YandexTagLib
    * @attr url URL address of web page to share.
    * @attr title Custom title text for shared page.
    */
-  def like_button = { attrs ->
-    def attributes =
+  Closure like_button = { Map attrs ->
+    Map attributes =
     [
-      name: "ya-share",
-      type: (attrs.layout ?: YandexLikeButtonLayout.BUTTON).toString(),
-      size: (attrs.size ?: YandexLikeButtonSize.LARGE).toString()
+      'name' : 'ya-share',
+      'type' : attrs['layout']?.toString() ?: YandexLikeButtonLayout.BUTTON.toString(),
+      'size' : attrs['size']?.toString() ?: YandexLikeButtonSize.LARGE.toString()
     ]
 
-    if (attrs.text)
+    if (attrs['text'])
     {
-      attributes.share_text = attrs.text
+      attributes['share_text'] = attrs['text'].toString()
     }
 
-    if (attrs.url)
+    if (attrs['url'])
     {
-      attributes.share_url = attrs.url
+      attributes['share_url'] = attrs['url'].toString()
     }
 
-    if (attrs.title)
+    if (attrs['title'])
     {
-      attributes.share_title = attrs.title
+      attributes['share_title'] = attrs['title'].toString()
     }
 
-    out << g.withTag(name: "a", attrs: attributes)
+    out << g.withTag(name : 'a', attrs : attributes)
   }
-
-  /**
-   *
-
-  def map = { attrs ->
-
-  }*/
 
   /**
    * Renders button for Yandex.Money (http://money.yandex.ru) payment system that allows financial transactions to be performed.
@@ -108,13 +108,17 @@ class YandexTagLib
    * @attr ask_payer_phone Whether to ask for payer phone number during transaction. Default is false.
    * @attr ask_payer_address Whether to ask for payer address during transaction. Default is false.
    */
-  def money_button = { attrs ->
-    if (!attrs.account || !attrs.sum || !attrs.description)
+  Closure money_button = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+    String sum = attrs['sum']?.toString()?.trim()
+    String description = attrs['description']?.toString()?.trim()
+
+    if (!account || !sum || !description)
     {
       return
     }
 
-    def text = attrs.text ?: YandexMoneyButtonText.PAY.toString()
+    String text = attrs['text'] ?: YandexMoneyButtonText.PAY.toString()
 
     int width
     switch (text)
@@ -148,17 +152,49 @@ class YandexTagLib
       break
     }
 
+    URIBuilder uri =
+    new URIBuilder('https://money.yandex.ru/embed/small.xml')
+      .addParameter('account', account)
+      .addParameter('quickpay', 'small')
+      .addParameter(attrs['type']?.toString() ?: YandexMoneyButtonType.WALLET.toString(), 'on')
+      .addParameter('button-text', text)
+      .addParameter('button-size', attrs['size']?.toString() ?: YandexMoneyButtonSize.LARGE.toString())
+      .addParameter('button-color', attrs['color']?.toString() ?: YandexMoneyButtonColor.ORANGE.toString())
+      .addParameter('targets', description)
+      .addParameter('default-sum', sum.toBigDecimal().toString())
+
+    if (attrs['ask_payer_full_name']?.toString()?.toBoolean())
+    {
+      uri.addParameter('fio', 'on')
+    }
+
+    if (attrs['ask_payer_email']?.toString()?.toBoolean())
+    {
+      uri.addParameter('mail', 'on')
+    }
+
+    if (attrs['ask_payer_phone']?.toString()?.toBoolean())
+    {
+      uri.addParameter('phone', 'on')
+    }
+
+    if (attrs['ask_payer_address']?.toString()?.toBoolean())
+    {
+      uri.addParameter('address', 'on')
+    }
+
     out << g.withTag(
-      name: "iframe",
-      attrs:
+      name : 'iframe',
+      attrs :
       [
-        frameborder: "0",
-        allowtransparency: true,
-        scrolling: "no",
-        width: width,
-        height: 54,
-        src: "https://money.yandex.ru/embed/small.xml?account=${attrs.account}&quickpay=small&${(attrs.type ?: YandexMoneyButtonType.WALLET).toString()}=on&button-text=${text}&button-size=${(attrs.size ?: YandexMoneyButtonSize.LARGE).toString()}&button-color=${(attrs.color ?: YandexMoneyButtonColor.ORANGE).toString()}&targets=${attrs.description.encodeAsURL()}&default-sum=${attrs.sum.toBigDecimal()}${attrs.ask_payer_full_name?.toBoolean() ? "&fio=on" : ""}${attrs.ask_payer_email?.toBoolean() ? "&mail=on" : ""}${attrs.ask_payer_phone?.toBoolean() ? "&phone=on" : ""}${attrs.ask_payer_address?.toBoolean() ? "&address=on" : ""}"
-      ])
+        'frameborder' : '0',
+        'allowtransparency' : true,
+        'scrolling' : 'no',
+        'width' : width,
+        'height' : 54,
+        'src' : uri.toString()
+      ]
+    )
   }
 
   /**
@@ -178,14 +214,17 @@ class YandexTagLib
    * @attr ask_payer_email Whether to ask for email address of payer during transaction. Default is false.
    * @attr ask_payer_phone Whether to ask for payer phone number during transaction. Default is false.
    */
-  def money_donate_form = { attrs ->
-    if (!attrs.account || !attrs.description_text)
+  Closure money_donate_form = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+    String descriptionText = attrs['description_text']?.toString()?.trim()
+
+    if (!account || !descriptionText)
     {
       return
     }
 
-    def text = (attrs.text ?: YandexMoneyDonateFormText.DONATE).toString()
-    def cards = attrs.cards == null || attrs.cards.toBoolean()
+    boolean cards = attrs['cards'] == null || attrs['cards'].toString().toBoolean()
+    String text = (attrs['text'] ?: YandexMoneyDonateFormText.DONATE).toString()
 
     int width
     switch (text)
@@ -219,17 +258,73 @@ class YandexTagLib
       width -= 69
     }
 
+    URIBuilder uri = new URIBuilder('https://money.yandex.ru/embed/donate.xml')
+      .addParameter('account', account)
+      .addParameter('quickpay', 'donate')
+      .addParameter('targets', descriptionText)
+      .addParameter('button-text', text)
+
+    if (cards)
+    {
+      uri.addParameter('payment-type-choice', 'on')
+    }
+
+    if (attrs['sum'])
+    {
+      uri.addParameter('default-sum', attrs['sum'].toString().toBigDecimal().toString())
+    }
+
+    if (attrs['description'])
+    {
+      uri.addParameter('target-visibility', 'on')
+    }
+
+    if (attrs['project_name'])
+    {
+      uri.addParameter('project-name', attrs['project_name'].toString())
+    }
+
+    if (attrs['project_site'])
+    {
+      uri.addParameter('project-site', attrs['project_site'].toString())
+    }
+
+    if (attrs['ask_payer_comment']?.toString()?.toBoolean())
+    {
+      uri.addParameter('comment', 'on')
+      if (attrs['comment_hint'])
+      {
+        uri.addParameter('hint', attrs['comment_hint'].toString())
+      }
+    }
+
+    if (attrs['ask_payer_full_name']?.toString()?.toBoolean())
+    {
+      uri.addParameter('fio', 'on')
+    }
+
+    if (attrs['ask_payer_email']?.toString()?.toBoolean())
+    {
+      uri.addParameter('mail', 'on')
+    }
+
+    if (attrs['ask_payer_phone']?.toString()?.toBoolean())
+    {
+      uri.addParameter('phone', 'on')
+    }
+
     out << g.withTag(
-      name: "iframe",
-      attrs:
+      name : 'iframe',
+      attrs :
       [
-        frameborder: "0",
-        allowtransparency: true,
-        scrolling: "no",
-        width: width,
-        height: attrs.ask_payer_comment?.toBoolean() ? 210 : 133,
-        src: "https://money.yandex.ru/embed/donate.xml?account=${attrs.account}&quickpay=donate${cards ? "&payment-type-choice=on" : ""}&default-sum=${attrs.sum != null ? attrs.sum.toBigDecimal() : ""}&targets=${attrs.description_text.encodeAsURL()}${attrs.description ? "&target-visibility=on" : ""}&project-name=${attrs.project_name != null ? attrs.project_name.encodeAsURL() : ""}&project-site=${attrs.project_site != null ? attrs.project_site.encodeAsURL() : ""}&button-text=${text}${attrs.ask_payer_comment?.toBoolean() ? "&comment=on&hint=${attrs.comment_hint != null ? attrs.comment_hint?.encodeAsURL() : ""}" : ""}${attrs.ask_payer_full_name?.toBoolean() ? "&fio=on" : ""}${attrs.ask_payer_email?.toBoolean() ? "&mail=on" : ""}${attrs.ask_payer_phone?.toBoolean() ? "&phone=on" : ""}"
-      ])
+        'frameborder' : '0',
+        'allowtransparency' : true,
+        'scrolling' : 'no',
+        'width' : width,
+        'height' : attrs['ask_payer_comment']?.toString()?.toBoolean() ? 210 : 133,
+        'src' : uri.toString()
+      ]
+    )
   }
 
   /**
@@ -247,23 +342,85 @@ class YandexTagLib
    * @attr ask_payer_phone Whether to ask for payer phone number during transaction. Default is false.
    * @attr ask_payer_address Whether to ask for payer address during transaction. Default is false.
    */
-  def money_payment_form = { attrs ->
-    if (!attrs.account || !attrs.description)
+  Closure money_payment_form = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+    String description = attrs['description']?.toString()?.trim()
+
+    if (!account || !description)
     {
       return
     }
 
+    URIBuilder uri = new URIBuilder('https://money.yandex.ru/embed/shop.xml')
+      .addParameter('account', account)
+      .addParameter('quickpay', 'shop')
+      .addParameter('button-text', attrs['text']?.toString() ?: YandexMoneyPaymentFormText.PAY.toString())
+
+    if (attrs['cards'] == null || attrs['cards'].toString().toBoolean())
+    {
+      uri.addParameter('payment-type-choice', 'on')
+    }
+
+    if (attrs['ask_payer_purpose']?.toString()?.toBoolean())
+    {
+      uri.addParameter('writer', 'buyer')
+    }
+    else
+    {
+      uri.addParameter('writer', 'seller')
+    }
+
+    if (attrs['ask_payer_purpose']?.toString()?.toBoolean())
+    {
+      uri.addParameter('targets-hint', description)
+    }
+    else
+    {
+      uri.addParameter('targets', description)
+    }
+
+    if (attrs['sum'])
+    {
+      uri.addParameter('default-sum', attrs['sum'].toString().toBigDecimal().toString())
+    }
+
+    if (attrs['ask_payer_comment']?.toString()?.toBoolean())
+    {
+      uri.addParameter('comment', 'on')
+    }
+
+    if (attrs['ask_payer_full_name']?.toString()?.toBoolean())
+    {
+      uri.addParameter('fio', 'on')
+    }
+
+    if (attrs['ask_payer_email']?.toString()?.toBoolean())
+    {
+      uri.addParameter('mail', 'on')
+    }
+
+    if (attrs['ask_payer_phone']?.toString()?.toBoolean())
+    {
+      uri.addParameter('phone', 'on')
+    }
+
+    if (attrs['ask_payer_address']?.toString()?.toBoolean())
+    {
+      uri.addParameter('address', 'on')
+    }
+
     out << g.withTag(
-      name: "iframe",
-      attrs:
+      name : 'iframe',
+      attrs :
       [
-        frameborder: "0",
-        allowtransparency: true,
-        scrolling: "no",
-        width: 450,
-        height: attrs.ask_payer_comment?.toBoolean() ? 255 : 200,
-        src: "https://money.yandex.ru/embed/shop.xml?account=${attrs.account}&quickpay=shop${attrs.cards == null || attrs.cards.toBoolean() ? "&payment-type-choice=on" : ""}&writer=${attrs.ask_payer_purpose?.toBoolean() ? "buyer" : "seller"}&${attrs.ask_payer_purpose?.toBoolean() ? "targets-hint" : "targets"}=${attrs.description.encodeAsURL()}&default-sum=${attrs.sum != null ? attrs.sum.toBigDecimal() : ""}&button-text=${(attrs.text ?: YandexMoneyPaymentFormText.PAY).toString()}${attrs.ask_payer_comment?.toBoolean() ? "&comment=on" : ""}${attrs.ask_payer_full_name?.toBoolean() ? "&fio=on" : ""}${attrs.ask_payer_email?.toBoolean() ? "&mail=on" : ""}${attrs.ask_payer_phone?.toBoolean() ? "&phone=on" : ""}${attrs.ask_payer_address?.toBoolean() ? "&address=on" : ""}"
-      ])
+        'frameborder' : '0',
+        'allowtransparency' : true,
+        'scrolling' : 'no',
+        'width' : 450,
+        'height' : attrs['ask_payer_comment']?.toString()?.toBoolean() ? 255 : 200,
+        'src' : uri.toString()
+      ]
+    )
   }
 
   /**
@@ -273,19 +430,24 @@ class YandexTagLib
    * @attr layout Visual layout/appearance of the button (YandexShareButtonLayout or string).
    * @attr language Button's interface language.
    */
-  def share_panel = { attrs ->
-    if (!attrs.services)
+  Closure share_panel = { Map attrs ->
+    String services = attrs['services'] instanceof Collection ? (attrs['services'] as Collection).join(',') : attrs['services']?.toString()
+
+    if (!services)
     {
-      attrs.services = "yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,friendfeed,moikrug,gplus,pinterest,surfingbird"
+      services = 'yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,friendfeed,moikrug,gplus,pinterest,surfingbird'
     }
 
-    out << g.withTag(name: "div", attrs:
-    [
-      class: "yashare-auto-init",
-      "data-yashareL10n": attrs.language ?: request.locale.language,
-      "data-yashareType": (attrs.layout ?: YandexShareButtonLayout.BUTTON).toString(),
-      "data-yashareQuickServices": attrs.services instanceof Collection ? attrs.services.join(",") : attrs.services
-    ])
+    out << g.withTag(
+      name : 'div',
+      attrs :
+      [
+        'class' : 'yashare-auto-init',
+        'data-yashareL10n' : attrs['language']?.toString() ?: request.locale.language,
+        'data-yashareType' : attrs['layout']?.toString() ?: YandexShareButtonLayout.BUTTON.toString(),
+        'data-yashareQuickServices' : services
+      ]
+    )
   }
 
   /**
@@ -295,24 +457,30 @@ class YandexTagLib
    * @attr height REQUIRED Height of video in player control.
    * @attr user REQUIRED Account identifier of video's uploader.
    */
-  def video = { attrs ->
-    if (!attrs.id || !attrs.width || !attrs.height || !attrs.user)
+  Closure video = { Map attrs ->
+    String id = attrs['id']?.toString()?.trim()
+    String width = attrs['width']?.toString()?.trim()
+    String height = attrs['height']?.toString()?.trim()
+    String user = attrs['user']?.toString()?.trim()
+
+    if (!id || !width || !height || !user)
     {
       return
     }
 
     out << g.withTag(
-      name: "iframe",
-      attrs:
+      name : 'iframe',
+      attrs :
       [
-        frameborder: "0",
-        allowfullscreen: true,
-        webkitallowfullscreen: true,
-        mozallowfullscreen: true,
-        width: attrs.width,
-        height: attrs.height,
-        src: "http://video.yandex.ru/iframe/${attrs.user}/${attrs.id}"
-      ])
+        'frameborder' : '0',
+        'allowfullscreen' : true,
+        'webkitallowfullscreen' : true,
+        'mozallowfullscreen' : true,
+        'width' : width,
+        'height' : height,
+        'src' : "http://video.yandex.ru/iframe/${user}/${id}"
+      ]
+    )
   }
 }
 
@@ -321,9 +489,10 @@ enum YandexLikeButtonLayout
   BUTTON,
   ICON
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -332,9 +501,10 @@ enum YandexLikeButtonSize
   LARGE,
   SMALL
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -358,9 +528,10 @@ enum YandexMoneyButtonColor
    */
   BLACK
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -384,18 +555,19 @@ enum YandexMoneyButtonSize
    */
   LARGE
 
+  @Override
   String toString()
   {
     switch (this)
     {
-      case SMALL:
-        return "s";
+      case SMALL :
+        return 's'
 
-      case MEDIUM:
-        return "m";
+      case MEDIUM :
+        return 'm'
 
-      case LARGE:
-        return "l";
+      case LARGE :
+        return 'l'
     }
   }
 }
@@ -435,9 +607,10 @@ enum YandexMoneyButtonText
    */
   SUPPORT
 
+  @Override
   String toString()
   {
-    return "0${(ordinal() + 1)}"
+    "0${(ordinal() + 1)}"
   }
 }
 
@@ -456,15 +629,16 @@ enum YandexMoneyButtonType
    */
   WALLET
 
+  @Override
   String toString()
   {
     switch (this)
     {
-      case CARD:
-        return "any-card-payment-type";
+      case CARD :
+        return 'any-card-payment-type'
 
-      case WALLET:
-        return "yamoney-payment-type";
+      case WALLET :
+        return 'yamoney-payment-type'
     }
   }
 }
@@ -499,9 +673,10 @@ enum YandexMoneyDonateFormText
    */
   SUPPORT
 
+  @Override
   String toString()
   {
-    return "0${(ordinal() + 1)}"
+    "0${(ordinal() + 1)}"
   }
 }
 
@@ -530,9 +705,10 @@ enum YandexMoneyPaymentFormText
    */
   GIVE
 
+  @Override
   String toString()
   {
-    return "0${(ordinal() + 1)}"
+    "0${(ordinal() + 1)}"
   }
 }
 
@@ -543,8 +719,9 @@ enum YandexShareButtonLayout
   ICON,
   NONE
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }

@@ -8,7 +8,7 @@ import grails.converters.JSON
  */
 class SurfingbirdTagLib
 {
-  static final String namespace = "surfingbird"
+  static final String namespace = 'surfingbird'
 
   /**
    * Renders Surfingbird "Surf" button.
@@ -22,32 +22,59 @@ class SurfingbirdTagLib
    * @attr width Horizontal width of the button. Default is 500px.
    * @attr height Vertical height of the button. Default is 25px.
    */
-  def surf_button = { attrs ->
-    def config =
+  Closure surf_button = { Map attrs ->
+    StringBuilder layout = new StringBuilder()
+
+    if (attrs['layout'])
+    {
+      layout.append(attrs['layout'].toString())
+    }
+    else
+    {
+      layout.append(SurfingbirdSurfButtonLayout.COMMON.toString())
+    }
+
+    if (!attrs['counter']?.toString()?.toBoolean())
+    {
+      layout.append('-nocount')
+    }
+
+    if (attrs['color'])
+    {
+      layout.append('-')
+      layout.append(attrs['color'].toString())
+    }
+
+    Map config =
     [
-      layout : "${(attrs.layout ?: SurfingbirdSurfButtonLayout.COMMON).toString()}${attrs.counter?.toBoolean() ? "" : "-nocount"}${attrs.color ? "-" + attrs.color : ""}",
+      'layout' : layout.toString()
     ]
 
-    if (attrs.url)
+    if (attrs['url'])
     {
-      config.url = attrs.url
-    }
-    if (attrs.width)
-    {
-      config.width = attrs.width
-    }
-    if (attrs.height)
-    {
-      config.height = attrs.height
+      config['url'] = attrs['url'].toString()
     }
 
-    out << g.withTag(name: "a", attrs:
-    [
-      target: "_blank",
-      class: "surfinbird__like_button",
-      href: "http://surfingbird.ru/share",
-      "data-surf-config": (config as JSON).encodeAsHTML()
-    ], attrs.label ?: "Surf")
+    if (attrs['width'])
+    {
+      config['width'] = attrs['width'].toString()
+    }
+
+    if (attrs['height'])
+    {
+      config['height'] = attrs['height'].toString()
+    }
+
+    out << g.withTag(
+      name : 'a', attrs :
+      [
+        'target' : '_blank',
+        'class' : 'surfinbird__like_button',
+        'href' : 'http://surfingbird.ru/share',
+        'data-surf-config' : (config as JSON).toString()
+      ],
+      attrs['label']?.toString() ?: 'Surf'
+    )
   }
 }
 
@@ -57,9 +84,10 @@ enum SurfingbirdSurfButtonColor
   GREEN,
   GRAY
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -69,21 +97,19 @@ enum SurfingbirdSurfButtonLayout
   MICRO,
   VERTICAL
 
+  @Override
   String toString()
   {
     switch (this)
     {
       case COMMON :
-        return "common"
-      break
+        return 'common'
 
       case MICRO :
-        return "micro"
-      break
+        return 'micro'
 
       case VERTICAL :
-        return "vert"
-      break
+        return 'vert'
     }
   }
 }

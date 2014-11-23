@@ -1,12 +1,14 @@
 package catharsis.widgets
 
+import org.apache.http.client.utils.URIBuilder
+
 /**
  * SoundCloud tags library
  * @see "http://soundcloud.com"
  */
 class SoundCloudTagLib
 {
-  static final String namespace = "soundcloud"
+  static final String namespace = 'soundcloud'
 
   /**
    * Renders SoundCloud user's profile icon.
@@ -15,23 +17,33 @@ class SoundCloudTagLib
    * @attr color Color of profile icon (SoundCloudProfileIconColor or string).
    * @attr size Edge size of profile icon in pixels.
    */
-  def profile_icon = { attrs ->
-    if (!attrs.account)
+  Closure profile_icon = { Map attrs ->
+    String account = attrs['account']?.toString()?.trim()
+
+    if (!account)
     {
-      return;
+      return
     }
 
-    def size = attrs.size ?: SoundCloudProfileIconSize.SIZE_32
-    def url = "http://soundcloud.com/${attrs.account}&color=${attrs.color ?: SoundCloudProfileIconColor.ORANGE_WHITE}&size=${size}"
+    String size = attrs['size']?.toString() ?: SoundCloudProfileIconSize.SIZE_32.toString()
 
-    out << g.withTag(name: "iframe", attrs:
-    [
-      "allowtransparency" : true,
-      "frameborder" : "0",
-      "scrolling" : "no",
-      "src" : "https://w.soundcloud.com/icon/?url=${url}",
-      "style" : "width: ${size}px; height: ${size}px;"
-    ])
+    URIBuilder uri =
+    new URIBuilder('https://w.soundcloud.com/icon')
+      .addParameter('url', "http://soundcloud.com/${account}")
+      .addParameter('color', attrs['color']?.toString() ?: SoundCloudProfileIconColor.ORANGE_WHITE.toString())
+      .addParameter('size', size)
+
+    out << g.withTag(
+      name : 'iframe',
+      attrs :
+      [
+        'allowtransparency' : true,
+        'frameborder' : '0',
+        'scrolling' : 'no',
+        'src' : uri.toString(),
+        'style' : "width:${size}px; height:${size}px;"
+      ]
+    )
   }
 }
 
@@ -47,9 +59,10 @@ enum SoundCloudProfileIconColor
 
   WHITE_TRANSPARENT
 
+  @Override
   String toString()
   {
-    name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -93,30 +106,31 @@ enum SoundCloudProfileIconSize
    */
   SIZE_64
 
+  @Override
   String toString()
   {
     switch (this)
     {
       case SIZE_16 :
-        return "16";
+        return 16
 
       case SIZE_24 :
-        return "24";
+        return 24
 
       case SIZE_32 :
-        return "32";
+        return 32
 
       case SIZE_40 :
-        return "40";
+        return 40
 
       case SIZE_48 :
-        return "48";
+        return 48
 
       case SIZE_56 :
-        return "56";
+        return 56
 
       case SIZE_64 :
-        return "64";
+        return 64
     }
   }
 }

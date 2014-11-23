@@ -1,12 +1,58 @@
-/web-app/WEB-INF
-/out
-/.idea
-/.iml
-/.classpath
-/.project
-/.settings
-*.log
+### Eclipse ###
+.classpath
+.project
+.settings/
+
+
+### Intellij ###
+.idea/
+*.iml
+*.iws
+
+
+### Mac ###
+.DS_Store
+
+### Maven ###
+log/
+target/
+
+
+### Grails ###
+
+# web application files
+/web-app/WEB-INF/classes
+
+# default HSQL database files for production mode
+/prodDb.*
+
+# general HSQL database files
+*Db.properties
+*Db.script
+
+# logs
+/stacktrace.log
+/test/reports
+/logs
+
+# project release file
+/*.war
+
+# plugin release files
 /*.zip
 /plugin.xml
+
+# older plugin install locations
+/plugins
+/web-app/plugins
+
+# "temporary" build files
 /target
-*.iws
+/out
+
+# SQLite database files #
+/*.db
+
+/private
+/db
+.anvil/

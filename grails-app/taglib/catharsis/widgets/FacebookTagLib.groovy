@@ -6,7 +6,7 @@ package catharsis.widgets
  */
 class FacebookTagLib
 {
-  static final String namespace = "facebook"
+  static final String namespace = 'facebook'
 
   /**
    * Renders Facebook Activity Feed.
@@ -24,13 +24,13 @@ class FacebookTagLib
    * @attr recommendations Specifies whether to always show recommendations (Articles liked by a high amount of people) in the bottom half of the feed. Default is false.
    * @attr track_label A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    */
-  def activity_feed = { attrs ->
-    def feedAttributes =
-      [
-        class: "fb-activity",
-      ]
+  Closure activity_feed = { Map attrs ->
+    Map feedAttributes =
+    [
+      'class' : 'fb-activity'
+    ]
 
-    feed(attrs, feedAttributes)
+    this.feed(attrs, feedAttributes)
   }
 
   /**
@@ -44,43 +44,43 @@ class FacebookTagLib
    * @attr mobile A boolean value that specifies whether to show the mobile-optimized version or not. If not specified, auto-detection is used.
    * @attr order The order to use when displaying comments (FacebookCommentsOrder or string).
    */
-  def comments = { attrs ->
-    def attributes =
-      [
-        class: "fb-comments",
-      ]
+  Closure comments = { Map attrs ->
+    Map attributes =
+    [
+      'class' : 'fb-comments'
+    ]
 
-    if (attrs.url)
+    if (attrs['url'])
     {
-      attributes["data-href"] = attrs.url
+      attributes['data-href'] = attrs['url'].toString()
     }
 
-    if (attrs.posts)
+    if (attrs['posts'])
     {
-      attributes["data-num-posts"] = attrs.posts.toInteger()
+      attributes['data-num-posts'] = attrs['posts'].toString().toInteger()
     }
 
-    if (attrs.width)
+    if (attrs['width'])
     {
-      attributes["data-width"] = attrs.width
+      attributes['data-width'] = attrs['width'].toString()
     }
 
-    if (attrs.color_scheme)
+    if (attrs['color_scheme'])
     {
-      attributes["data-colorscheme"] = attrs.color_scheme.toString()
+      attributes['data-colorscheme'] = attrs['color_scheme'].toString()
     }
 
-    if (attrs.mobile != null)
+    if (attrs['mobile'] != null)
     {
-      attributes["data-mobile"] = attrs.mobile.toBoolean().toString()
+      attributes['data-mobile'] = attrs['mobile'].toString().toBoolean().toString()
     }
 
-    if (attrs.order)
+    if (attrs['order'])
     {
-      attributes["data-order-by"] = attrs.order.toString()
+      attributes['data-order-by'] = attrs['order'].toString()
     }
 
-    out << g.withTag(name: "div", attrs: attributes)
+    out << g.withTag(name : 'div', attrs : attributes)
   }
 
   /**
@@ -95,45 +95,45 @@ class FacebookTagLib
    * @attr max_rows The maximum number of rows of faces to display. Default is 1.
    * @attr color_scheme The color scheme used by the widget (FacebookColorScheme or string). Default is "light".
    */
-  def facepile = { attrs ->
-    def attributes =
-      [
-        class: "fb-facepile"
-      ]
+  Closure facepile = { Map attrs ->
+    Map attributes =
+    [
+      'class' : 'fb-facepile'
+    ]
 
-    attributes["data-href"] = attrs.url ?: request.requestURL
+    attributes['data-href'] = attrs['url']?.toString() ?: request.requestURL
 
-    if (attrs.actions)
+    if (attrs['actions'])
     {
-      attributes["data-action"] = attrs.actions instanceof Collection ? attrs.actions.join(",") : attrs.actions.toString()
+      attributes['data-action'] = attrs['actions'] instanceof Collection ? (attrs['actions'] as Collection).join(',') : attrs['actions'].toString()
     }
 
-    if (attrs.photo_size)
+    if (attrs['photo_size'])
     {
-      attributes["data-size"] = attrs.photo_size.toString()
+      attributes['data-size'] = attrs['photo_size'].toString()
     }
 
-    if (attrs.width)
+    if (attrs['width'])
     {
-      attributes["data-width"] = attrs.width
+      attributes['data-width'] = attrs['width'].toString()
     }
 
-    if (attrs.height)
+    if (attrs['height'])
     {
-      attributes["data-height"] = attrs.height
+      attributes['data-height'] = attrs['height'].toString()
     }
 
-    if (attrs.max_rows)
+    if (attrs['max_rows'])
     {
-      attributes["data-max-rows"] = attrs.max_rows.toInteger()
+      attributes['data-max-rows'] = attrs['max_rows'].toString().toInteger()
     }
 
-    if (attrs.color_scheme)
+    if (attrs['color_scheme'])
     {
-      attributes["data-colorscheme"] = attrs.color_scheme.toString()
+      attributes['data-colorscheme'] = attrs['color_scheme'].toString()
     }
 
-    out << g.withTag(name: "div", attrs: attributes)
+    out << g.withTag(name : 'div', attrs : attributes)
   }
 
   /**
@@ -148,28 +148,28 @@ class FacebookTagLib
    * @attr layout Selects one of the different layouts that are available for the button (FacebookButtonLayout or string). Default is "standard".
    * @attr faces Specifies whether to display profile photos below the button (standard layout only). You must not enable this on child-directed sites.
    */
-  def follow_button = { attrs ->
-    if (!attrs.url)
+  Closure follow_button = { Map attrs ->
+    if (!attrs['url'])
     {
       return
     }
 
-    def buttonAttributes =
-      [
-        class: "fb-follow",
-      ]
+    Map buttonAttributes =
+    [
+      'class' : 'fb-follow',
+    ]
 
-    if (attrs.layout)
+    if (attrs['layout'])
     {
-      buttonAttributes["data-layout"] = attrs.layout.toString()
+      buttonAttributes['data-layout'] = attrs['layout'].toString()
     }
 
-    if (attrs.faces != null)
+    if (attrs['faces'] != null)
     {
-      buttonAttributes["data-show-faces"] = attrs.faces.toBoolean().toString()
+      buttonAttributes['data-show-faces'] = attrs['faces'].toString().toBoolean().toString()
     }
 
-    button(attrs, buttonAttributes)
+    this.button(attrs, buttonAttributes)
   }
 
   /**
@@ -177,14 +177,27 @@ class FacebookTagLib
    * @see "https://developers.facebook.com/docs/javascript"
    * @attr app_id REQUIRED Identifier of registered Facebook application.
    */
-  def initialize = { attrs ->
-    if (!attrs.app_id)
+  Closure initialize = { Map attrs ->
+    String appId = attrs['app_id']?.toString()?.trim()
+
+    if (!appId)
     {
       return
     }
 
-    out << g.withTag(name: "div", attrs: [id: "fb-root"])
-    out << g.javascript(null, g.render(contextPath: pluginContextPath, template: "/facebook_initialize", model: [app_id : attrs.app_id]))
+    out << g.withTag(name : 'div', attrs : ['id' : 'fb-root'])
+
+    out << g.javascript(
+      contextPath : pluginContextPath,
+      g.render(
+        contextPath : pluginContextPath,
+        template : '/facebook_initialize',
+        model :
+        [
+          'app_id' : appId
+        ]
+      )
+    )
   }
 
   /**
@@ -201,59 +214,59 @@ class FacebookTagLib
    * @attr faces Specifies whether to display profile photos of people who like the page. Default is true.
    * @attr stream Specifies whether to display a stream of the latest posts by the Page. Default is true.
    */
-  def like_box = { attrs ->
-    if (!attrs.url)
+  Closure like_box = { Map attrs ->
+    if (!attrs['url'])
     {
       return
     }
 
-    def attributes =
-      [
-        class: "fb-like-box",
-        "data-href" : attrs.url
-      ]
+    Map attributes =
+    [
+      'class' : 'fb-like-box',
+      'data-href' : attrs['url'].toString()
+    ]
 
-    if (attrs.width)
+    if (attrs['width'])
     {
-      attributes["data-width"] = attrs.width
+      attributes['data-width'] = attrs['width'].toString()
     }
 
-    if (attrs.height)
+    if (attrs['height'])
     {
-      attributes["data-height"] = attrs.height
+      attributes['data-height'] = attrs['height'].toString()
     }
 
-    if (attrs.color_scheme)
+    if (attrs['color_scheme'])
     {
-      attributes["data-colorscheme"] = attrs.color_scheme.toString()
+      attributes['data-colorscheme'] = attrs['color_scheme'].toString()
     }
 
-    if (attrs.wall != null)
+    if (attrs['wall'] != null)
     {
-      attributes["data-force-wall"] = attrs.wall.toBoolean().toString()
+      attributes['data-force-wall'] = attrs['wall'].toString().toBoolean().toString()
     }
 
-    if (attrs.header != null)
+    if (attrs['header'] != null)
     {
-      attributes["data-header"] = attrs.header.toBoolean().toString()
+      attributes['data-header'] = attrs['header'].toString().toBoolean().toString()
     }
 
-    if (attrs.border != null)
+    if (attrs['border'] != null)
     {
-      attributes["data-show-border"] = attrs.border.toBoolean().toString()
+      attributes['data-show-border'] = attrs['border'].toString().toBoolean().toString()
     }
 
-    if (attrs.faces != null)
+    if (attrs['faces'] != null)
     {
-      attributes["data-show-faces"] = attrs.faces.toBoolean().toString()
+      attributes['data-show-faces'] = attrs['faces'].toString().toBoolean().toString()
     }
 
-    if (attrs.stream != null)
+    if (attrs['stream'] != null)
     {
-      attributes["data-stream"] = attrs.stream.toBoolean().toString()
+      attributes['data-stream'] = attrs['stream'].toString().toBoolean().toString()
     }
 
-    out << g.withTag(name: "div", attrs: attributes)
+    out << g.withTag(name : 'div', attrs : attributes)
   }
 
   /**
@@ -269,33 +282,33 @@ class FacebookTagLib
    * @attr faces Specifies whether to display profile photos below the button (standard layout only). You must not enable this on child-directed sites. Default is false.
    * @attr width The width of the button. The layout you choose affects the minimum and default widths you can use.
    */
-  def like_button = { attrs ->
-    if (!attrs.url)
+  Closure like_button = { Map attrs ->
+    if (!attrs['url'])
     {
-      attrs.url = request.requestURL
+      attrs['url'] = request.requestURL
     }
 
-    def buttonAttributes =
-      [
-        class: "fb-like",
-      ]
+    Map buttonAttributes =
+    [
+      'class' : 'fb-like',
+    ]
 
-    if (attrs.verb)
+    if (attrs['verb'])
     {
-      buttonAttributes["data-action"] = attrs.verb.toString()
+      buttonAttributes['data-action'] = attrs['verb'].toString()
     }
 
-    if (attrs.layout)
+    if (attrs['layout'])
     {
-      buttonAttributes["data-layout"] = attrs.layout.toString()
+      buttonAttributes['data-layout'] = attrs['layout'].toString()
     }
 
-    if (attrs.faces != null)
+    if (attrs['faces'] != null)
     {
-      buttonAttributes["data-show-faces"] = attrs.faces.toBoolean().toString()
+      buttonAttributes['data-show-faces'] = attrs['faces'].toString().toBoolean().toString()
     }
 
-    button(attrs, buttonAttributes)
+    this.button(attrs, buttonAttributes)
   }
 
   /**
@@ -304,24 +317,26 @@ class FacebookTagLib
    * @attr url REQUIRED URL address of Facebook post to embed
    * @attr width Width of Facebook post area on page
    */
-  def post = { attrs ->
-    if (!attrs.url)
+  Closure post = { Map attrs ->
+    String url = attrs['url']?.toString()?.trim()
+
+    if (!url)
     {
       return
     }
 
-    def attributes =
-      [
-        class: "fb-post",
-        "data-href": attrs.url
-      ]
+    Map attributes =
+    [
+      'class' : 'fb-post',
+      'data-href' : url
+    ]
 
-    if (attrs.width)
+    if (attrs['width'])
     {
-      attributes["data-width"] = attrs.width
+      attributes['data-width'] = attrs['width'].toString()
     }
 
-    out << g.withTag(name: "div", attrs: attributes)
+    out << g.withTag(name : 'div', attrs : attributes)
   }
 
   /**
@@ -339,13 +354,13 @@ class FacebookTagLib
    * @attr max_age Limit the created time of articles that are shown in the feed. Valid values are 1-180, which represents the age in days to limit to. Default is 0 (no limit).
    * @attr track_label A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    */
-  def recommendations_feed = { attrs ->
-    def feedAttributes =
+  Closure recommendations_feed = { Map attrs ->
+    Map feedAttributes =
     [
-      class: "fb-recommendations",
+      'class' : 'fb-recommendations'
     ]
 
-    feed(attrs, feedAttributes)
+    this.feed(attrs, feedAttributes)
   }
 
   /**
@@ -359,13 +374,13 @@ class FacebookTagLib
    * @attr kids_mode If your web site or online service, or a portion of your service, is directed to children under 13 you must enable this. Default is false.
    * @attr track_label A label for tracking referrals which must be less than 50 characters and can contain alphanumeric characters and some punctuation (currently +/=-.:_).
    */
-  def send_button = { attrs ->
-    def buttonAttributes =
+  Closure send_button = { Map attrs ->
+    Map buttonAttributes =
     [
-      class: "fb-send",
+      'class' : 'fb-send'
     ]
 
-    button(attrs, buttonAttributes)
+    this.button(attrs, buttonAttributes)
   }
 
   /**
@@ -374,117 +389,124 @@ class FacebookTagLib
    * @attr width REQUIRED Width of video control.
    * @attr height REQUIRED Height of video control.
    */
-  def video = { attrs ->
-    if (!attrs.id || !attrs.width || !attrs.height)
+  Closure video = { Map attrs ->
+    String id = attrs['id']?.toString()?.trim()
+    String width = attrs['width']?.toString()?.trim()
+    String height = attrs['height']?.toString()?.trim()
+
+    if (!id || !width || !height)
     {
       return
     }
 
-    out << g.withTag(name: "iframe", attrs:
-    [
-      frameborder: "0",
-      allowfullscreen: true,
-      webkitallowfullscreen: true,
-      mozallowfullscreen: true,
-      width: attrs.width,
-      height: attrs.height,
-      src: "http://www.facebook.com/video/embed?video_id=${attrs.id}"
-    ])
+    out << g.withTag(
+      name : 'iframe',
+      attrs :
+      [
+        'frameborder' : '0',
+        'allowfullscreen' : true,
+        'webkitallowfullscreen' : true,
+        'mozallowfullscreen' : true,
+        'width' : width,
+        'height' : height,
+        'src' : "http://www.facebook.com/video/embed?video_id=${id}"
+      ]
+    )
   }
 
-  private void button(Map attrs, Map buttonAttributes)
+  private void button(final Map attrs, final Map buttonAttributes)
   {
-    if (attrs.url)
+    if (attrs['url'])
     {
-      buttonAttributes["data-href"] = attrs.url
+      buttonAttributes['data-href'] = attrs['url'].toString()
     }
 
-    if (attrs.color_scheme)
+    if (attrs['color_scheme'])
     {
-      buttonAttributes["data-colorscheme"] = attrs.color_scheme.toString()
+      buttonAttributes['data-colorscheme'] = attrs['color_scheme'].toString()
     }
 
-    if (attrs.kids_mode != null)
+    if (attrs['kids_mode'] != null)
     {
-      buttonAttributes["data-kid-directed-site"] = attrs.kids_mode.toBoolean().toString()
+      buttonAttributes['data-kid-directed-site'] = attrs['kids_mode'].toString().toBoolean().toString()
     }
 
-    if (attrs.track_label)
+    if (attrs['track_label'])
     {
-      buttonAttributes["data-ref"] = attrs.track_label
+      buttonAttributes['data-ref'] = attrs['track_label'].toString()
     }
 
-    if (attrs.width)
+    if (attrs['width'])
     {
-      buttonAttributes["data-width"] = attrs.width
+      buttonAttributes['data-width'] = attrs['width'].toString()
     }
 
-    if (attrs.height)
+    if (attrs['height'])
     {
-      buttonAttributes["data-height"] = attrs.height
+      buttonAttributes['data-height'] = attrs['height'].toString()
     }
 
-    out << g.withTag(name: "div", attrs: buttonAttributes)
+    out << g.withTag(name : 'div', attrs : buttonAttributes)
   }
 
-  private void feed(Map attrs, Map feedAttributes)
+  private void feed(final Map attrs, final Map feedAttributes)
   {
-    if (attrs.domain)
+    if (attrs['domain'])
     {
-      feedAttributes["data-site"] = attrs.domain
+      feedAttributes['data-site'] = attrs['domain'].toString()
     }
 
-    if (attrs.app_id)
+    if (attrs['app_id'])
     {
-      feedAttributes["data-app-id"] = attrs.app_id
+      feedAttributes['data-app-id'] = attrs['app_id'].toString()
     }
 
-    if (attrs.actions)
+    if (attrs['actions'])
     {
-      feedAttributes["data-action"] = attrs.actions instanceof Collection ? attrs.actions.join(",") : attrs.actions.toString()
+      feedAttributes['data-action'] = attrs['actions'] instanceof Collection ? (attrs['actions'] as Collection).join(',') : attrs['actions'].toString()
     }
 
-    if (attrs.width)
+    if (attrs['width'])
     {
-      feedAttributes["data-width"] = attrs.width
+      feedAttributes['data-width'] = attrs['width'].toString()
     }
 
-    if (attrs.height)
+    if (attrs['height'])
     {
-      feedAttributes["data-height"] = attrs.height
+      feedAttributes['data-height'] = attrs['height'].toString()
     }
 
-    if (attrs.color_scheme)
+    if (attrs['color_scheme'])
     {
-      feedAttributes["data-colorscheme"] = attrs.color_scheme.toString()
+      feedAttributes['data-colorscheme'] = attrs['color_scheme'].toString()
     }
 
-    if (attrs.header != null)
+    if (attrs['header'] != null)
     {
-      feedAttributes["data-header"] = attrs.header.toBoolean().toString()
+      feedAttributes['data-header'] = attrs['header'].toString().toBoolean().toString()
     }
 
-    if (attrs.link_target)
+    if (attrs['link_target'])
     {
-      feedAttributes["data-linktarget"] = attrs.link_target
+      feedAttributes['data-linktarget'] = attrs['link_target'].toString()
     }
 
-    if (attrs.max_age)
+    if (attrs['max_age'])
     {
-      feedAttributes["data-max-age"] = attrs.max_age.toInteger()
+      feedAttributes['data-max-age'] = attrs['max_age'].toString().toInteger()
     }
 
-    if (attrs.recommendations != null)
+    if (attrs['recommendations'] != null)
     {
-      feedAttributes["data-recommendations"] = attrs.recommendations.toBoolean().toString()
+      feedAttributes['data-recommendations'] = attrs['recommendations'].toString().toBoolean().toString()
     }
 
-    if (attrs.track_label)
+    if (attrs['track_label'])
     {
-      feedAttributes["data-ref"] = attrs.track_label
+      feedAttributes['data-ref'] = attrs['track_label'].toString()
     }
 
-    out << g.withTag(name: "div", attrs: feedAttributes)
+    out << g.withTag(name : 'div', attrs : feedAttributes)
   }
 }
 
@@ -508,9 +530,10 @@ enum FacebookButtonLayout
    */
   STANDARD
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -529,9 +552,10 @@ enum FacebookColorScheme
    */
   DARK
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -541,9 +565,10 @@ enum FacebookCommentsOrder
   REVERSE_TIME,
   TIME
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -553,9 +578,10 @@ enum FacebookFacepilePhotoSize
   MEDIUM,
   LARGE
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
 
@@ -564,8 +590,9 @@ enum FacebookLikeButtonVerb
   LIKE,
   RECOMMEND
 
+  @Override
   String toString()
   {
-    return name().toLowerCase()
+    this.name().toLowerCase()
   }
 }
