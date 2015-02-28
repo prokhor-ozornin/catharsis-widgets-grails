@@ -1,6 +1,6 @@
 class CatharsisWidgetsGrailsPlugin
 {
-  def version = '3.0'
+  def version = '3.0-SNAPSHOT'
 
   def grailsVersion = '2.3 > *'
 

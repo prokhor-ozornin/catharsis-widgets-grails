@@ -149,7 +149,9 @@ class FacebookTagLib
    * @attr faces Specifies whether to display profile photos below the button (standard layout only). You must not enable this on child-directed sites.
    */
   Closure follow_button = { Map attrs ->
-    if (!attrs['url'])
+    String url = attrs['url']?.toString()?.trim()
+
+    if (!url)
     {
       return
     }
@@ -215,7 +217,9 @@ class FacebookTagLib
    * @attr stream Specifies whether to display a stream of the latest posts by the Page. Default is true.
    */
   Closure like_box = { Map attrs ->
-    if (!attrs['url'])
+    String url = attrs['url']?.toString()?.trim()
+
+    if (!url)
     {
       return
     }
@@ -283,7 +287,9 @@ class FacebookTagLib
    * @attr width The width of the button. The layout you choose affects the minimum and default widths you can use.
    */
   Closure like_button = { Map attrs ->
-    if (!attrs['url'])
+    String url = attrs['url']?.toString()?.trim()
+
+    if (!url)
     {
       attrs['url'] = request.requestURL
     }
