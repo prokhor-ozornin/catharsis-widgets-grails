@@ -37,7 +37,7 @@ class FacebookTagLibSpec extends Specification
     when :
       String template = applyTemplate('<facebook:facepile/>')
     then :
-      template == "<div class=\"fb-facepile\" data-href=\"${request.requestURL}\"></div>"
+      template == "<div class=\"fb-facepile\"></div>"
 
     when :
       template = applyTemplate("<facebook:facepile url=\"url\" actions=\"actions\" photo_size=\"${FacebookFacepilePhotoSize.LARGE}\" width=\"width\" height=\"height\" max_rows=\"10\" color_scheme=\"${FacebookColorScheme.DARK}\"/>")
@@ -110,7 +110,7 @@ class FacebookTagLibSpec extends Specification
     when :
       String template = applyTemplate('<facebook:like_button/>')
     then :
-      template == "<div class=\"fb-like\" data-href=\"${request.requestURL}\"></div>"
+      template == "<div class=\"fb-like\"></div>"
 
     when :
       template = applyTemplate("<facebook:like_button verb=\"${FacebookLikeButtonVerb.RECOMMEND}\" color_scheme=\"${FacebookColorScheme.DARK}\" url=\"url\" kids_mode=\"true\" layout=\"${FacebookButtonLayout.BOX_COUNT}\" track_label=\"track_label\" faces=\"true\" width=\"width\"/>")

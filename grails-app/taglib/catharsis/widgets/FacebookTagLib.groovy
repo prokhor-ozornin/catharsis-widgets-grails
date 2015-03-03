@@ -87,7 +87,7 @@ class FacebookTagLib
    * Renders Facebook Facepile widget.
    * Requires Facebook JavaScript initialization to be performed first.
    * @see "https://developers.facebook.com/docs/plugins/facepile"
-   * @attr url Display photos of the people who have liked this absolute URL. Default is current page URL.
+   * @attr url Display photos of the people who have liked this absolute URL.
    * @attr actions Collection or a comma-separated string of Open Graph action types.
    * @attr photo_size Controls the size of the photos shown in the widget (FacebookFacepileSize or string). Default is "medium".
    * @attr width The width of the widget in pixels. Minimum is 200. Default is 300.
@@ -101,7 +101,10 @@ class FacebookTagLib
       'class' : 'fb-facepile'
     ]
 
-    attributes['data-href'] = attrs['url']?.toString() ?: request.requestURL
+    if (attrs['url'])
+    {
+      attributes['data-href'] = attrs['url'].toString()
+    }
 
     if (attrs['actions'])
     {
@@ -287,13 +290,6 @@ class FacebookTagLib
    * @attr width The width of the button. The layout you choose affects the minimum and default widths you can use.
    */
   Closure like_button = { Map attrs ->
-    String url = attrs['url']?.toString()?.trim()
-
-    if (!url)
-    {
-      attrs['url'] = request.requestURL
-    }
-
     Map buttonAttributes =
     [
       'class' : 'fb-like',

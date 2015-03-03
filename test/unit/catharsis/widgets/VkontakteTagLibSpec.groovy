@@ -94,7 +94,7 @@ class VkontakteTagLibSpec extends Specification
       template.contains('VK.Widgets.Group("element_id", {"mode":"2","wide":1,"width":"width","height":"height","color1":"background_color","color2":"text_color","color3":"button_color"}, "account");')
   }
 
-  void initialize()
+  /*void initialize()
   {
     when :
       String template = applyTemplate("<vkontakte:initialize/>")
@@ -116,7 +116,7 @@ class VkontakteTagLibSpec extends Specification
     then :
       template.contains('<script type="text/javascript">')
       template.contains('VK.init({apiId:id, onlyWidgets:true})')
-  }
+  }*/
 
   void like_button()
   {
